@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/mac/crafting-corner/src/app/page.tsx"],"sourcesContent":["import Hero from \"../components/Hero\";\nimport ProductCard from \"../components/ProductCard\";\n\nexport default function Home() {\n  const mock = [\n    { title: \"Oak Dining Table\", price: 45000, img: \"/assets/img/products/oak-table.webp\", slug: \"oak-dining-table\" },\n    { title: \"Walnut Armchair\", price: 28000, img: \"/assets/img/products/walnut-chair.webp\", slug: \"walnut-armchair\" },\n  ];\n\n  return (\n    <>\n      <Hero />\n      <section className=\"mx-auto my-16 grid max-w-6xl grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-8 px-4\">\n        {mock.map(p => <ProductCard key={p.slug} {...p} />)}\n      </section>\n    </>\n  );\n}"],"names":[],"mappings":";;;;AAAA;AACA;;;;AAEe,SAAS;IACtB,MAAM,OAAO;QACX;YAAE,OAAO;YAAoB,OAAO;YAAO,KAAK;YAAuC,MAAM;QAAmB;QAChH;YAAE,OAAO;YAAmB,OAAO;YAAO,KAAK;YAA0C,MAAM;QAAkB;KAClH;IAED,qBACE;;0BACE,6WAAC,0HAAA,CAAA,UAAI;;;;;0BACL,6WAAC;gBAAQ,WAAU;0BAChB,KAAK,GAAG,CAAC,CAAA,kBAAK,6WAAC,iIAAA,CAAA,UAAW;wBAAe,GAAG,CAAC;uBAAb,EAAE,IAAI;;;;;;;;;;;;AAI/C"}},
+    {"offset": {"line": 55, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

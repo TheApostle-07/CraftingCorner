@@ -1,0 +1,11 @@
+{
+  "/page": "app/page.js",
+  "/[category]/page": "app/[category]/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/products/[slug]/page": "app/products/[slug]/page.js",
+  "/[category]/[slug]/page": "app/[category]/[slug]/page.js",
+  "/products/page": "app/products/page.js",
+  "/about/page": "app/about/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/collections/page": "app/collections/page.js"
+}

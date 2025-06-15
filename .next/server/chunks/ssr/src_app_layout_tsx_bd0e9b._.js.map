@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/mac/crafting-corner/src/app/layout.tsx"],"sourcesContent":["// src/app/layout.tsx\nexport default function RootLayout({ children }: { children: React.ReactNode }) {\n    return (\n      <html lang=\"en\">\n        <body>{children}</body>\n      </html>\n    );\n  }"],"names":[],"mappings":"AAAA,qBAAqB;;;;;;AACN,SAAS,WAAW,EAAE,QAAQ,EAAiC;IAC1E,qBACE,6WAAC;QAAK,MAAK;kBACT,cAAA,6WAAC;sBAAM;;;;;;;;;;;AAGb"}},
+    {"offset": {"line": 29, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

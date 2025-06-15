@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Nimbus L‑Sectional Sofa",
+    "slug": "nimbus-sectional-sofa",
+    "price": 78500,
+    "img": [
+      "/assets/img/products/nimbus-sofa-1.png",
+      "/assets/img/products/nimbus-sofa-2.png"
+    ],
+    "category": "living-room",
+    "description": "Spacious L‑shaped sectional upholstered in a stain‑resistant linen blend. Seats up to six comfortably.",
+    "tags": ["sofa", "sectional", "family seating"]
+  },
+  {
+    "title": "Aranya Teak TV Console",
+    "slug": "aranya-teak-tv-console",
+    "price": 32500,
+    "img": "/assets/img/products/aranya-tv-unit.png",
+    "category": "living-room",
+    "description": "Hand‑joined solid‑teak media console with rattan sliding shutters and cable‑management ports.",
+    "tags": ["tv unit", "storage", "teak"]
+  },
+  {
+    "title": "Kashmir Walnut Coffee Table",
+    "slug": "kashmir-walnut-coffee-table",
+    "price": 24999,
+    "img": [
+      "/assets/img/products/kashmir-coffee-1.png",
+      "/assets/img/products/kashmir-coffee-2.png"
+    ],
+    "category": "living-room",
+    "description": "Live‑edge walnut top on matte‑black hairpin legs—each piece showcases unique grain patterns.",
+    "tags": ["coffee table", "live edge", "walnut"]
+  },
+  {
+    "title": "Indigo Velvet Accent Chair",
+    "slug": "indigo-velvet-accent-chair",
+    "price": 18950,
+    "img": "/assets/img/products/indigo-accent-chair.png",
+    "category": "living-room",
+    "description": "Plush accent chair with channel‑tufted backrest and solid‑ash frame, finished in a deep indigo velvet.",
+    "tags": ["chair", "velvet", "lounge"]
+  },
+  {
+    "title": "Udaipur Mirror with Jali Work",
+    "slug": "udaipur-mirror",
+    "price": 9950,
+    "img": "/assets/img/products/top_2.png",
+    "category": "living-room",
+    "description": "Hand‑carved mango‑wood frame featuring traditional Rajasthani jali lattice. Wall‑mount hardware included.",
+    "tags": ["mirror", "jali work", "hand carved"]
+  },
+  {
+    "title": "Sutra Rattan Side Table",
+    "slug": "sutra-rattan-side-table",
+    "price": 8450,
+    "img": "/assets/img/products/sutra-side-table.png",
+    "category": "living-room",
+    "description": "Lightweight yet sturdy cane‑weave side table with concealed storage for remotes and magazines.",
+    "tags": ["side table", "rattan", "storage"]
+  },
+  {
+    "title": "Mysuru Rosewood Bookshelf",
+    "slug": "mysuru-rosewood-bookshelf",
+    "price": 21800,
+    "img": "/assets/img/products/mysuru-bookshelf.png",
+    "category": "living-room",
+    "description": "Five‑tier open bookshelf crafted from sustainably‑sourced Indian rosewood with adjustable shelves.",
+    "tags": ["bookshelf", "rosewood", "storage"]
+  },
+  {
+    "title": "Calm Recliner Lounger",
+    "slug": "calm-recliner-lounger",
+    "price": 26990,
+    "img": [
+      "/assets/img/products/calm-recliner-1.png",
+      "/assets/img/products/calm-recliner-2.png"
+    ],
+    "category": "living-room",
+    "description": "Ergonomic push‑back recliner with high‑density foam and breathable faux‑leather upholstery.",
+    "tags": ["recliner", "lounger", "comfort"]
+  },
+  {
+    "title": "Sangam Nesting Tables — Set of 2",
+    "slug": "sangam-nesting-tables",
+    "price": 11999,
+    "img": "/assets/img/products/sangam-nesting.png",
+    "category": "living-room",
+    "description": "Space‑saving nesting tables in contrasting acacia and white‑oak veneer. Use together or apart.",
+    "tags": ["nesting tables", "space saving", "acacia"]
+  }
+]

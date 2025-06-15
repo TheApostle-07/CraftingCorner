@@ -1,0 +1,101 @@
+[
+    {
+      "title": "Living Room",
+      "slug": "living-room",
+      "icon": "sofa",
+      "image": "/assets/img/category/living_room_cat.png",
+      "subs": [
+        { "title": "Sofas & Sectionals", "slug": "sofas",           "image": "/assets/category/sofas.jpg" },
+        { "title": "Recliners",            "slug": "recliners",       "image": "/assets/category/recliners.jpg" },
+        { "title": "Coffee & Center Tables","slug": "coffee-tables",  "image": "/assets/category/coffee-tables.jpg" },
+        { "title": "TV Units & Media",     "slug": "tv-units",       "image": "/assets/category/tv-units.jpg" },
+        { "title": "Book Shelves",         "slug": "book-shelves",   "image": "/assets/category/book-shelves.jpg" },
+        { "title": "Side Tables",          "slug": "side-tables",    "image": "/assets/category/side-tables.jpg" }
+      ]
+    },
+    {
+      "title": "Bedroom",
+      "slug": "bedroom",
+      "icon": "bed-double",
+      "image": "/assets/img/category/bed_room_cat.png",
+      "subs": [
+        { "title": "Beds",               "slug": "beds",            "image": "/assets/category/beds.jpg" },
+        { "title": "Wardrobes",          "slug": "wardrobes",       "image": "/assets/category/wardrobes.jpg" },
+        { "title": "Bedside Tables",     "slug": "bedside-tables",  "image": "/assets/category/bedside-tables.jpg" },
+        { "title": "Dressers & Mirrors", "slug": "dressers",        "image": "/assets/category/dressers.jpg" },
+        { "title": "Mattresses",         "slug": "mattresses",      "image": "/assets/category/mattresses.jpg" }
+      ]
+    },
+    {
+      "title": "Dining Room",
+      "slug": "dining-room",
+      "icon": "fork-knife",
+      "image": "/assets/img/category/dining_room_cat.png",
+      "subs": [
+        { "title": "Dining Tables", "slug": "dining-tables", "image": "/assets/category/dining-tables.jpg" },
+        { "title": "Dining Chairs", "slug": "dining-chairs", "image": "/assets/category/dining-chairs.jpg" },
+        { "title": "Dining Sets",  "slug": "dining-sets",   "image": "/assets/category/dining-sets.jpg" },
+        { "title": "Benches",      "slug": "benches",       "image": "/assets/category/benches.jpg" },
+        { "title": "Bar Units",    "slug": "bar-units",     "image": "/assets/category/bar-units.jpg" }
+      ]
+    },
+    {
+      "title": "Study & Office",
+      "slug": "office",
+      "icon": "briefcase",
+      "image": "/assets/img/category/study_office_cat.png",
+      "subs": [
+        { "title": "Office Chairs",   "slug": "office-chairs",   "image": "/assets/category/office-chairs.jpg" },
+        { "title": "Study Desks",     "slug": "study-desks",     "image": "/assets/category/study-desks.jpg" },
+        { "title": "Bookcases",       "slug": "bookcases",       "image": "/assets/category/bookcases.jpg" },
+        { "title": "Filing Cabinets", "slug": "filing-cabinets", "image": "/assets/category/filing-cabinets.jpg" }
+      ]
+    },
+    {
+      "title": "Outdoor",
+      "slug": "outdoor",
+      "icon": "sun",
+      "image": "/assets/img/category/outdoor_cat.png",
+      "subs": [
+        { "title": "Patio Sets",   "slug": "patio-sets",   "image": "/assets/category/patio-sets.jpg" },
+        { "title": "Garden Chairs", "slug": "garden-chairs", "image": "/assets/category/garden-chairs.jpg" },
+        { "title": "Swings",        "slug": "swings",        "image": "/assets/category/swings.jpg" },
+        { "title": "Loungers",      "slug": "loungers",      "image": "/assets/category/loungers.jpg" }
+      ]
+    },
+    {
+      "title": "Kids Room",
+      "slug": "kids-room",
+      "icon": "baby",
+      "image": "/assets/img/category/kids_room_cat.png",
+      "subs": [
+        { "title": "Kids Beds",      "slug": "kids-beds",      "image": "/assets/category/kids-beds.jpg" },
+        { "title": "Study Tables",   "slug": "kids-study",    "image": "/assets/category/kids-study.jpg" },
+        { "title": "Toy Storage",    "slug": "toy-storage",   "image": "/assets/category/toy-storage.jpg" },
+        { "title": "Kids Seating",   "slug": "kids-seating",  "image": "/assets/category/kids-seating.jpg" }
+      ]
+    },
+    {
+      "title": "Hallway & Storage",
+      "slug": "storage",
+      "icon": "archive",
+      "image": "/assets/img/category/H&S_cat.png",
+      "subs": [
+        { "title": "Shoe Racks",      "slug": "shoe-racks",      "image": "/assets/category/shoe-racks.jpg" },
+        { "title": "Console Tables",  "slug": "console-tables",  "image": "/assets/category/console-tables.jpg" },
+        { "title": "Cabinets",        "slug": "cabinets",        "image": "/assets/category/cabinets.jpg" }
+      ]
+    },
+    {
+      "title": "Kitchen & Bar",
+      "slug": "kitchen-bar",
+      "icon": "wine",
+      "image": "/assets/img/category/K&B_cat.png",
+      "subs": [
+        { "title": "Bar Stools",      "slug": "bar-stools",      "image": "/assets/category/bar-stools.jpg" },
+        { "title": "Kitchen Islands", "slug": "kitchen-islands", "image": "/assets/category/kitchen-islands.jpg" },
+        { "title": "Trolleys",        "slug": "trolleys",        "image": "/assets/category/trolleys.jpg" }
+      ]
+    }
+  ]
+  

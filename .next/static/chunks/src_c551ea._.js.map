@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/mac/crafting-corner/src/components/FloatingWhatsapp.tsx"],"sourcesContent":["'use client';\nimport { FaWhatsapp } from 'react-icons/fa';\n\ntype Props = {\n  /** E.164 phone number WITHOUT “+” (e.g. 919876543210) */\n  phone: string;\n  /** Optional pre-filled text that appears in WhatsApp */\n  message?: string;\n};\n\nexport default function FloatingWhatsapp({ phone, message = '' }: Props) {\n  const url = `https://wa.me/${phone}${message ? `?text=${encodeURIComponent(message)}` : ''}`;\n\n  return (\n    <a\n      href={url}\n      target=\"_blank\"\n      rel=\"noopener noreferrer\"\n      aria-label=\"Chat with us on WhatsApp\"\n      className=\"\n        fixed z-50 bottom-4 right-4 flex h-14 w-14 items-center\n        justify-center rounded-full bg-green-500 shadow-lg\n        transition-transform hover:scale-110 focus:outline-none\n      \"\n    >\n      <FaWhatsapp className=\"h-7 w-7 text-white\" />\n      <span className=\"sr-only\">WhatsApp</span>\n    </a>\n  );\n}"],"names":[],"mappings":";;;;AACA;AADA;;;AAUe,SAAS,iBAAiB,EAAE,KAAK,EAAE,UAAU,EAAE,EAAS;IACrE,MAAM,MAAM,CAAC,cAAc,EAAE,QAAQ,UAAU,CAAC,MAAM,EAAE,mBAAmB,UAAU,GAAG,IAAI;IAE5F,qBACE,4TAAC;QACC,MAAM;QACN,QAAO;QACP,KAAI;QACJ,cAAW;QACX,WAAU;;0BAMV,4TAAC,kOAAA,CAAA,aAAU;gBAAC,WAAU;;;;;;0BACtB,4TAAC;gBAAK,WAAU;0BAAU;;;;;;;;;;;;AAGhC;KAnBwB"}},
+    {"offset": {"line": 52, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///Users/mac/crafting-corner/src/app/not-found.tsx"],"sourcesContent":["'use client';\n\nexport default function NotFound() {\n  return (\n    <main className=\"grid min-h-[60vh] place-items-center px-6 text-center\">\n      <div>\n        <h1 className=\"font-display text-5xl text-walnut\">404</h1>\n        <p className=\"mt-2 text-charcoal/80\">\n          The page you’re looking for doesn’t exist.\n        </p>\n      </div>\n    </main>\n  );\n}"],"names":[],"mappings":";;;;AAAA;;AAEe,SAAS;IACtB,qBACE,6WAAC;QAAK,WAAU;kBACd,cAAA,6WAAC;;8BACC,6WAAC;oBAAG,WAAU;8BAAoC;;;;;;8BAClD,6WAAC;oBAAE,WAAU;8BAAwB;;;;;;;;;;;;;;;;;AAM7C"}},
+    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 56, "column": 0}, "map": {"version":3,"sources":["file:///Users/mac/crafting-corner/node_modules/.pnpm/next%4015.0.3_react-dom%4018.2.0_react%4018.2.0__react%4018.2.0/node_modules/next/src/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = require('../../module.compiled').vendored[\n  'react-ssr'\n].ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":";AAAAA,OAAOC,OAAO,GAAGC,QAAQ,qMAAyBC,QAAQ,CACxD,YACD,CAACC,kBAAkB","ignoreList":[0]}},
+    {"offset": {"line": 58, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
