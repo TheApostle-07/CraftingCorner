@@ -1,6 +1,8 @@
 /* --------------------------------------------------------------------------
    Product details page (server component)
 --------------------------------------------------------------------------- */
+'use client';
+
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
