@@ -1,3 +1,4 @@
+'use client';
 /**
  * Crafting‑Corner – custom Next.js configuration
  * ------------------------------------------------
