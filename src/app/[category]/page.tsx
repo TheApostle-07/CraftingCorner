@@ -2,6 +2,7 @@
 // Highly–polished category landing page that’s fully statically-generated.
 // It pulls its data from the JSON files in /src/data and sprinkles a few
 // tasteful animations + a floating WhatsApp CTA.
+'use client';
 
 import Image from "next/image";
 import { Metadata } from "next";
