@@ -9,12 +9,14 @@
  */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
 
   // --- Deployment leniency -------------------------------------------
   typescript: {
     // ⛑  Don’t block the build if type‑checking fails
     ignoreBuildErrors: true,
   },
+
   eslint: {
     // ⛑  Don’t block the build if ESLint finds problems
     ignoreDuringBuilds: true,
