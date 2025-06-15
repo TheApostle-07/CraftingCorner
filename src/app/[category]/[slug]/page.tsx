@@ -1,10 +1,7 @@
 // src/app/[category]/[slug]/page.tsx
-'use client';
-
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { MotionConfig, motion } from 'framer-motion';
 
 import FloatingWhatsapp from '../../../components/FloatingWhatsapp';
 import ProductCard from '../../../components/ProductCard'; // for related items
@@ -82,20 +79,12 @@ export default async function ProductPage({
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
 
   return (
-    <MotionConfig transition={{ duration: 0.5, ease: 'easeOut' }}>
-      <motion.main
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="pb-32"
-      >
+    <>
+      <main className="pb-32">
         {/* ——— Hero / gallery ——— */}
         <section className="relative mx-auto mb-12 grid max-w-6xl gap-6 px-4 lg:grid-cols-2">
           {/* Main Image */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="overflow-hidden rounded-2xl bg-walnut/5"
-          >
+          <div className="overflow-hidden rounded-2xl bg-walnut/5">
             <Image
               src={gallery[0]}
               alt={product.title}
@@ -104,14 +93,10 @@ export default async function ProductPage({
               className="h-full w-full object-cover object-center"
               priority
             />
-          </motion.div>
+          </div>
 
           {/* Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col justify-center space-y-6"
-          >
+          <div className="flex flex-col justify-center space-y-6">
             <h1 className="font-display text-4xl font-semibold text-ivory">
               {product.title}
             </h1>
@@ -138,18 +123,15 @@ export default async function ProductPage({
                 ))}
               </ul>
             )}
-          </motion.div>
+          </div>
         </section>
 
         {/* ——— Secondary gallery thumbnails (if more images) ——— */}
         {gallery.length > 1 && (
           <section className="mx-auto mb-20 grid max-w-5xl grid-cols-2 gap-4 px-4 md:grid-cols-3">
             {gallery.slice(1).map((img, i) => (
-              <motion.div
+              <div
                 key={img}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: (i + 1) * 0.05 }}
                 className="overflow-hidden rounded-xl bg-walnut/5"
               >
                 <Image
@@ -159,7 +141,7 @@ export default async function ProductPage({
                   height={500}
                   className="h-full w-full object-cover object-center"
                 />
-              </motion.div>
+              </div>
             ))}
           </section>
         )}
@@ -184,7 +166,7 @@ export default async function ProductPage({
           phone="+919999999999"
           message={`Hi! I'm interested in the ${product.title}. Could you tell me more?`}
         />
-      </motion.main>
-    </MotionConfig>
+      </main>
+    </>
   );
 }
