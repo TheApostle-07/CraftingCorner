@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* ── Floating WhatsApp CTA (persists site-wide) ─── */}
         <FloatingWhatsapp
-          phone="+919876543210"            /* update to your number */
+          phone="+919056888917"            /* update to your number */
           message="Hi! I'm interested in your furniture."
         />
 
