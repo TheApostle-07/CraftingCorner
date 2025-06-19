@@ -75,11 +75,17 @@ export default function ContactPage() {
       {/* ── Info cards + map ─────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6">
         <div className="grid gap-8 lg:grid-cols-3">
-          <InfoCard title="Showroom & Studio" icon={<MapPin className="h-6 w-6" />} i={0}>
-            <address className="not-italic leading-relaxed">
-              Crafting Corner<br />12 Shanti Path, C-Scheme<br />Jaipur 302005 (RJ)
-            </address>
-          </InfoCard>
+          <InfoCard
+  title="Showroom & Studio"
+  icon={<MapPin className="h-6 w-6" />}
+  i={0}
+>
+  <address className="not-italic leading-relaxed">
+    Crafting Corner<br />
+    Plot&nbsp;No.&nbsp;522, Sector&nbsp;82&nbsp;JLPL<br />
+    Mohali, Punjab&nbsp;160082
+  </address>
+</InfoCard>
 
           <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
             <Link href="tel:+919056888917" className="block hover:underline">+91 90568 88917</Link>
