@@ -82,9 +82,9 @@ export default function ContactPage() {
           </InfoCard>
 
           <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
-            <Link href="tel:+919876543210" className="block hover:underline">+91 98765 43210</Link>
+            <Link href="tel:+919056888917" className="block hover:underline">+91 90568 88917</Link>
             <Link
-              href="https://wa.me/919876543210?text=Hi%20Crafting%20Corner!"
+              href="https://wa.me/919056888917?text=Hi%20Crafting%20Corner!"
               target="_blank" rel="noopener noreferrer"
               className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-1.5 text-ivory shadow hover:bg-green-600"
             >
@@ -93,8 +93,8 @@ export default function ContactPage() {
           </InfoCard>
 
           <InfoCard title="Email Us" icon={<Mail className="h-6 w-6" />} i={2}>
-            <Link href="mailto:hello@craftingcorner.in" className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut">
-              hello@craftingcorner.in
+            <Link href="mailto:craftingcorner.cc17@gmail.com" className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut">
+              craftingcorner.cc17@gmail.com
             </Link>
           </InfoCard>
         </div>
@@ -107,15 +107,15 @@ export default function ContactPage() {
         >
           {/* Responsive 16:9 container */}
           <div className="relative w-full pt-[56.25%]">
-            <iframe
-              title="Crafting Corner – Jaipur showroom"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.4109259507414!2d75.78786711504462!3d26.893891883138058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4b7a083e5d07%3A0x6b7e2306df0dfaf8!2s12%20Shanti%20Path%2C%20C‑Scheme%2C%20Jaipur%2C%20Rajasthan%20302005!5e0!3m2!1sen!2sin!4v1710709530000!5m2!1sen!2sin"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
-            />
-          </div>
+  <iframe
+    title="Crafting Corner – Mohali showroom"
+    src="https://www.google.com/maps?q=Plot+no.+522,+Sector+82+JLPL+Mohali,+Punjab+160082&output=embed"
+    loading="lazy"
+    referrerPolicy="no-referrer-when-downgrade"
+    allowFullScreen
+    className="absolute inset-0 h-full w-full border-0"
+  />
+</div>
         </motion.div>
       </section>
 
