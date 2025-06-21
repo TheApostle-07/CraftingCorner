@@ -7,7 +7,12 @@
 
 'use client';
 
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useReducedMotion,
+} from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -19,7 +24,13 @@ export default function Hero() {
 
   /* 2 ▸ Helper: only return motion props when animations are allowed */
   const m = (from: any, to: any, delay = 0) =>
-    reduceMotion ? {} : { initial: from, animate: to, transition: { delay, duration: 0.9, ease: 'easeOut' } };
+    reduceMotion
+      ? {}
+      : {
+          initial: from,
+          animate: to,
+          transition: { delay, duration: 0.9, ease: 'easeOut' },
+        };
 
   /* 3 ▸ Layout */
   return (
@@ -27,7 +38,7 @@ export default function Hero() {
       id="hero"
       className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-black text-white sm:min-h-screen"
     >
-      {/* ——— Background ——— */}
+      {/* ── Background ─────────────────────────────────────────────── */}
       <motion.div
         aria-hidden
         style={reduceMotion ? undefined : { y: yBg }}
@@ -44,13 +55,15 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
       </motion.div>
 
-      {/* ——— Content ——— */}
+      {/* ── Content ────────────────────────────────────────────────── */}
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-24 text-center lg:gap-8 lg:px-8">
         <motion.h1
           {...m({ opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
           className="font-display text-4xl leading-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
         >
-          Timeless&nbsp;<span className="whitespace-nowrap">Hand-Crafted</span>
+          Timeless
+          <br className="sm:hidden" />
+          <span className="whitespace-nowrap"> Hand-Crafted </span>
           <br className="hidden sm:inline" />
           <span className="text-brass">Furniture</span>
         </motion.h1>
@@ -64,7 +77,7 @@ export default function Hero() {
 
         <motion.div
           {...m({ opacity: 0, y: 30 }, { opacity: 1, y: 0 }, 0.4)}
-          className="flex flex-col items-center gap-4 sm:flex-row sm:gap-6"
+          className="mx-auto flex max-w-fit flex-col items-center gap-4 sm:flex-row sm:gap-6"
         >
           <Link
             href="/collections"
@@ -73,7 +86,7 @@ export default function Hero() {
             Browse Collection
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="h-5 w-5 -mr-1"
               fill="none"
               stroke="currentColor"
               strokeWidth={2}
@@ -93,7 +106,7 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ——— Scroll cue (hidden on very small / touch-heavy screens) ——— */}
+      {/* ── Scroll cue (hidden on very small / touch-heavy screens) ── */}
       <motion.div
         {...m({ opacity: 0 }, { opacity: 0.8 }, 0.8)}
         className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 sm:block"
