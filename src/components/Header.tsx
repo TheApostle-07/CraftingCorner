@@ -116,7 +116,7 @@ export default function Header() {
 
           {/* WhatsApp quick‑dial */}
           <Link
-            href="https://wa.me/919999999999"
+            href="https://wa.me/919056888917"
             target="_blank"
             className="hidden rounded-full bg-[#7B5A3C] px-4 py-2 text-sm font-medium text-white shadow-lg transition hover:bg-[#694A2F] lg:inline-block"
           >
