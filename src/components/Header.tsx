@@ -87,7 +87,7 @@ export default function Header() {
           >
             {/* SVG / PNG logo stored in /public/assets/logo.svg  */}
             <Image
-              src="/assets/logo.jpg"
+              src="/assets/Furniture.png"
               alt="Crafting Corner logo"
               width={20}
               height={20}
