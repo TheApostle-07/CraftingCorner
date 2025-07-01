@@ -8,6 +8,7 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { AiFillStar } from 'react-icons/ai';
 
 import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
@@ -92,20 +93,41 @@ export default function Home() {
       title: 'Modular Shoe Rack',
       price: 4_699,
       img: '/assets/img/products/rc_1.png',
-      slug: 'modular-shoe-rack',
+      slug: 'modular-shoe-rack'
     },
     {
       title: 'Kids’ Study Desk',
       price: 6_399,
       img: '/assets/img/products/rc_2.png',
-      slug: 'kids-study-desk',
+      slug: 'kids-study-desk'
     },
     {
       title: 'Fabric Storage Ottoman',
       price: 3_250,
       img: '/assets/img/products/rc_3.png',
-      slug: 'fabric-storage-ottoman',
+      slug: 'fabric-storage-ottoman'
+    }
+  ];
+
+  const testimonials = [
+    {
+      name: 'Ananya Sharma',
+      role: 'Interior Designer',
+      quote: 'Crafting Corner delivered beyond expectations! The quality and craftsmanship of the Sheesham bed is unparalleled.',
+      avatar: '/assets/img/testimonials/ananya.jpg'
     },
+    {
+      name: 'Ravi Patel',
+      role: 'Happy Customer',
+      quote: 'The Walnut Armchair is a masterpiece. It transformed my living room into a cozy haven. Highly recommend!',
+      avatar: '/assets/img/testimonials/ravi.jpg'
+    },
+    {
+      name: 'Priya Singh',
+      role: 'Architect',
+      quote: 'Their attention to detail is remarkable. Every piece feels hand-crafted and timeless.',
+      avatar: '/assets/img/testimonials/priya.jpg'
+    }
   ];
 
   /* --------------------------------------------------------------------
@@ -134,7 +156,7 @@ export default function Home() {
       <Hero />
 
       {/* ───────────────────── Categories carousel ────────────── */}
-      <section className="relative mx-auto mt-16 max-w-6xl px-8 lg:px-4">
+      <section id="categories" className="relative mx-auto mt-16 max-w-6xl px-8 lg:px-4">
         <h2 className="mb-8 font-display text-2xl font-semibold text-walnut lg:mb-6">
           Browse by Category
         </h2>
@@ -208,6 +230,49 @@ export default function Home() {
       <Shelf title="Featured Products" items={featured} />
       <Shelf title="Top Picks" items={topPicks} />
       <Shelf title="Recommended for You" items={recommended} />
+
+      {/* ───────────────────── Testimonials ───────────────────── */}
+      <section className="mx-auto my-20 max-w-6xl px-4">
+        <h2 className="mb-8 font-display text-2xl font-semibold text-walnut text-center">
+          What Our Clients Say
+        </h2>
+        <motion.div
+          className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.2 } }
+          }}
+        >
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={i}
+              className="flex flex-col items-center rounded-xl bg-ivory/80 p-6 text-center shadow-lg"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 }
+              }}
+            >
+              <img
+                src={t.avatar}
+                alt={t.name}
+                className="mx-auto mb-4 h-16 w-16 rounded-full object-cover"
+              />
+              <div className="mb-2 flex space-x-1">
+                <AiFillStar className="h-5 w-5 text-yellow-400" />
+                <AiFillStar className="h-5 w-5 text-yellow-400" />
+                <AiFillStar className="h-5 w-5 text-yellow-400" />
+                <AiFillStar className="h-5 w-5 text-yellow-400" />
+                <AiFillStar className="h-5 w-5 text-yellow-400" />
+              </div>
+              <p className="mb-4 text-sm italic text-charcoal/90">"{t.quote}"</p>
+              <span className="font-medium text-walnut">{t.name}</span>
+              <span className="text-xs text-charcoal/70">{t.role}</span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
     </>
   );
 }
