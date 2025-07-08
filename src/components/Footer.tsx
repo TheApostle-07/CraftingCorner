@@ -79,21 +79,21 @@
              {/* socials */}
              <div className="mt-6 flex justify-center gap-4 sm:justify-start">
                <Link
-                 href="https://instagram.com"
+                 href="https://www.instagram.com/craftingcornermohali/"
                  aria-label="Instagram"
                  className="rounded-full p-2 transition hover:bg-walnut/10"
                >
                  <Instagram className="h-5 w-5" />
                </Link>
                <Link
-                 href="https://facebook.com"
+                 href=" https://www.facebook.com/profile.php?id=61574155822550"
                  aria-label="Facebook"
                  className="rounded-full p-2 transition hover:bg-walnut/10"
                >
                  <Facebook className="h-5 w-5" />
                </Link>
                <Link
-                 href="https://linkedin.com"
+                 href="https://www.linkedin.com/company/crafting-corner-mohali/"
                  aria-label="LinkedIn"
                  className="rounded-full p-2 transition hover:bg-walnut/10"
                >
