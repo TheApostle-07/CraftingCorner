@@ -121,17 +121,17 @@ export default function Header() {
           {/* ——— Actions ——— */}
           <div className="flex items-center gap-4">
             {/* Cart placeholder */}
-            <motion.button
+{/*             <motion.button
               whileHover={{ rotate: -10 }}
               className="hidden rounded-full p-2 text-walnut hover:bg-walnut/10 lg:inline-flex"
               aria-label="Cart"
             >
               <ShoppingCart className="h-5 w-5" />
-            </motion.button>
+            </motion.button> */}
 
             {/* WhatsApp quick‑dial */}
             <Link
-              href="https://wa.me/919999999999"
+              href="https://wa.me/919056888917"
               target="_blank"
               className="hidden rounded-full bg-[#7B5A3C] px-4 py-2 text-sm font-medium text-white shadow-lg transition hover:bg-[#694A2F] lg:inline-block"
             >
