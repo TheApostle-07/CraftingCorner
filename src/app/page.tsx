@@ -116,19 +116,19 @@ export default function Home() {
       name: 'Ananya Sharma',
       role: 'Interior Designer',
       quote: 'Crafting Corner delivered beyond expectations! The quality and craftsmanship of the Sheesham bed is unparalleled.',
-      avatar: '/assets/img/testimonials/ananya.jpg'
+      avatar: '/assets/img/testimonials/av-1.jpeg'
     },
     {
       name: 'Ravi Patel',
       role: 'Happy Customer',
       quote: 'The Walnut Armchair is a masterpiece. It transformed my living room into a cozy haven. Highly recommend!',
-      avatar: '/assets/img/testimonials/ravi.jpg'
+      avatar: '/assets/img/testimonials/av-2.jpeg'
     },
     {
       name: 'Priya Singh',
       role: 'Architect',
       quote: 'Their attention to detail is remarkable. Every piece feels hand-crafted and timeless.',
-      avatar: '/assets/img/testimonials/priya.jpg'
+      avatar: '/assets/img/testimonials/av-3.jpeg'
     }
   ];
 
