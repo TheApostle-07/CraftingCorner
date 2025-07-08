@@ -6,8 +6,10 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { X } from 'lucide-react';
 import { AiFillStar } from 'react-icons/ai';
 
 import Hero from '../components/Hero';
@@ -114,21 +116,60 @@ export default function Home() {
       name: 'Ananya Sharma',
       role: 'Interior Designer',
       quote: 'Crafting Corner delivered beyond expectations! The quality and craftsmanship of the Sheesham bed is unparalleled.',
-      avatar: '/assets/img/testimonials/av-1.jpeg'
+      avatar: '/assets/img/testimonials/ananya.jpg'
     },
     {
       name: 'Ravi Patel',
       role: 'Happy Customer',
       quote: 'The Walnut Armchair is a masterpiece. It transformed my living room into a cozy haven. Highly recommend!',
-      avatar: '/assets/img/testimonials/av-2.jpeg'
+      avatar: '/assets/img/testimonials/ravi.jpg'
     },
     {
       name: 'Priya Singh',
       role: 'Architect',
       quote: 'Their attention to detail is remarkable. Every piece feels hand-crafted and timeless.',
-      avatar: '/assets/img/testimonials/av-3.jpeg'
+      avatar: '/assets/img/testimonials/priya.jpg'
     }
   ];
+
+    // ──────────────────────────── Visitor lead‑capture modal ────────────────────────────
+    const [showModal, setShowModal] = useState(false);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+
+    // simple regex helpers (10‑digit Indian mobile & basic e‑mail)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[6-9]\d{9}$/;
+    const isValid = name.trim().length > 1 && emailRegex.test(email) && phoneRegex.test(phone);
+
+    useEffect(() => {
+      // show only once per **browser tab** (sessionStorage)
+      if (typeof window === 'undefined') return;
+      if (sessionStorage.getItem('leadModalShown') === 'true') return;
+
+      const timer = setTimeout(() => setShowModal(true), 5000);
+      return () => clearTimeout(timer);
+    }, []);
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!isValid) return;
+      // TODO: send to backend / 3rd‑party (placeholder)
+      console.table({ name, email, phone });
+      hideModal();
+      // reset
+      setName('');
+      setEmail('');
+      setPhone('');
+    };
+
+    const hideModal = () => {
+      setShowModal(false);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('leadModalShown', 'true');
+      }
+    };
 
   /* --------------------------------------------------------------------
         2.  CATEGORY CAROUSEL LOGIC
@@ -152,6 +193,68 @@ export default function Home() {
   -------------------------------------------------------------------- */
   return (
     <>
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+            className="relative w-[92%] max-w-md rounded-2xl bg-ivory/95 p-8 shadow-2xl ring-4 ring-white"
+          >
+            {/* close button */}
+            <button
+              onClick={hideModal}
+              aria-label="Close"
+              className="absolute right-4 top-4 text-white hover:text-white/80"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <h3 className="mb-2 text-center font-display text-xl font-semibold text-white">
+              Stay in the Loop
+            </h3>
+            <p className="mb-6 text-center text-sm text-white/80">
+              Get exclusive offers & design tips delivered to your inbox.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Mobile Number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
+                required
+              />
+
+              <button
+                type="submit"
+                disabled={!isValid}
+                className="w-full rounded-md bg-white py-2 font-medium text-walnut ring-1 ring-walnut transition disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                Notify Me
+              </button>
+            </form>
+          </motion.div>
+        </div>
+      )}
       {/* ───────────────────────── Hero ───────────────────────── */}
       <Hero />
 
