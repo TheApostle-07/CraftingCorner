@@ -58,7 +58,7 @@ export default function Hero() {
           className="mb-4 flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24"
         >
           <Image
-            src="/assets/img/logo-mark.svg"
+            src="/assets/img/Furniture.png"
             alt="Crafting Corner logo"
             fill
             priority
