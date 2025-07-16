@@ -1,10 +1,6 @@
 /* -------------------------------------------------------------
    Ultra-polished hero section for Crafting Corner
-   – fully responsive  (min-height 100 svh on mobile, 100 vh on ≥ sm)
-   – parallax bg (disabled if user prefers-reduced-motion)
-   – framer-motion entrances with graceful fallback
 --------------------------------------------------------------*/
-
 'use client';
 
 import {
@@ -17,12 +13,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Hero() {
-  /* 1 ▸ Parallax offset (15 % at 600 px scroll) – opt-out if user prefers no motion */
+  /* ── Parallax offset (disabled if prefers-reduced-motion) ── */
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 600], ['0%', '15%']);
 
-  /* 2 ▸ Helper: only return motion props when animations are allowed */
+  /* Helper for conditional motion */
   const m = (from: any, to: any, delay = 0) =>
     reduceMotion
       ? {}
@@ -32,13 +28,12 @@ export default function Hero() {
           transition: { delay, duration: 0.9, ease: 'easeOut' },
         };
 
-  /* 3 ▸ Layout */
   return (
     <section
       id="hero"
       className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-black text-white sm:min-h-screen"
     >
-      {/* ── Background ─────────────────────────────────────────────── */}
+      {/* ── Background ── */}
       <motion.div
         aria-hidden
         style={reduceMotion ? undefined : { y: yBg }}
@@ -46,7 +41,7 @@ export default function Hero() {
       >
         <Image
           src="/assets/img/CC_Hero.png"
-          alt="Hand-crafted furniture showroom background"
+          alt=""
           fill
           priority
           sizes="100vw"
@@ -55,10 +50,25 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80" />
       </motion.div>
 
-      {/* ── Content ────────────────────────────────────────────────── */}
+      {/* ── Content ── */}
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-24 text-center lg:gap-8 lg:px-8">
+        {/* Logo ─────────────────────────────────────────────── */}
+        <motion.div
+          {...m({ opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1 }, 0.05)}
+          className="mb-4 flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24"
+        >
+          <Image
+            src="/assets/img/logo-mark.svg"
+            alt="Crafting Corner logo"
+            fill
+            priority
+            className="object-contain"
+          />
+        </motion.div>
+
+        {/* Headline */}
         <motion.h1
-          {...m({ opacity: 0, y: 50 }, { opacity: 1, y: 0 })}
+          {...m({ opacity: 0, y: 50 }, { opacity: 1, y: 0 }, 0.1)}
           className="font-display text-4xl leading-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
         >
           Timeless
@@ -68,13 +78,15 @@ export default function Hero() {
           <span className="text-brass">Furniture</span>
         </motion.h1>
 
+        {/* Sub-copy */}
         <motion.p
-          {...m({ opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.2)}
+          {...m({ opacity: 0, y: 40 }, { opacity: 1, y: 0 }, 0.25)}
           className="mx-auto max-w-xl text-base sm:text-lg md:text-xl"
         >
-          Made to transcend trends – built to last generations.
+          Made to transcend trends — built to last generations.
         </motion.p>
 
+        {/* CTA buttons */}
         <motion.div
           {...m({ opacity: 0, y: 30 }, { opacity: 1, y: 0 }, 0.4)}
           className="mx-auto flex max-w-fit flex-col items-center gap-4 sm:flex-row sm:gap-6"
@@ -106,9 +118,9 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* ── Scroll cue (hidden on very small / touch-heavy screens) ── */}
+      {/* Scroll cue */}
       <motion.div
-        {...m({ opacity: 0 }, { opacity: 0.8 }, 0.8)}
+        {...m({ opacity: 0 }, { opacity: 0.8 }, 0.9)}
         className="pointer-events-none absolute bottom-8 left-1/2 hidden -translate-x-1/2 sm:block"
       >
         <svg
