@@ -1,5 +1,7 @@
 /* -------------------------------------------------------------
    Ultra-polished hero section for Crafting Corner
+   – parallax bg (disabled if prefers-reduced-motion)
+   – Framer Motion entrances
 --------------------------------------------------------------*/
 'use client';
 
@@ -13,12 +15,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Hero() {
-  /* ── Parallax offset (disabled if prefers-reduced-motion) ── */
+  /* ── Parallax offset (15 % at 600 px scroll) ── */
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
   const yBg = useTransform(scrollY, [0, 600], ['0%', '15%']);
 
-  /* Helper for conditional motion */
+  /* Helper for reusable motion props */
   const m = (from: any, to: any, delay = 0) =>
     reduceMotion
       ? {}
@@ -33,7 +35,7 @@ export default function Hero() {
       id="hero"
       className="relative isolate flex min-h-[100svh] flex-col justify-center overflow-hidden bg-black text-white sm:min-h-screen"
     >
-      {/* ── Background ── */}
+      {/* ── Background image + tint ── */}
       <motion.div
         aria-hidden
         style={reduceMotion ? undefined : { y: yBg }}
@@ -52,13 +54,13 @@ export default function Hero() {
 
       {/* ── Content ── */}
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-24 text-center lg:gap-8 lg:px-8">
-        {/* Logo ─────────────────────────────────────────────── */}
+        {/* Logo */}
         <motion.div
           {...m({ opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1 }, 0.05)}
-          className="mb-4 flex h-20 w-20 items-center justify-center sm:h-24 sm:w-24"
+          className="relative mb-4 h-20 w-20 sm:h-24 sm:w-24"
         >
           <Image
-            src="/assets/img/Furniture.png"
+            src="/assets/img/Furniture.png" // update path if needed
             alt="Crafting Corner logo"
             fill
             priority
