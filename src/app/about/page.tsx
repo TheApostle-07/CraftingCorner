@@ -7,10 +7,11 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Leaf, Handshake, Infinity } from 'lucide-react';
 
-/**
- * About page (client component so we can animate with Framer Motion)
- */
+/* ──────────────────────────────────────────────────────────
+     About Page
+───────────────────────────────────────────────────────── */
 export default function About() {
   return (
     <>
@@ -21,7 +22,6 @@ export default function About() {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="relative isolate flex min-h-[50vh] items-center justify-center overflow-hidden rounded-b-3xl bg-walnut/5"
       >
-        {/* background image */}
         <Image
           src="/assets/img/about/aboutus_2.png"
           alt="Crafting Corner workshop"
@@ -29,9 +29,7 @@ export default function About() {
           priority
           className="object-cover object-center"
         />
-        {/* tint */}
         <div className="absolute inset-0 bg-black/60" />
-        {/* copy */}
         <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
           <h1 className="font-display text-5xl font-semibold text-white drop-shadow-lg">
             About&nbsp;Us
@@ -70,7 +68,7 @@ export default function About() {
           viewport={{ once: true }}
         >
           <h2 className="font-display text-3xl font-semibold text-walnut">
-            From the Founders’ Desk
+            From the&nbsp;Founders’ Desk
           </h2>
           <p>
             Our search for furniture that truly resonated with our vision of
@@ -79,13 +77,9 @@ export default function About() {
             individual style. This spark birthed Crafting Corner.
           </p>
           <p>
-            We are manufacturers and customizers of luxury bespoke furniture and
-            décor, blending materials and techniques sourced from Italy, China,
-            and Turkey with the skilled artistry found here in India. Imagine
-            hand-painted Turkish tiles adding character to a console, the
-            elegance of Italian marble shaping your dining table, or the
-            tranquility of Feng Shui informing a bamboo shelving unit — each
-            piece designed specifically for your space.
+            We manufacture and customise luxury bespoke furniture and décor,
+            blending materials and techniques sourced from Italy, China, and
+            Turkey with skilled Indian artistry.
           </p>
           <p>
             Whether it’s a specific size, fabric, or finish, we’re here to
@@ -93,12 +87,10 @@ export default function About() {
             craft not just furniture, but the backdrop to your stories.
           </p>
           <p className="font-semibold text-walnut">
-            Sushant &amp; Amish Garg<br />
-            Founders, Crafting Corner
+            — Sushant&nbsp;&amp;&nbsp;Amish Garg
           </p>
         </motion.div>
 
-        {/* Founder image */}
         <motion.div
           className="relative mt-10 h-72 w-full overflow-hidden rounded-2xl bg-ivory shadow-md lg:mt-0 lg:h-96 lg:w-1/2"
           initial={{ opacity: 0, x: 40 }}
@@ -131,14 +123,20 @@ export default function About() {
             {
               title: 'Sustainability',
               desc: 'We use FSC-certified timber and water-based finishes.',
+              Icon: Leaf,
+              color: 'text-emerald-600',
             },
             {
               title: 'Fair Wages',
               desc: 'Our artisans earn 20-30 % above industry standards.',
+              Icon: Handshake,
+              color: 'text-sky-600',
             },
             {
               title: 'Lifetime Service',
               desc: 'Repairs & re-polishing free for the first 5 years.',
+              Icon: Infinity,
+              color: 'text-amber-600',
             },
           ].map((v, i) => (
             <motion.li
@@ -148,9 +146,10 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
             >
-              <div className="rounded-2xl bg-ivory p-6 shadow-md transition hover:shadow-lg">
+              <div className="flex flex-col items-start gap-3 rounded-2xl bg-ivory p-6 shadow-md transition hover:shadow-lg">
+                <v.Icon className={`h-7 w-7 ${v.color}`} />
                 <h3 className="font-medium text-walnut">{v.title}</h3>
-                <p className="mt-2 text-sm text-charcoal/80">{v.desc}</p>
+                <p className="text-sm text-charcoal/80">{v.desc}</p>
               </div>
             </motion.li>
           ))}
@@ -167,15 +166,16 @@ export default function About() {
             Drop by for a cup of chai in Mohali and feel every texture for
             yourself.
           </p>
+
+          {/* Updated gradient-green button */}
           <Link
             href="/contact"
-            className="mt-8 inline-block rounded-full bg-ivory px-6 py-3 font-medium text-walnut transition hover:bg-ivory/90"
+            className="mt-8 inline-block rounded-full bg-gradient-to-r from-emerald-500 to-lime-500 px-8 py-3 font-medium text-white shadow-lg shadow-emerald-300/30 transition hover:brightness-110"
           >
             Book an Appointment
           </Link>
         </div>
 
-        {/* subtle background watermark */}
         <Image
           src="/assets/img/hero/showroom.webp"
           alt=""
