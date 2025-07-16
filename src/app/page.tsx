@@ -111,6 +111,18 @@ export default function Home() {
     }
   ];
 
+  /* ---------- Browse‑by‑Products tiles ---------- */
+  const browseProducts = [
+    { title: 'Dining Table Set', slug: 'dining-table-set', img: '/assets/img/products/browse_dining.png' },
+    { title: 'Sofa Set', slug: 'sofa-set', img: '/assets/img/products/browse_sofa.png' },
+    { title: 'Rugs', slug: 'rugs', img: '/assets/img/products/browse_rugs.png' },
+    { title: 'Centre Tables', slug: 'centre-tables', img: '/assets/img/products/browse_centre.png' },
+    { title: 'Console', slug: 'console', img: '/assets/img/products/browse_console.png' },
+    { title: 'Chairs', slug: 'chairs', img: '/assets/img/products/browse_chairs.png' },
+    { title: 'Beds', slug: 'beds', img: '/assets/img/products/browse_beds.png' },
+    { title: 'Coffee / Side Table', slug: 'coffee-side-table', img: '/assets/img/products/browse_coffee.png' },
+  ];
+
   const testimonials = [
     {
       name: 'Ananya Sharma',
@@ -325,6 +337,36 @@ export default function Home() {
               </motion.ul>
             </AnimatePresence>
           </div>
+        </div>
+      </section>
+
+      {/* ───────────────────── Browse‑by‑Products grid ─────────────── */}
+      <section id="browse-products" className="mx-auto mt-20 max-w-6xl px-8 lg:px-4">
+        <h2 className="mb-8 font-display text-2xl font-semibold text-walnut lg:mb-6">
+          Browse by Products
+        </h2>
+
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
+          {browseProducts.map((p) => (
+            <a
+              key={p.slug}
+              href={`/${p.slug}`}
+              className="group relative block overflow-hidden rounded-xl"
+            >
+              <img
+                src={p.img}
+                alt={p.title}
+                className="h-40 w-full object-cover transition duration-300 group-hover:scale-105"
+                loading="lazy"
+                width={400}
+                height={160}
+              />
+              <span className="absolute inset-0 bg-black/40 transition-opacity duration-300 group-hover:bg-black/50" />
+              <span className="absolute inset-0 flex items-center justify-center px-2 text-center font-display text-lg font-semibold text-white">
+                {p.title}
+              </span>
+            </a>
+          ))}
         </div>
       </section>
 
