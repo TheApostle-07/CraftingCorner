@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
    /src/app/about/page.tsx
-   Fully‑responsive, animated “About Us” page for Crafting Corner
+   Fully-responsive, animated “About Us” page for Crafting Corner
 --------------------------------------------------------------------------- */
 'use client';
 
@@ -12,9 +12,6 @@ import Link from 'next/link';
  * About page (client component so we can animate with Framer Motion)
  */
 export default function About() {
-  /* ──────────────────────────────────────────────────────────
-       Render
-  ────────────────────────────────────────────────────────── */
   return (
     <>
       {/* ——— Hero ——— */}
@@ -37,11 +34,10 @@ export default function About() {
         {/* copy */}
         <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
           <h1 className="font-display text-5xl font-semibold text-white drop-shadow-lg">
-            Our Story
+            About&nbsp;Us
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-lg text-white/90">
-            Hand‑crafted furniture born in small Indian workshops, made to last
-            generations.
+            Furniture that reflects your story.
           </p>
         </div>
       </motion.section>
@@ -49,8 +45,9 @@ export default function About() {
       {/* ——— Narrative ——— */}
       <section className="mx-auto my-20 max-w-4xl space-y-10 px-6 leading-relaxed text-charcoal/90">
         {[
-          'At Crafting Corner we believe the warmth of real wood, the honesty of cane‑weave and the touch of hand‑polish can never be replicated by mass production. Since 2015 we’ve been partnering with artisan carpenters across Rajasthan, Kerala and Uttar Pradesh to create furniture that blends time‑honoured techniques with contemporary silhouettes.',
-          'Every plank is sustainably sourced, kiln‑seasoned and joined with traditional mortise‑and‑tenon joints. Each finish is mixed in small batches using low‑VOC oils so that your home stays as healthy as it is beautiful.',
+          'At Crafting Corner, we create more than just furniture — we craft spaces that feel deeply personal, functional, and timeless. Based in Mohali, Punjab, we are a luxury furniture and décor studio known for bespoke pieces that blend global craftsmanship with Indian artistry.',
+          'Each design starts with a conversation and ends with a handcrafted piece made just for you. Whether you’re furnishing a cozy corner, styling your living room, or building your dream office, we’re here to help you bring your vision to life — thoughtfully and beautifully.',
+          'We work with materials sourced from Italy, China, and Turkey, and combine them with hand-finished work by Indian artisans. The result? Furniture that’s not just stylish, but meaningful.',
         ].map((paragraph, i) => (
           <motion.p
             key={i}
@@ -62,6 +59,59 @@ export default function About() {
             {paragraph}
           </motion.p>
         ))}
+      </section>
+
+      {/* ——— Founders ——— */}
+      <section className="mx-auto my-20 max-w-6xl px-6 lg:flex lg:items-center lg:gap-12">
+        <motion.div
+          className="flex-1 space-y-6"
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
+          <h2 className="font-display text-3xl font-semibold text-walnut">
+            From the Founders’ Desk
+          </h2>
+          <p>
+            Our search for furniture that truly resonated with our vision of
+            luxury led us to a realization: the market often presented either
+            mass-produced items or pieces that didn’t quite capture an
+            individual style. This spark birthed Crafting Corner.
+          </p>
+          <p>
+            We are manufacturers and customizers of luxury bespoke furniture and
+            décor, blending materials and techniques sourced from Italy, China,
+            and Turkey with the skilled artistry found here in India. Imagine
+            hand-painted Turkish tiles adding character to a console, the
+            elegance of Italian marble shaping your dining table, or the
+            tranquility of Feng Shui informing a bamboo shelving unit — each
+            piece designed specifically for your space.
+          </p>
+          <p>
+            Whether it’s a specific size, fabric, or finish, we’re here to
+            transform your ideas into tangible pieces. Thank you for letting us
+            craft not just furniture, but the backdrop to your stories.
+          </p>
+          <p className="font-semibold text-walnut">
+            Sushant &amp; Amish Garg<br />
+            Founders, Crafting Corner
+          </p>
+        </motion.div>
+
+        {/* Founder image */}
+        <motion.div
+          className="relative mt-10 h-72 w-full overflow-hidden rounded-2xl bg-ivory shadow-md lg:mt-0 lg:h-96 lg:w-1/2"
+          initial={{ opacity: 0, x: 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+        >
+          <Image
+            src="/assets/img/about/founders.jpg"
+            alt="Founders of Crafting Corner"
+            fill
+            className="object-cover object-center"
+          />
+        </motion.div>
       </section>
 
       {/* ——— Values ——— */}
@@ -80,15 +130,15 @@ export default function About() {
           {[
             {
               title: 'Sustainability',
-              desc: 'We use FSC‑certified timber and water‑based finishes.',
+              desc: 'We use FSC-certified timber and water-based finishes.',
             },
             {
               title: 'Fair Wages',
-              desc: 'Our artisans earn 20‑30 % above industry standards.',
+              desc: 'Our artisans earn 20-30 % above industry standards.',
             },
             {
               title: 'Lifetime Service',
-              desc: 'Repairs & re‑polishing free for the first 5 years.',
+              desc: 'Repairs & re-polishing free for the first 5 years.',
             },
           ].map((v, i) => (
             <motion.li
@@ -114,7 +164,7 @@ export default function About() {
             Visit Our Experience Studio
           </h2>
           <p className="mx-auto mt-4 max-w-md text-ivory/90">
-            Drop by for a cup of chai in Bengaluru and feel every texture for
+            Drop by for a cup of chai in Mohali and feel every texture for
             yourself.
           </p>
           <Link
