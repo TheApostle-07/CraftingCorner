@@ -1,10 +1,10 @@
 /* ----------------------------------------------------------------------------
    Header.tsx – Adaptive, accessible navigation bar for Crafting Corner
-   • Safe‑area support & backdrop‑saturate for iOS
-   • Shrinks on scroll, sticky with glass‑morphism
-   • Escape‑key & route‑change close the mobile drawer
-   • Fully responsive: desktop links, mobile slide‑in menu
-   • ARIA‑friendly (aria‑expanded, landmarks)
+   • Safe-area support & backdrop-saturate for iOS
+   • Shrinks on scroll, sticky with glass-morphism
+   • Escape-key & route-change close the mobile drawer
+   • Fully responsive: desktop links, mobile slide-in menu
+   • ARIA-friendly (aria-expanded, landmarks)
 -----------------------------------------------------------------------------*/
 'use client';
 
@@ -30,7 +30,7 @@ const NAV_LINKS = [
   { href: '/contact', label: 'Contact' },
 ];
 
-// Smooth‑scroll helper for internal #links
+// Smooth-scroll helper for internal #links
 function scrollToId(id: string) {
   const el = document.getElementById(id.replace('#', ''));
   if (el) {
@@ -85,17 +85,16 @@ export default function Header() {
             aria-label="Crafting Corner home"
             className="flex items-center gap-2"
           >
-            {/* SVG / PNG logo stored in /public/assets/logo.svg  */}
             <Image
               src="/assets/img/Furniture.png"
               alt="Crafting Corner logo"
               width={20}
               height={20}
               priority
-              className="h-10 w-auto"
+              className="h-10 w-auto md:h-12 transform scale-150 md:scale-[1.8]"
+              style={{ transformOrigin: 'left center' }}
             />
-            {/* Brand word‑mark – hidden on very small screens to save space */}
-            
+            {/* Word-mark (optional) */}
           </Link>
 
           {/* ——— Desktop nav ——— */}
@@ -121,15 +120,15 @@ export default function Header() {
           {/* ——— Actions ——— */}
           <div className="flex items-center gap-4">
             {/* Cart placeholder */}
-{/*             <motion.button
+            <motion.button
               whileHover={{ rotate: -10 }}
               className="hidden rounded-full p-2 text-walnut hover:bg-walnut/10 lg:inline-flex"
               aria-label="Cart"
             >
               <ShoppingCart className="h-5 w-5" />
-            </motion.button> */}
+            </motion.button>
 
-            {/* WhatsApp quick‑dial */}
+            {/* WhatsApp quick-dial */}
             <Link
               href="https://wa.me/919056888917"
               target="_blank"
@@ -140,7 +139,7 @@ export default function Header() {
               </span>
             </Link>
 
-            {/* Mobile – Hamburger */}
+            {/* Mobile – Hamburger */}
             <button
               aria-label="Open navigation"
               aria-expanded={mobileOpen}
@@ -169,7 +168,7 @@ export default function Header() {
               className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
             />
 
-            {/* ---- Slide‑in drawer --------------------------------------- */}
+            {/* ---- Slide-in drawer --------------------------------------- */}
             <motion.aside
               key="drawer"
               initial={{ x: '100%' }}
