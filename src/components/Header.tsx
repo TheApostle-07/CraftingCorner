@@ -120,13 +120,7 @@ export default function Header() {
           {/* ——— Actions ——— */}
           <div className="flex items-center gap-4">
             {/* Cart placeholder */}
-            <motion.button
-              whileHover={{ rotate: -10 }}
-              className="hidden rounded-full p-2 text-walnut hover:bg-walnut/10 lg:inline-flex"
-              aria-label="Cart"
-            >
-              <ShoppingCart className="h-5 w-5" />
-            </motion.button>
+           
 
             {/* WhatsApp quick-dial */}
             <Link
