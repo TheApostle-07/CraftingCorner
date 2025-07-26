@@ -1,0 +1,86 @@
+[
+  {
+    "title": "Apex Sit-Stand Desk",
+    "slug": "apex-sit-stand-desk",
+    "price": 38900,
+    "img": [
+      "/assets/img/products/apex-desk-1.png",
+      "/assets/img/products/apex-desk-2.png"
+    ],
+    "category": "office",
+    "description": "Electric height-adjustable desk with dual-motor lift and programmable memory presets.",
+    "tags": ["desk", "sit-stand", "height adjustable"]
+  },
+  {
+    "title": "ErgoFlex Mesh Task Chair",
+    "slug": "ergoflex-mesh-chair",
+    "price": 14990,
+    "img": "/assets/img/products/ergoflex-chair.png",
+    "category": "office",
+    "description": "Breathable mesh back, 3D arm-rests, and synchronous tilt for all-day ergonomic support.",
+    "tags": ["chair", "mesh", "ergonomic"]
+  },
+  {
+    "title": "Zenith Walnut Bookshelf",
+    "slug": "zenith-walnut-bookshelf",
+    "price": 21750,
+    "img": "/assets/img/products/zenith-bookshelf.png",
+    "category": "office",
+    "description": "Five-tier open bookshelf in rich American-walnut veneer with adjustable shelves.",
+    "tags": ["bookshelf", "walnut", "storage"]
+  },
+  {
+    "title": "Vault Steel Filing Cabinet",
+    "slug": "vault-filing-cabinet",
+    "price": 11999,
+    "img": "/assets/img/products/vault-filing.png",
+    "category": "office",
+    "description": "Powder-coated steel cabinet with smooth ball-bearing drawers and lockable top section.",
+    "tags": ["filing cabinet", "steel", "lockable"]
+  },
+  {
+    "title": "Focus LED Desk Lamp",
+    "slug": "focus-led-lamp",
+    "price": 3950,
+    "img": "/assets/img/products/focus-desk-lamp.png",
+    "category": "office",
+    "description": "Minimalist task lamp with 3-stage touch dimmer and adjustable arm; 50,000-hour LED.",
+    "tags": ["lamp", "LED", "dimmable"]
+  },
+  {
+    "title": "Elevate Monitor Stand",
+    "slug": "elevate-monitor-stand",
+    "price": 2250,
+    "img": "/assets/img/products/elevate-stand.png",
+    "category": "office",
+    "description": "Bamboo monitor riser with integrated phone slot and cable-management groove.",
+    "tags": ["monitor stand", "bamboo", "ergonomic"]
+  },
+  {
+    "title": "Stride Anti-Fatigue Mat",
+    "slug": "stride-anti-fatigue-mat",
+    "price": 3950,
+    "img": "/assets/img/products/stride-mat.png",
+    "category": "office",
+    "description": "High-density foam mat designed to relieve pressure during standing-desk sessions.",
+    "tags": ["mat", "anti fatigue", "standing desk"]
+  },
+  {
+    "title": "Orbit Cable Organizer",
+    "slug": "orbit-cable-organizer",
+    "price": 850,
+    "img": "/assets/img/products/orbit-organizer.png",
+    "category": "office",
+    "description": "Magnetic silicone cable holder—keeps up to 5 cords neatly docked on your workspace.",
+    "tags": ["cable management", "organizer", "magnetic"]
+  },
+  {
+    "title": "Clarity Acoustic Desk Divider",
+    "slug": "clarity-acoustic-divider",
+    "price": 6290,
+    "img": "/assets/img/products/clarity-divider.png",
+    "category": "office",
+    "description": "PET-felt privacy panel that dampens noise and mounts tool-free to most desk tops.",
+    "tags": ["divider", "acoustic panel", "privacy"]
+  }
+]

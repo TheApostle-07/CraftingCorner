@@ -1,0 +1,95 @@
+[
+  {
+    "title": "Bespoke Live-Edge Dining Table",
+    "slug": "bespoke-live-edge-table",
+    "price": 86500,
+    "img": [
+      "/assets/img/products/custom-liveedge-1.png",
+      "/assets/img/products/custom-liveedge-2.png"
+    ],
+    "category": "custom",
+    "description": "Made-to-order slab table in your choice of walnut, acacia, or teak—edge profile, finish, and dimensions fully customizable.",
+    "tags": ["custom", "dining table", "live edge"]
+  },
+  {
+    "title": "Personalized Name Toy Chest",
+    "slug": "personalized-toy-chest",
+    "price": 14250,
+    "img": "/assets/img/products/custom-toychest.png",
+    "category": "custom",
+    "description": "Solid-pine storage chest with laser-cut nameplate, safety hinges, and choice of pastel paint colors.",
+    "tags": ["toy chest", "personalized", "storage"]
+  },
+  {
+    "title": "Modular Wardrobe System",
+    "slug": "modular-wardrobe-system",
+    "price": 72900,
+    "img": [
+      "/assets/img/products/custom-wardrobe-1.png",
+      "/assets/img/products/custom-wardrobe-2.png"
+    ],
+    "category": "custom",
+    "description": "Configure doors, drawers, and internal shelves to your exact closet layout—available in 6 finishes.",
+    "tags": ["wardrobe", "modular", "custom sizing"]
+  },
+  {
+    "title": "Engraved Walnut Desk Organizer",
+    "slug": "engraved-desk-organizer",
+    "price": 2890,
+    "img": "/assets/img/products/custom-organizer.png",
+    "category": "custom",
+    "description": "Hand-oiled walnut caddy with personalized engraving for pens, phone, and sticky notes.",
+    "tags": ["desk", "organizer", "engraved"]
+  },
+  {
+    "title": "Custom Upholstered Bed Headboard",
+    "slug": "custom-upholstered-headboard",
+    "price": 22990,
+    "img": "/assets/img/products/custom-headboard.png",
+    "category": "custom",
+    "description": "Pick fabric, tufting style, and height for a headboard that fits any bed frame perfectly.",
+    "tags": ["headboard", "upholstered", "made to order"]
+  },
+  {
+    "title": "Tailor-Made Sectional Sofa",
+    "slug": "tailor-made-sectional-sofa",
+    "price": 104500,
+    "img": [
+      "/assets/img/products/custom-sectional-1.png",
+      "/assets/img/products/custom-sectional-2.png"
+    ],
+    "category": "custom",
+    "description": "Select length, arm style, fabric, and cushion density—ships in modular pieces for easy setup.",
+    "tags": ["sofa", "sectional", "custom fabric"]
+  },
+  {
+    "title": "Monogram Leather Office Chair",
+    "slug": "monogram-leather-chair",
+    "price": 21950,
+    "img": "/assets/img/products/custom-leather-chair.png",
+    "category": "custom",
+    "description": "Top-grain leather desk chair with embroidered initials on the headrest and adjustable lumbar support.",
+    "tags": ["office chair", "leather", "monogram"]
+  },
+  {
+    "title": "Convertible Loft Playhouse Bed",
+    "slug": "convertible-playhouse-bed",
+    "price": 52500,
+    "img": [
+      "/assets/img/products/custom-playhouse-1.png",
+      "/assets/img/products/custom-playhouse-2.png"
+    ],
+    "category": "custom",
+    "description": "Design your own color scheme and curtain set—loft converts to study nook as kids grow.",
+    "tags": ["kids", "loft bed", "playhouse"]
+  },
+  {
+    "title": "Signature Hand-Tufted Rug",
+    "slug": "signature-handtufted-rug",
+    "price": 31200,
+    "img": "/assets/img/products/custom-rug.png",
+    "category": "custom",
+    "description": "Submit artwork or choose from patterns—custom size, color palette, and pile height in 100 % New-Zealand wool.",
+    "tags": ["rug", "hand tufted", "custom design"]
+  }
+]

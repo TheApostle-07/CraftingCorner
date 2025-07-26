@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Coastal Teak Patio Set — 4-Piece",
+    "slug": "coastal-teak-patio-set",
+    "price": 54900,
+    "img": [
+      "/assets/img/products/coastal-patio-1.png",
+      "/assets/img/products/coastal-patio-2.png"
+    ],
+    "category": "outdoor",
+    "description": "Weather-resistant solid-teak seating group with water-repellent Sunbrella cushions (sofa, two armchairs, coffee table).",
+    "tags": ["patio set", "teak", "sunbrella"]
+  },
+  {
+    "title": "Breeze Wicker Lounge Chair",
+    "slug": "breeze-wicker-lounge",
+    "price": 12990,
+    "img": "/assets/img/products/breeze-lounge.png",
+    "category": "outdoor",
+    "description": "Hand-woven PE-rattan lounge chair with powder-coated steel frame and removable headrest pillow.",
+    "tags": ["lounge chair", "wicker", "rattan"]
+  },
+  {
+    "title": "SunGuard Cantilever Umbrella 11′",
+    "slug": "sunguard-cantilever-umbrella",
+    "price": 18950,
+    "img": "/assets/img/products/sunguard-umbrella.png",
+    "category": "outdoor",
+    "description": "UV-block canopy with 360° swivel, tilt function, and weighted cross-base; includes protective cover.",
+    "tags": ["umbrella", "shade", "cantilever"]
+  },
+  {
+    "title": "HearthStone Propane Fire Pit",
+    "slug": "hearthstone-propane-firepit",
+    "price": 28700,
+    "img": [
+      "/assets/img/products/hearthstone-firepit-1.png",
+      "/assets/img/products/hearthstone-firepit-2.png"
+    ],
+    "category": "outdoor",
+    "description": "Porcelain-topped fire table with adjustable flame, lava rocks, and hidden 20-lb tank storage.",
+    "tags": ["fire pit", "propane", "outdoor heating"]
+  },
+  {
+    "title": "Sierra Garden Bench — 5′",
+    "slug": "sierra-garden-bench",
+    "price": 11490,
+    "img": "/assets/img/products/sierra-bench.png",
+    "category": "outdoor",
+    "description": "Classic slat-back eucalyptus bench treated with a weatherproof oil finish; seats two comfortably.",
+    "tags": ["bench", "eucalyptus", "garden seating"]
+  },
+  {
+    "title": "Verde Raised Planter Box",
+    "slug": "verde-raised-planter",
+    "price": 6450,
+    "img": "/assets/img/products/verde-planter.png",
+    "category": "outdoor",
+    "description": "Galvanized steel planter with drainage holes and shelf—perfect height for herbs or veggies.",
+    "tags": ["planter", "raised bed", "gardening"]
+  },
+  {
+    "title": "Terra Cotta Chiminea",
+    "slug": "terra-cotta-chiminea",
+    "price": 8990,
+    "img": "/assets/img/products/terra-chiminea.png",
+    "category": "outdoor",
+    "description": "Hand-fired clay chiminea with iron stand—radiates gentle 360° warmth for patio evenings.",
+    "tags": ["chiminea", "clay", "fire"]
+  },
+  {
+    "title": "Alpine Hammock & Steel Stand",
+    "slug": "alpine-hammock-stand",
+    "price": 11950,
+    "img": "/assets/img/products/alpine-hammock.png",
+    "category": "outdoor",
+    "description": "Quilted double hammock in fade-proof fabric, paired with a quick-assembly powder-coated stand.",
+    "tags": ["hammock", "stand", "double"]
+  },
+  {
+    "title": "Seagrass Outdoor Area Rug 6×9",
+    "slug": "seagrass-outdoor-rug",
+    "price": 7750,
+    "img": "/assets/img/products/seagrass-rug.png",
+    "category": "outdoor",
+    "description": "Durable hand-braided seagrass rug with latex backing—adds texture and comfort to patios.",
+    "tags": ["rug", "seagrass", "patio decor"]
+  }
+]

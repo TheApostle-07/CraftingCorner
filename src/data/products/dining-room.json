@@ -1,0 +1,89 @@
+[
+  {
+    "title": "Solaire 6-Seater Dining Table",
+    "slug": "solaire-dining-table",
+    "price": 42800,
+    "img": [
+      "/assets/img/products/solaire-table-1.png",
+      "/assets/img/products/solaire-table-2.png"
+    ],
+    "category": "dining-room",
+    "description": "Rectangular solid-oak dining table with chamfered edges and a satin-matte finish.",
+    "tags": ["dining table", "oak", "6 seater"]
+  },
+  {
+    "title": "Solaire Upholstered Chair",
+    "slug": "solaire-upholstered-chair",
+    "price": 6850,
+    "img": "/assets/img/products/solaire-chair.png",
+    "category": "dining-room",
+    "description": "Matching oak dining chair with charcoal-linen cushion and ergonomic curved backrest.",
+    "tags": ["chair", "upholstered", "oak"]
+  },
+  {
+    "title": "Rajasthan Sheesham Bench",
+    "slug": "rajasthan-sheesham-bench",
+    "price": 11200,
+    "img": "/assets/img/products/rajasthan-bench.png",
+    "category": "dining-room",
+    "description": "Sheesham-wood bench featuring hand-turned legs—pairs perfectly with rustic tables.",
+    "tags": ["bench", "sheesham", "hand turned"]
+  },
+  {
+    "title": "Cascade Marble Lazy Susan",
+    "slug": "cascade-marble-lazy-susan",
+    "price": 3490,
+    "img": "/assets/img/products/cascade-lazy-susan.png",
+    "category": "dining-room",
+    "description": "12-inch white-marble Lazy Susan with brushed-brass base for effortless sharing.",
+    "tags": ["serveware", "marble", "lazy susan"]
+  },
+  {
+    "title": "Noor Cane-Front Sideboard",
+    "slug": "noor-cane-sideboard",
+    "price": 36800,
+    "img": [
+      "/assets/img/products/noor-sideboard-1.png",
+      "/assets/img/products/noor-sideboard-2.png"
+    ],
+    "category": "dining-room",
+    "description": "Four-door mango-wood buffet with natural-cane panels and adjustable interior shelving.",
+    "tags": ["sideboard", "cane", "storage"]
+  },
+  {
+    "title": "Eclipse Pendant Light",
+    "slug": "eclipse-pendant-light",
+    "price": 7450,
+    "img": "/assets/img/products/eclipse-pendant.png",
+    "category": "dining-room",
+    "description": "Dual-disc brass and frosted-glass pendant, height-adjustable for perfect table illumination.",
+    "tags": ["lighting", "pendant", "brass"]
+  },
+  {
+    "title": "Terracotta Dinnerware — 16-Pc Set",
+    "slug": "terracotta-dinnerware-set",
+    "price": 5999,
+    "img": "/assets/img/products/terracotta-dinnerware.png",
+    "category": "dining-room",
+    "description": "Hand-glazed terracotta plates and bowls; oven, microwave, and dishwasher safe.",
+    "tags": ["dinnerware", "terracotta", "hand glazed"]
+  },
+  {
+    "title": "Aeris Wine Rack — 18 Bottles",
+    "slug": "aeris-wine-rack",
+    "price": 9850,
+    "img": "/assets/img/products/aeris-wine-rack.png",
+    "category": "dining-room",
+    "description": "Freestanding walnut wine rack with steel cradles—stores bottles at ideal 8° tilt.",
+    "tags": ["wine rack", "walnut", "storage"]
+  },
+  {
+    "title": "Haven Linen Table Runner",
+    "slug": "haven-linen-runner",
+    "price": 1850,
+    "img": "/assets/img/products/haven-runner.png",
+    "category": "dining-room",
+    "description": "Pure-linen runner in sandstone hue with double-stitched edges; machine washable.",
+    "tags": ["table runner", "linen", "textile"]
+  }
+]
