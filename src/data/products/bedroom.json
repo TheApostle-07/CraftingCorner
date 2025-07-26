@@ -1,0 +1,92 @@
+[
+  {
+    "title": "Sirohi King Platform Bed",
+    "slug": "sirohi-king-platform-bed",
+    "price": 64900,
+    "img": [
+      "/assets/img/products/sirohi-bed-1.png",
+      "/assets/img/products/sirohi-bed-2.png"
+    ],
+    "category": "bedroom",
+    "description": "Low-profile solid-teak platform bed with tapered legs and ventilated slat base—no box-spring needed.",
+    "tags": ["bed", "king size", "platform"]
+  },
+  {
+    "title": "Solace Memory-Foam Mattress",
+    "slug": "solace-memory-foam-mattress",
+    "price": 28500,
+    "img": "/assets/img/products/solace-mattress.png",
+    "category": "bedroom",
+    "description": "8-inch dual-density memory-foam mattress with cool-gel layer for pressure-relieving support.",
+    "tags": ["mattress", "memory foam", "cool gel"]
+  },
+  {
+    "title": "Jodhpur Mango-Wood Nightstand",
+    "slug": "jodhpur-mango-nightstand",
+    "price": 7950,
+    "img": "/assets/img/products/jodhpur-nightstand.png",
+    "category": "bedroom",
+    "description": "Hand-finished bedside table with carved drawer front, brass knob, and concealed cord cut-out.",
+    "tags": ["nightstand", "storage", "mango wood"]
+  },
+  {
+    "title": "CloudSoft Upholstered Headboard",
+    "slug": "cloudsoft-upholstered-headboard",
+    "price": 14499,
+    "img": [
+      "/assets/img/products/cloudsoft-headboard-1.png",
+      "/assets/img/products/cloudsoft-headboard-2.png"
+    ],
+    "category": "bedroom",
+    "description": "Diamond-tufted headboard wrapped in stain-resistant ivory linen; height-adjustable mounts included.",
+    "tags": ["headboard", "upholstered", "linen"]
+  },
+  {
+    "title": "Aura Walnut Dresser — 6 Drawers",
+    "slug": "aura-walnut-dresser",
+    "price": 34200,
+    "img": "/assets/img/products/aura-dresser.png",
+    "category": "bedroom",
+    "description": "Spacious six-drawer dresser in American-walnut veneer with soft-close glides and brass pulls.",
+    "tags": ["dresser", "walnut", "soft close"]
+  },
+  {
+    "title": "Zen Mirror Vanity Set",
+    "slug": "zen-mirror-vanity",
+    "price": 26800,
+    "img": [
+      "/assets/img/products/zen-vanity-1.png",
+      "/assets/img/products/zen-vanity-2.png"
+    ],
+    "category": "bedroom",
+    "description": "Compact vanity table with built-in LED ring mirror, hidden jewelry drawer, and cushioned stool.",
+    "tags": ["vanity", "mirror", "LED"]
+  },
+  {
+    "title": "Serene Cotton Quilt — Queen",
+    "slug": "serene-cotton-quilt",
+    "price": 4950,
+    "img": "/assets/img/products/serene-quilt.png",
+    "category": "bedroom",
+    "description": "Lightweight 100 % cotton quilt with hand-stitched kantha detailing; reversible ivory & sage.",
+    "tags": ["quilt", "cotton", "kantha"]
+  },
+  {
+    "title": "Himalaya Wool Area Rug 5×8",
+    "slug": "himalaya-wool-rug",
+    "price": 16999,
+    "img": "/assets/img/products/himalaya-rug.png",
+    "category": "bedroom",
+    "description": "Hand-tufted New-Zealand wool rug in muted geometric pattern; ethically produced in Bhadohi.",
+    "tags": ["rug", "wool", "hand tufted"]
+  },
+  {
+    "title": "CalmGlow Bedside Lamp",
+    "slug": "calmglow-bedside-lamp",
+    "price": 4250,
+    "img": "/assets/img/products/calmglow-lamp.png",
+    "category": "bedroom",
+    "description": "Frosted-glass dome lamp with touch dimmer and warm-white LED bulb included.",
+    "tags": ["lamp", "LED", "dimmer"]
+  }
+]
