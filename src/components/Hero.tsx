@@ -10,6 +10,15 @@
    import { motion, useScroll, useTransform } from 'framer-motion';
    import Image from 'next/image';
    import Link from 'next/link';
+
+   import { Great_Vibes } from 'next/font/google';
+
+   // Elegant script for headline
+   const greatVibes = Great_Vibes({
+     subsets: ['latin'],
+     weight: '400',
+     display: 'swap',
+   });
    
    export default function Hero() {
      /* Parallax bg offset */
@@ -21,7 +30,7 @@
          {/* Background */}
          <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10">
            <Image
-             src="/assets/img/CC_Hero.png"
+             src="/assets/img/CC_Hero_1.png"
              alt=""
              fill
              priority
@@ -41,7 +50,7 @@
            className="relative mb-4 h-48 w-48 sm:h-64 sm:w-64"
          >
             <Image
-              src="/assets/img/Furniture.png"
+              src="/assets/logo.png"
               alt="Crafting Corner logo"
               width={512}
               height={512}
@@ -53,12 +62,12 @@
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="mb-1 sm:mb-3 lg:mb-4 italic text-4xl leading-snug sm:text-6xl md:text-7xl lg:text-8xl"
-            style={{ fontFamily: '"Great Vibes", cursive' }}
+            className={`${greatVibes.className} mb-1 sm:mb-3 lg:mb-4 italic text-4xl leading-snug sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-md`}
           >
-             Timeless&nbsp;<span className="whitespace-nowrap">Hand-Crafted</span>
-             <br className="hidden sm:inline" />
-             <span className="text-brass">Furniture</span>
+            {/* Responsive headline – each word stacks on xs and flows inline ≥sm */}
+            <span className="block sm:inline">Timeless&nbsp;</span>
+            <span className="block sm:inline whitespace-nowrap">Hand‑Crafted&nbsp;</span>
+            <span className="block sm:inline text-brass">Furniture</span>
            </motion.h1>
    
            <motion.p
@@ -72,6 +81,7 @@
          </div>
    
          {/* Scroll cue */}
+         
          <motion.button
            type="button"
            onClick={() =>
