@@ -29,3 +29,25 @@ export async function loadProducts(catSlug: string): Promise<Product[]> {
 //   import { loadProducts, allCategories } from '@/lib/loaders.server';
 export { allCategories, getCategory };
 export type { Product };
+/**
+ * Read the master list at `/src/data/products.json`
+ * (used by /products page and as a fallback for standalone slugs).
+ */
+export async function loadAllProducts(): Promise<Product[]> {
+  const { readFile } = await import('node:fs/promises');
+  const { join }     = await import('node:path');
+
+  const file = join(process.cwd(), 'src', 'data', 'products.json');
+
+  try {
+    const json = await readFile(file, 'utf8');
+    if (json.trim() === '') {
+      console.warn(`[loadAllProducts] "${file}" is empty – returning []`);
+      return [];
+    }
+    return JSON.parse(json) as Product[];
+  } catch (err) {
+    console.error(`[loadAllProducts] Failed to load or parse "${file}":`, err);
+    return [];
+  }
+}
