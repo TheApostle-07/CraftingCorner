@@ -5,6 +5,9 @@ import { loadAllProducts } from '../../lib/loaders.server';
 import productTypes from '../../data/productTypes.json';
 import type { Product } from '../../lib/types';
 
+
+
+export const dynamic = 'force-dynamic'; 
 // ───────────────────────────────────────────────────────────────────────────────
 // Page component
 // ───────────────────────────────────────────────────────────────────────────────
