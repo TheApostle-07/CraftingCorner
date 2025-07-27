@@ -1,37 +1,44 @@
-// src/lib/loaders.server.ts
-// ————————————————————
-// Fully static data helpers — compatible with output: "export"
-// ————————————————————
-//  ▸ No more fs / path → everything is pulled from the JSON bundle
-//  ▸ Works both in local dev (Node server) and on Vercel’s CDN build
-// ————————————————————
+/* --------------------------------------------------------------------------
+   src/lib/loaders.server.ts           (server-only)
+   Helpers for reading product JSON directly from disk
+--------------------------------------------------------------------------- */
+import type { Product } from './types';
+import { getCategory, allCategories } from './categories';
 
-import type { Product } from ‘./types’;
-import { allCategories, getCategory } from ‘./categories’;
-
-// Master list – tree-shaken into the JS bundle at build-time
-import master from ‘../data/products.json’;
-
-const allProducts = master as Product[];
-
-/* ————————————————————————
-Return all products (used by /products page & slug fallback)
-———————————————————————— */
-export async function loadAllProducts(): Promise<Product[]> {
-return allProducts;
-}
-
-/* ————————————————————————
-Filter by category slug (re-used by category/[slug] routes)
-———————————————————————— */
+/** Read `/src/data/products/<category>.json` */
 export async function loadProducts(catSlug: string): Promise<Product[]> {
-const slug = catSlug.toLowerCase();
-return allProducts.filter(
-(p) => p.category?.toLowerCase() === slug,
-);
+  const { readFile } = await import('node:fs/promises');
+  const { join }     = await import('node:path');
+
+  const file = join(process.cwd(), 'src', 'data', 'products', `${catSlug}.json`);
+
+  try {
+    const json = await readFile(file, 'utf8');
+    if (json.trim() === '') return [];
+    return JSON.parse(json) as Product[];
+  } catch (err) {
+    console.error(`[loadProducts] Failed to read "${file}":`, err);
+    return [];
+  }
 }
 
-// Re-export helpers so callers can do
-//   import { loadProducts, allCategories } from ‘@/lib/loaders.server’;
+/** Read the master list at `/src/data/products.json` */
+export async function loadAllProducts(): Promise<Product[]> {
+  const { readFile } = await import('node:fs/promises');
+  const { join }     = await import('node:path');
+
+  const file = join(process.cwd(), 'src', 'data', 'products.json');
+
+  try {
+    const json = await readFile(file, 'utf8');
+    if (json.trim() === '') return [];
+    return JSON.parse(json) as Product[];
+  } catch (err) {
+    console.error(`[loadAllProducts] Failed to read "${file}":`, err);
+    return [];
+  }
+}
+
+// Re-export helpers/types
 export { allCategories, getCategory };
 export type { Product };
