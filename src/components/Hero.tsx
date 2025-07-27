@@ -50,7 +50,7 @@
            className="relative mb-4 h-48 w-48 sm:h-64 sm:w-64"
          >
             <Image
-              src="/assets/img/Furniture.png"
+              src="/assets/img/logo.png"
               alt="Crafting Corner logo"
               width={512}
               height={512}
