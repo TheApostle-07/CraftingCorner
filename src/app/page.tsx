@@ -16,6 +16,8 @@ import Hero from '../components/Hero';
 import ProductCard from '../components/ProductCard';
 import { allCategories } from '../lib/categories'; // client-safe helper
 import type { Category } from '../lib/types';
+import { sendLead } from '../lib/sendLead';
+
 
 // ─────────────────────────────────────────────────────────────
 // Config
@@ -164,17 +166,22 @@ export default function Home() {
       return () => clearTimeout(timer);
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (!isValid) return;
-      // TODO: send to backend / 3rd‑party (placeholder)
-      console.table({ name, email, phone });
-      hideModal();
-      // reset
-      setName('');
-      setEmail('');
-      setPhone('');
-    };
+     const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  if (!isValid) return;
+
+  // Send details to the Apps Script endpoint
+  const ok = await sendLead(name.trim(), email.trim(), phone.trim());
+
+  if (ok) {
+    hideModal();        // close modal once saved
+    setName('');        // clear inputs
+    setEmail('');
+    setPhone('');
+  } else {
+    alert('Sorry, something went wrong. Please try again.');
+  }
+};
 
     const hideModal = () => {
       setShowModal(false);
