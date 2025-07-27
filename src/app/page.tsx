@@ -348,7 +348,7 @@ export default function Home() {
       </section>
 
       {/* ───────────────────── Browse‑by‑Products grid ─────────────── */}
-      <section id="browse-products" className="mx-auto mt-20 max-w-6xl px-8 lg:px-4">
+       <section id="browse-products" className="mx-auto mt-20 max-w-6xl px-8 lg:px-4">
         <h2 className="mb-8 font-display text-2xl font-semibold text-walnut lg:mb-6">
           Browse by Products
         </h2>
@@ -357,7 +357,7 @@ export default function Home() {
           {browseProducts.map((p) => (
             <a
               key={p.slug}
-              href={`/${p.slug}`}
+              href={`/products?type=${p.slug}`}
               className="group relative block overflow-hidden rounded-xl"
             >
               <img
