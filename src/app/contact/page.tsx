@@ -13,6 +13,7 @@ import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Home, Phone, Mail, MapPin, Send as SendIcon } from 'lucide-react';
+import { sendLead } from '../../lib/sendLead';
 
 /* ─────────────────────────────── Animations ──────────────────────────────── */
 const fadeUp: Variants = {
@@ -35,10 +36,20 @@ function useContactForm() {
   const update = (k: keyof State, v: string) => set((s) => ({ ...s, [k]: v }));
   const reset  = () => set({ ...initialState, sent: false });
 
-  const submit = () => {
-    // 👉 Hook up to real backend / Netlify handler here
-    set((s) => ({ ...s, sent: true }));
-  };
+  const submit = async () => {
+  const ok = await sendLead(
+    state.name.trim(),
+    state.email.trim(),
+    state.phone.trim(),
+    state.message.trim()        // pass the message too
+  );
+
+  if (ok) {
+    set(s => ({ ...s, sent: true }));
+  } else {
+    alert('Sorry, something went wrong. Please try again.');
+  }
+};
 
   return { state, update, submit, reset };
 }
@@ -75,22 +86,16 @@ export default function ContactPage() {
       {/* ── Info cards + map ─────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6">
         <div className="grid gap-8 lg:grid-cols-3">
-          <InfoCard
-  title="Showroom & Studio"
-  icon={<MapPin className="h-6 w-6" />}
-  i={0}
->
-  <address className="not-italic leading-relaxed">
-    Crafting Corner<br />
-    Plot&nbsp;No.&nbsp;522, Sector&nbsp;82&nbsp;JLPL<br />
-    Mohali, Punjab&nbsp;160082
-  </address>
-</InfoCard>
+          <InfoCard title="Showroom & Studio" icon={<MapPin className="h-6 w-6" />} i={0}>
+            <address className="not-italic leading-relaxed">
+              Crafting Corner<br />12 Shanti Path, C-Scheme<br />Jaipur 302005 (RJ)
+            </address>
+          </InfoCard>
 
           <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
-            <Link href="tel:+919056888917" className="block hover:underline">+91 90568 88917</Link>
+            <Link href="tel:+919876543210" className="block hover:underline">+91 98765 43210</Link>
             <Link
-              href="https://wa.me/919056888917?text=Hi%20Crafting%20Corner!"
+              href="https://wa.me/919876543210?text=Hi%20Crafting%20Corner!"
               target="_blank" rel="noopener noreferrer"
               className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-1.5 text-ivory shadow hover:bg-green-600"
             >
@@ -99,8 +104,8 @@ export default function ContactPage() {
           </InfoCard>
 
           <InfoCard title="Email Us" icon={<Mail className="h-6 w-6" />} i={2}>
-            <Link href="mailto:craftingcorner.cc17@gmail.com" className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut">
-              craftingcorner.cc17@gmail.com
+            <Link href="mailto:hello@craftingcorner.in" className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut">
+              hello@craftingcorner.in
             </Link>
           </InfoCard>
         </div>
@@ -113,15 +118,15 @@ export default function ContactPage() {
         >
           {/* Responsive 16:9 container */}
           <div className="relative w-full pt-[56.25%]">
-  <iframe
-    title="Crafting Corner – Mohali showroom"
-    src="https://www.google.com/maps?q=Plot+no.+522,+Sector+82+JLPL+Mohali,+Punjab+160082&output=embed"
-    loading="lazy"
-    referrerPolicy="no-referrer-when-downgrade"
-    allowFullScreen
-    className="absolute inset-0 h-full w-full border-0"
-  />
-</div>
+            <iframe
+              title="Crafting Corner – Jaipur showroom"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.4109259507414!2d75.78786711504462!3d26.893891883138058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4b7a083e5d07%3A0x6b7e2306df0dfaf8!2s12%20Shanti%20Path%2C%20C‑Scheme%2C%20Jaipur%2C%20Rajasthan%20302005!5e0!3m2!1sen!2sin!4v1710709530000!5m2!1sen!2sin"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              className="absolute inset-0 h-full w-full border-0"
+            />
+          </div>
         </motion.div>
       </section>
 
@@ -135,7 +140,7 @@ export default function ContactPage() {
           <motion.div variants={fadeUp} className="rounded-lg bg-green-100 p-6 text-center text-green-800 shadow">
             <p className="text-lg font-medium">Thank you!</p>
             <p className="mt-1 text-sm">Your message is in our workshop – we’ll reply shortly. 😊</p>
-            <button onClick={reset} className="mt-4 rounded bg-[#7b593b] px-5 py-2 text-ivory shadow hover:bg-[#684a32]">
+            <button onClick={reset} className="mt-4 rounded bg-[#fff] px-5 py-2 text-ivory shadow hover:bg-[#B2BEB5]">
               Send another message
             </button>
           </motion.div>
