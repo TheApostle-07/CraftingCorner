@@ -5,8 +5,8 @@
       "slug": "solaire-dining-table",
       "price": 42800,
       "img": [
-        "/assets/img/solaire-table-1.png",
-        "/assets/img/solaire-table-2.png"
+        "/assets/img/solaire-table-1.png"
+        
       ]
     },
     {
@@ -32,8 +32,7 @@
       "slug": "noor-cane-sideboard",
       "price": 36800,
       "img": [
-        "/assets/img/noor-sideboard-1.png",
-        "/assets/img/noor-sideboard-2.png"
+        "/assets/img/noor-sideboard-1.png"
       ]
     },
     {
@@ -41,24 +40,6 @@
       "slug": "eclipse-pendant-light",
       "price": 7450,
       "img": "/assets/img/eclipse-pendant.png"
-    },
-    {
-      "title": "Terracotta Dinnerware — 16-Pc Set",
-      "slug": "terracotta-dinnerware-set",
-      "price": 5999,
-      "img": "/assets/img/terracotta-dinnerware.png"
-    },
-    {
-      "title": "Aeris Wine Rack — 18 Bottles",
-      "slug": "aeris-wine-rack",
-      "price": 9850,
-      "img": "/assets/img/aeris-wine-rack.png"
-    },
-    {
-      "title": "Haven Linen Table Runner",
-      "slug": "haven-linen-runner",
-      "price": 1850,
-      "img": "/assets/img/haven-runner.png"
     }
   ],
 
@@ -77,8 +58,7 @@
       "slug": "tailor-made-sectional-sofa",
       "price": 104500,
       "img": [
-        "/assets/img/custom-sectional-1.png",
-        "/assets/img/custom-sectional-2.png"
+        "/assets/img/custom-sectional-1.png"
       ]
     },
     {
@@ -86,8 +66,7 @@
       "slug": "calm-recliner-lounger",
       "price": 26990,
       "img": [
-        "/assets/img/calm-recliner-1.png",
-        "/assets/img/calm-recliner-2.png"
+        "/assets/img/calm-recliner-1.png"
       ]
     },
     {
@@ -107,18 +86,6 @@
       "slug": "artisan-acacia-magazine-rack",
       "price": 2990,
       "img": "/assets/img/artisan-rack.png"
-    },
-    {
-      "title": "Aura Walnut Dresser — 6 Drawers",
-      "slug": "aura-walnut-dresser",
-      "price": 34200,
-      "img": "/assets/img/aura-dresser.png"
-    },
-    {
-      "title": "Udaipur Mirror with Jali Work",
-      "slug": "udaipur-mirror",
-      "price": 9950,
-      "img": "/assets/img/udaipur-mirror.png"
     }
   ],
 
@@ -158,24 +125,6 @@
       "slug": "sahara-jute-rug",
       "price": 11500,
       "img": "/assets/img/sahara-jute-rug.png"
-    },
-    {
-      "title": "Aurora Shag Round Rug 4′",
-      "slug": "aurora-shag-round-rug",
-      "price": 6450,
-      "img": "/assets/img/aurora-shag-rug.png"
-    },
-    {
-      "title": "Ombré Cotton Dhurrie 5×7",
-      "slug": "ombre-cotton-dhurrie",
-      "price": 8200,
-      "img": "/assets/img/ombre-dhurrie.png"
-    },
-    {
-      "title": "Blossom Silk Runner 2′×8′",
-      "slug": "blossom-silk-runner",
-      "price": 9990,
-      "img": "/assets/img/blossom-runner.png"
     }
   ],
 
@@ -218,24 +167,6 @@
       "slug": "aura-marble-end-table",
       "price": 15500,
       "img": "/assets/img/aura-end-table.png"
-    },
-    {
-      "title": "Orbit Glass Coffee Table",
-      "slug": "orbit-glass-coffee-table",
-      "price": 18800,
-      "img": "/assets/img/orbit-glass-coffee.png"
-    },
-    {
-      "title": "Nova Metal Nesting Stools",
-      "slug": "nova-metal-nesting-stools",
-      "price": 7890,
-      "img": "/assets/img/nova-nesting-stools.png"
-    },
-    {
-      "title": "Eclipse Oak End Table",
-      "slug": "eclipse-oak-end-table",
-      "price": 13200,
-      "img": "/assets/img/eclipse-oak-end-table.png"
     }
   ],
 
@@ -251,8 +182,7 @@
       "slug": "riviera-bar-cabinet",
       "price": 41900,
       "img": [
-        "/assets/img/riviera-bar-1.png",
-        "/assets/img/riviera-bar-2.png"
+        "/assets/img/riviera-bar-1.png"
       ]
     },
     {
@@ -278,24 +208,6 @@
       "slug": "clarity-acoustic-divider",
       "price": 6290,
       "img": "/assets/img/clarity-divider.png"
-    },
-    {
-      "title": "Verde Raised Planter Box",
-      "slug": "verde-raised-planter",
-      "price": 6450,
-      "img": "/assets/img/verde-planter.png"
-    },
-    {
-      "title": "Orbit Cable Organizer",
-      "slug": "orbit-cable-organizer",
-      "price": 850,
-      "img": "/assets/img/orbit-organizer.png"
-    },
-    {
-      "title": "Helix Glass Console Table",
-      "slug": "helix-glass-console",
-      "price": 17200,
-      "img": "/assets/img/helix-glass-console.png"
     }
   ],
 
@@ -335,24 +247,6 @@
       "slug": "flutter-ceiling-fan",
       "price": 6590,
       "img": "/assets/img/flutter-fan.png"
-    },
-    {
-      "title": "Aura Cane Dining Chair",
-      "slug": "aura-cane-chair",
-      "price": 7450,
-      "img": "/assets/img/aura-cane-chair.png"
-    },
-    {
-      "title": "Nimbus Visitor Chair",
-      "slug": "nimbus-visitor-chair",
-      "price": 6350,
-      "img": "/assets/img/nimbus-visitor-chair.png"
-    },
-    {
-      "title": "Sierra Teak Rocking Chair",
-      "slug": "sierra-teak-rocker",
-      "price": 15800,
-      "img": "/assets/img/sierra-teak-rocker.png"
     }
   ],
 
@@ -362,8 +256,7 @@
       "slug": "sirohi-king-platform-bed",
       "price": 64900,
       "img": [
-        "/assets/img/sirohi-bed-1.png",
-        "/assets/img/sirohi-bed-2.png"
+        "/assets/img/sirohi-bed-1.png"
       ]
     },
     {
@@ -407,27 +300,6 @@
       "slug": "custom-upholstered-headboard",
       "price": 22990,
       "img": "/assets/img/custom-headboard.png"
-    },
-    {
-      "title": "Modular Wardrobe System",
-      "slug": "modular-wardrobe-system",
-      "price": 72900,
-      "img": [
-        "/assets/img/custom-wardrobe-1.png",
-        "/assets/img/custom-wardrobe-2.png"
-      ]
-    },
-    {
-      "title": "Aurora Bedside Table Lamp",
-      "slug": "aurora-bedside-lamp",
-      "price": 4250,
-      "img": "/assets/img/aurora-bedside-lamp.png"
-    },
-    {
-      "title": "Nimbus Under‑bed Storage Drawer",
-      "slug": "nimbus-underbed-drawer",
-      "price": 3850,
-      "img": "/assets/img/nimbus-underbed-drawer.png"
     }
   ],
 
@@ -467,24 +339,6 @@
       "slug": "orbit-metal-end-table",
       "price": 8500,
       "img": "/assets/img/orbit-metal-end-table.png"
-    },
-    {
-      "title": "Crystal Nesting Stools",
-      "slug": "crystal-nesting-stools",
-      "price": 11900,
-      "img": "/assets/img/crystal-stools.png"
-    },
-    {
-      "title": "Verve Concrete Coffee Table",
-      "slug": "verve-concrete-coffee",
-      "price": 17800,
-      "img": "/assets/img/verve-concrete-coffee.png"
-    },
-    {
-      "title": "Luna Round Marble Side Table",
-      "slug": "luna-round-marble-table",
-      "price": 13200,
-      "img": "/assets/img/luna-marble-side.png"
     }
   ]
 }
