@@ -57,8 +57,8 @@ export default async function ProductsPage({
 
       // If fewer than 9, top‑up with other unique products (same category first)
       let topUp: Product[] = [];
-      if (matched.length < 9) {
-        const need = 9 - matched.length;
+      if (matched.length < 6) {
+        const need = 6 - matched.length;
 
         // 1. Prefer same category as the first matched item (if any)
         const primaryCat = matched[0]?.category?.toLowerCase();
