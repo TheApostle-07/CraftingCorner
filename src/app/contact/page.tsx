@@ -83,53 +83,64 @@ export default function ContactPage() {
         </div>
       </motion.section>
 
-      {/* ── Info cards + map ─────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6">
-        <div className="grid gap-8 lg:grid-cols-3">
-          <InfoCard title="Showroom & Studio" icon={<MapPin className="h-6 w-6" />} i={0}>
-            <address className="not-italic leading-relaxed">
-              Crafting Corner<br />12 Shanti Path, C-Scheme<br />Jaipur 302005 (RJ)
-            </address>
-          </InfoCard>
+       {/* ── Info cards + map ─────────────────────────────────────── */}
+<section className="mx-auto max-w-6xl px-6">
+  <div className="grid gap-8 lg:grid-cols-3">
+    {/* Address */}
+    <InfoCard title="Showroom & Studio" icon={<MapPin className="h-6 w-6" />} i={0}>
+      <address className="not-italic leading-relaxed">
+        Crafting Corner<br />
+        Plot 522, Sector 82 (JLPL Industrial Area)<br />
+        Mohali 140306 (PB)
+      </address>
+    </InfoCard>
 
-          <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
-            <Link href="tel:+919876543210" className="block hover:underline">+91 98765 43210</Link>
-            <Link
-              href="https://wa.me/919876543210?text=Hi%20Crafting%20Corner!"
-              target="_blank" rel="noopener noreferrer"
-              className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-1.5 text-ivory shadow hover:bg-green-600"
-            >
-              <WhatsAppIcon className="h-4 w-4"/> Enquire
-            </Link>
-          </InfoCard>
+    {/* Phone / WhatsApp */}
+    <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
+      <Link href="tel:+919056888917" className="block hover:underline">
+        +91 90568 88917
+      </Link>
 
-          <InfoCard title="Email Us" icon={<Mail className="h-6 w-6" />} i={2}>
-            <Link href="mailto:hello@craftingcorner.in" className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut">
-              hello@craftingcorner.in
-            </Link>
-          </InfoCard>
-        </div>
+      <Link
+        href="https://wa.me/919056888917?text=Hi%20Crafting%20Corner!"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-1.5 text-ivory shadow hover:bg-green-600"
+      >
+        <WhatsAppIcon className="h-4 w-4" /> Enquire
+      </Link>
+    </InfoCard>
 
-        {/* Map */}
-        <motion.div
-          variants={fadeUp}
-          custom={3}
-          className="mt-14 overflow-hidden rounded-2xl shadow-lg"
-        >
-          {/* Responsive 16:9 container */}
-          <div className="relative w-full pt-[56.25%]">
-            <iframe
-              title="Crafting Corner – Jaipur showroom"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.4109259507414!2d75.78786711504462!3d26.893891883138058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396c4b7a083e5d07%3A0x6b7e2306df0dfaf8!2s12%20Shanti%20Path%2C%20C‑Scheme%2C%20Jaipur%2C%20Rajasthan%20302005!5e0!3m2!1sen!2sin!4v1710709530000!5m2!1sen!2sin"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-              className="absolute inset-0 h-full w-full border-0"
-            />
-          </div>
-        </motion.div>
-      </section>
+    {/* Email */}
+    <InfoCard title="Email Us" icon={<Mail className="h-6 w-6" />} i={2}>
+      <Link
+        href="mailto:hello@craftingcorner.in"
+        className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut"
+      >
+        support@craftingcorner.in
+      </Link>
+    </InfoCard>
+  </div>
 
+  {/* Map */}
+  <motion.div
+    variants={fadeUp}
+    custom={3}
+    className="mt-14 overflow-hidden rounded-2xl shadow-lg"
+  >
+    {/* Responsive 16:9 container */}
+    <div className="relative w-full pt-[56.25%]">
+      <iframe
+        title="Crafting Corner – Mohali showroom"
+        src="https://maps.google.com/maps?q=30.654184,76.733288&z=15&output=embed"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        allowFullScreen
+        className="absolute inset-0 h-full w-full border-0"
+      />
+    </div>
+  </motion.div>
+</section>
       {/* ── Contact form ─────────────────────────────────────────── */}
       <section className="mx-auto max-w-4xl px-6">
         <motion.h2 variants={fadeUp} className="mb-10 font-display text-3xl font-semibold text-[#7b593b]">
