@@ -4,60 +4,20 @@
     "slug": "starship-bunk-bed",
     "price": 36500,
     "img": [
-      "/assets/img/products/starship-bunk-1.png",
-      "/assets/img/products/starship-bunk-2.png"
+      "/assets/img/products/starship-bunk-1.png"
     ],
     "category": "kids-room",
     "description": "Space-themed twin-over-twin bunk with built-in ladder, guard rails, and glow-in-the-dark decals.",
     "tags": ["bunk bed", "space theme", "twin"]
   },
   {
-    "title": "Rainbow Study Desk",
-    "slug": "rainbow-study-desk",
-    "price": 10500,
-    "img": "/assets/img/products/rainbow-desk.png",
+    "title": "Aurora Shag Rug",
+    "slug": "aurora-shag-rug",
+    "price": 5890,
+    "img": "/assets/img/products/aurora-shag-rug.png",
     "category": "kids-room",
-    "description": "Compact MDF desk with pastel drawers, cable grommet, and adjustable height legs.",
-    "tags": ["desk", "adjustable", "pastel"]
-  },
-  {
-    "title": "Cloud Puff Bean Bag",
-    "slug": "cloud-puff-bean-bag",
-    "price": 3250,
-    "img": "/assets/img/products/cloud-beanbag.png",
-    "category": "kids-room",
-    "description": "Ultra-soft microfiber bean bag filled with recycled beads; removable, washable cover.",
-    "tags": ["bean bag", "washable", "soft seating"]
-  },
-  {
-    "title": "Adventure Toy Storage Unit",
-    "slug": "adventure-toy-storage",
-    "price": 8750,
-    "img": [
-      "/assets/img/products/adventure-storage-1.png",
-      "/assets/img/products/adventure-storage-2.png"
-    ],
-    "category": "kids-room",
-    "description": "Multi-bin organizer with removable fabric totes and a roll-out bottom drawer.",
-    "tags": ["storage", "toy bins", "organizer"]
-  },
-  {
-    "title": "Galaxy Night Light Projector",
-    "slug": "galaxy-night-light",
-    "price": 1990,
-    "img": "/assets/img/products/galaxy-nightlight.png",
-    "category": "kids-room",
-    "description": "USB-powered LED projector casting rotating stars and planets with three brightness levels.",
-    "tags": ["night light", "projector", "LED"]
-  },
-  {
-    "title": "Safari Canvas Wall Art — Set of 3",
-    "slug": "safari-canvas-art",
-    "price": 3250,
-    "img": "/assets/img/products/safari-canvas.png",
-    "category": "kids-room",
-    "description": "Frameless canvas prints featuring friendly safari animals—ready to hang.",
-    "tags": ["wall art", "canvas", "safari"]
+    "description": "Ultra-soft high-pile rug in pastel gradient hues—perfect for cozying up reading nooks or play zones.",
+    "tags": ["rug", "shag", "pastel"]
   },
   {
     "title": "Puzzle Play Mat (6×6 ft)",
@@ -69,21 +29,30 @@
     "tags": ["play mat", "foam tiles", "educational"]
   },
   {
-    "title": "Rocket Laundry Hamper",
-    "slug": "rocket-laundry-hamper",
-    "price": 1490,
-    "img": "/assets/img/products/rocket-hamper.png",
-    "category": "kids-room",
-    "description": "Pop-up hamper in fun rocket shape with mesh sides and easy-carry handles.",
-    "tags": ["laundry hamper", "rocket", "pop up"]
+    "title": "Himalaya Wool Area Rug 5×8",
+    "slug": "himalaya-wool-rug",
+    "price": 16999,
+    "img": "/assets/img/products/himalaya-rug.png",
+    "category": "bedroom",
+    "description": "Hand-tufted New-Zealand wool rug in muted geometric pattern; ethically produced in Bhadohi.",
+    "tags": ["rug", "wool", "hand tufted"]
   },
   {
-    "title": "Flutter Ceiling Fan 36″",
-    "slug": "flutter-ceiling-fan",
-    "price": 6590,
-    "img": "/assets/img/products/flutter-fan.png",
+    "title": "Sangam Nesting Toy Table Set",
+    "slug": "sangam-nesting-toy-table",
+    "price": 9850,
+    "img": "/assets/img/products/sangam-nesting.png",
     "category": "kids-room",
-    "description": "Whisper-quiet ceiling fan with rainbow blades and integrated LED light kit.",
-    "tags": ["ceiling fan", "rainbow", "LED"]
+    "description": "Two-in-one table and stool set crafted for creative play—space-saving and colorful.",
+    "tags": ["nesting table", "play table", "kids"]
+  },
+  {
+    "title": "CloudGlow Bedside Lamp",
+    "slug": "cloudglow-bedside-lamp",
+    "price": 2990,
+    "img": "/assets/img/products/calmglow-lamp.png",
+    "category": "kids-room",
+    "description": "Gentle bedside lamp with frosted dome and soft LED lighting to soothe bedtime fears.",
+    "tags": ["lamp", "LED", "bedside"]
   }
 ]
