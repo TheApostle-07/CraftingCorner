@@ -30,15 +30,6 @@
     "tags": ["bench", "sheesham", "hand turned"]
   },
   {
-    "title": "Cascade Marble Lazy Susan",
-    "slug": "cascade-marble-lazy-susan",
-    "price": 3490,
-    "img": "/assets/img/products/cascade-lazy-susan.png",
-    "category": "dining-room",
-    "description": "12-inch white-marble Lazy Susan with brushed-brass base for effortless sharing.",
-    "tags": ["serveware", "marble", "lazy susan"]
-  },
-  {
     "title": "Noor Cane-Front Sideboard",
     "slug": "noor-cane-sideboard",
     "price": 36800,
@@ -67,23 +58,5 @@
     "category": "dining-room",
     "description": "Hand-glazed terracotta plates and bowls; oven, microwave, and dishwasher safe.",
     "tags": ["dinnerware", "terracotta", "hand glazed"]
-  },
-  {
-    "title": "Aeris Wine Rack — 18 Bottles",
-    "slug": "aeris-wine-rack",
-    "price": 9850,
-    "img": "/assets/img/products/aeris-wine-rack.png",
-    "category": "dining-room",
-    "description": "Freestanding walnut wine rack with steel cradles—stores bottles at ideal 8° tilt.",
-    "tags": ["wine rack", "walnut", "storage"]
-  },
-  {
-    "title": "Haven Linen Table Runner",
-    "slug": "haven-linen-runner",
-    "price": 1850,
-    "img": "/assets/img/products/haven-runner.png",
-    "category": "dining-room",
-    "description": "Pure-linen runner in sandstone hue with double-stitched edges; machine washable.",
-    "tags": ["table runner", "linen", "textile"]
   }
 ]
