@@ -1,17 +1,5 @@
 [
   {
-    "title": "Heritage Kitchen Island Cart",
-    "slug": "heritage-kitchen-island",
-    "price": 28900,
-    "img": [
-      "/assets/img/products/heritage-island-1.png",
-      "/assets/img/products/heritage-island-2.png"
-    ],
-    "category": "kitchen-bar",
-    "description": "Solid-rubberwood island on locking casters with butcher-block top, spice rack, and slide-out trays.",
-    "tags": ["kitchen island", "butcher block", "rolling cart"]
-  },
-  {
     "title": "Cascade Adjustable Bar Stool",
     "slug": "cascade-bar-stool",
     "price": 4950,
@@ -30,18 +18,6 @@
     "tags": ["mortar", "pestle", "granite"]
   },
   {
-    "title": "Aurora 12-Piece Cocktail Set",
-    "slug": "aurora-cocktail-set",
-    "price": 3590,
-    "img": [
-      "/assets/img/products/aurora-cocktail-1.png",
-      "/assets/img/products/aurora-cocktail-2.png"
-    ],
-    "category": "kitchen-bar",
-    "description": "Stainless-steel shaker, muddler, jigger, strainer, and garnish tongs—plus 6 reusable picks.",
-    "tags": ["cocktail", "barware", "shaker set"]
-  },
-  {
     "title": "Artisan Acacia Cutting Board",
     "slug": "artisan-acacia-board",
     "price": 2250,
@@ -51,22 +27,10 @@
     "tags": ["cutting board", "acacia", "end grain"]
   },
   {
-    "title": "Crystal Tulip Wine Glasses — Set of 6",
-    "slug": "crystal-tulip-wine-glasses",
-    "price": 4490,
-    "img": "/assets/img/products/crystal-tulip-glass.png",
-    "category": "kitchen-bar",
-    "description": "Lead-free crystal glasses with thin laser-cut rim to enhance bouquet and flavor.",
-    "tags": ["wine glasses", "crystal", "glassware"]
-  },
-  {
     "title": "Riviera Bar Cabinet",
     "slug": "riviera-bar-cabinet",
     "price": 41900,
-    "img": [
-      "/assets/img/products/riviera-bar-1.png",
-      "/assets/img/products/riviera-bar-2.png"
-    ],
+    "img": ["/assets/img/products/riviera-bar-1.png"],
     "category": "kitchen-bar",
     "description": "Walnut veneer cabinet with pull-out shelves, built-in stemware rack, and mirrored backsplash.",
     "tags": ["bar cabinet", "storage", "walnut"]
