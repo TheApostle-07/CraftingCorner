@@ -42,33 +42,6 @@
     "tags": ["chair", "velvet", "lounge"]
   },
   {
-    "title": "Udaipur Mirror with Jali Work",
-    "slug": "udaipur-mirror",
-    "price": 9950,
-    "img": "/assets/img/products/top_2.png",
-    "category": "living-room",
-    "description": "Hand‑carved mango‑wood frame featuring traditional Rajasthani jali lattice. Wall‑mount hardware included.",
-    "tags": ["mirror", "jali work", "hand carved"]
-  },
-  {
-    "title": "Sutra Rattan Side Table",
-    "slug": "sutra-rattan-side-table",
-    "price": 8450,
-    "img": "/assets/img/products/sutra-side-table.png",
-    "category": "living-room",
-    "description": "Lightweight yet sturdy cane‑weave side table with concealed storage for remotes and magazines.",
-    "tags": ["side table", "rattan", "storage"]
-  },
-  {
-    "title": "Mysuru Rosewood Bookshelf",
-    "slug": "mysuru-rosewood-bookshelf",
-    "price": 21800,
-    "img": "/assets/img/products/mysuru-bookshelf.png",
-    "category": "living-room",
-    "description": "Five‑tier open bookshelf crafted from sustainably‑sourced Indian rosewood with adjustable shelves.",
-    "tags": ["bookshelf", "rosewood", "storage"]
-  },
-  {
     "title": "Calm Recliner Lounger",
     "slug": "calm-recliner-lounger",
     "price": 26990,
@@ -81,12 +54,12 @@
     "tags": ["recliner", "lounger", "comfort"]
   },
   {
-    "title": "Sangam Nesting Tables — Set of 2",
-    "slug": "sangam-nesting-tables",
-    "price": 11999,
-    "img": "/assets/img/products/sangam-nesting.png",
+    "title": "Sutra Rattan Side Table",
+    "slug": "sutra-rattan-side-table",
+    "price": 8450,
+    "img": "/assets/img/products/sutra-side-table.png",
     "category": "living-room",
-    "description": "Space‑saving nesting tables in contrasting acacia and white‑oak veneer. Use together or apart.",
-    "tags": ["nesting tables", "space saving", "acacia"]
+    "description": "Lightweight yet sturdy cane‑weave side table with concealed storage for remotes and magazines.",
+    "tags": ["side table", "rattan", "storage"]
   }
 ]
