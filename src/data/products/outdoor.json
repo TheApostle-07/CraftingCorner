@@ -1,54 +1,21 @@
 [
   {
-    "title": "Coastal Teak Patio Set — 4-Piece",
-    "slug": "coastal-teak-patio-set",
-    "price": 54900,
-    "img": [
-      "/assets/img/products/coastal-patio-1.png",
-      "/assets/img/products/coastal-patio-2.png"
-    ],
-    "category": "outdoor",
-    "description": "Weather-resistant solid-teak seating group with water-repellent Sunbrella cushions (sofa, two armchairs, coffee table).",
-    "tags": ["patio set", "teak", "sunbrella"]
-  },
-  {
     "title": "Breeze Wicker Lounge Chair",
     "slug": "breeze-wicker-lounge",
     "price": 12990,
     "img": "/assets/img/products/breeze-lounge.png",
     "category": "outdoor",
-    "description": "Hand-woven PE-rattan lounge chair with powder-coated steel frame and removable headrest pillow.",
+    "description": "Hand‑woven PE‑rattan lounge chair with powder‑coated steel frame and removable headrest pillow.",
     "tags": ["lounge chair", "wicker", "rattan"]
   },
   {
-    "title": "SunGuard Cantilever Umbrella 11′",
-    "slug": "sunguard-cantilever-umbrella",
-    "price": 18950,
-    "img": "/assets/img/products/sunguard-umbrella.png",
+    "title": "Rajasthan Teak Garden Bench",
+    "slug": "rajasthan-teak-garden-bench",
+    "price": 11200,
+    "img": "/assets/img/products/rajasthan-bench.png",
     "category": "outdoor",
-    "description": "UV-block canopy with 360° swivel, tilt function, and weighted cross-base; includes protective cover.",
-    "tags": ["umbrella", "shade", "cantilever"]
-  },
-  {
-    "title": "HearthStone Propane Fire Pit",
-    "slug": "hearthstone-propane-firepit",
-    "price": 28700,
-    "img": [
-      "/assets/img/products/hearthstone-firepit-1.png",
-      "/assets/img/products/hearthstone-firepit-2.png"
-    ],
-    "category": "outdoor",
-    "description": "Porcelain-topped fire table with adjustable flame, lava rocks, and hidden 20-lb tank storage.",
-    "tags": ["fire pit", "propane", "outdoor heating"]
-  },
-  {
-    "title": "Sierra Garden Bench — 5′",
-    "slug": "sierra-garden-bench",
-    "price": 11490,
-    "img": "/assets/img/products/sierra-bench.png",
-    "category": "outdoor",
-    "description": "Classic slat-back eucalyptus bench treated with a weatherproof oil finish; seats two comfortably.",
-    "tags": ["bench", "eucalyptus", "garden seating"]
+    "description": "Durable solid‑teak bench with hand‑turned legs and a natural oil finish—perfect for patios or garden paths.",
+    "tags": ["bench", "teak", "outdoor seating"]
   },
   {
     "title": "Verde Raised Planter Box",
@@ -56,26 +23,8 @@
     "price": 6450,
     "img": "/assets/img/products/verde-planter.png",
     "category": "outdoor",
-    "description": "Galvanized steel planter with drainage holes and shelf—perfect height for herbs or veggies.",
+    "description": "Galvanized steel planter with drainage holes and shelf—ideal height for balcony herbs or veggies.",
     "tags": ["planter", "raised bed", "gardening"]
-  },
-  {
-    "title": "Terra Cotta Chiminea",
-    "slug": "terra-cotta-chiminea",
-    "price": 8990,
-    "img": "/assets/img/products/terra-chiminea.png",
-    "category": "outdoor",
-    "description": "Hand-fired clay chiminea with iron stand—radiates gentle 360° warmth for patio evenings.",
-    "tags": ["chiminea", "clay", "fire"]
-  },
-  {
-    "title": "Alpine Hammock & Steel Stand",
-    "slug": "alpine-hammock-stand",
-    "price": 11950,
-    "img": "/assets/img/products/alpine-hammock.png",
-    "category": "outdoor",
-    "description": "Quilted double hammock in fade-proof fabric, paired with a quick-assembly powder-coated stand.",
-    "tags": ["hammock", "stand", "double"]
   },
   {
     "title": "Seagrass Outdoor Area Rug 6×9",
@@ -83,7 +32,25 @@
     "price": 7750,
     "img": "/assets/img/products/seagrass-rug.png",
     "category": "outdoor",
-    "description": "Durable hand-braided seagrass rug with latex backing—adds texture and comfort to patios.",
+    "description": "Hand‑braided seagrass rug with latex backing that adds natural texture and comfort to alfresco spaces.",
     "tags": ["rug", "seagrass", "patio decor"]
+  },
+  {
+    "title": "Sahara Jute Patio Rug 5×8",
+    "slug": "sahara-jute-patio-rug",
+    "price": 6990,
+    "img": "/assets/img/products/sahara-jute-rug.png",
+    "category": "outdoor",
+    "description": "Tightly woven natural‑jute rug tough enough for verandas yet soft under bare feet.",
+    "tags": ["rug", "jute", "outdoor"]
+  },
+  {
+    "title": "Nova Nesting Patio Stools — Set of 3",
+    "slug": "nova-nesting-patio-stools",
+    "price": 9850,
+    "img": "/assets/img/products/nova-nesting-stools.png",
+    "category": "outdoor",
+    "description": "Space‑saving trio of powder‑coated steel stools that stack neatly when not in use.",
+    "tags": ["stools", "nesting", "outdoor furniture"]
   }
 ]
