@@ -12,15 +12,6 @@
     "tags": ["custom", "dining table", "live edge"]
   },
   {
-    "title": "Personalized Name Toy Chest",
-    "slug": "personalized-toy-chest",
-    "price": 14250,
-    "img": "/assets/img/products/custom-toychest.png",
-    "category": "custom",
-    "description": "Solid-pine storage chest with laser-cut nameplate, safety hinges, and choice of pastel paint colors.",
-    "tags": ["toy chest", "personalized", "storage"]
-  },
-  {
     "title": "Modular Wardrobe System",
     "slug": "modular-wardrobe-system",
     "price": 72900,
@@ -31,15 +22,6 @@
     "category": "custom",
     "description": "Configure doors, drawers, and internal shelves to your exact closet layout—available in 6 finishes.",
     "tags": ["wardrobe", "modular", "custom sizing"]
-  },
-  {
-    "title": "Engraved Walnut Desk Organizer",
-    "slug": "engraved-desk-organizer",
-    "price": 2890,
-    "img": "/assets/img/products/custom-organizer.png",
-    "category": "custom",
-    "description": "Hand-oiled walnut caddy with personalized engraving for pens, phone, and sticky notes.",
-    "tags": ["desk", "organizer", "engraved"]
   },
   {
     "title": "Custom Upholstered Bed Headboard",
@@ -63,15 +45,6 @@
     "tags": ["sofa", "sectional", "custom fabric"]
   },
   {
-    "title": "Monogram Leather Office Chair",
-    "slug": "monogram-leather-chair",
-    "price": 21950,
-    "img": "/assets/img/products/custom-leather-chair.png",
-    "category": "custom",
-    "description": "Top-grain leather desk chair with embroidered initials on the headrest and adjustable lumbar support.",
-    "tags": ["office chair", "leather", "monogram"]
-  },
-  {
     "title": "Convertible Loft Playhouse Bed",
     "slug": "convertible-playhouse-bed",
     "price": 52500,
@@ -89,7 +62,7 @@
     "price": 31200,
     "img": "/assets/img/products/custom-rug.png",
     "category": "custom",
-    "description": "Submit artwork or choose from patterns—custom size, color palette, and pile height in 100 % New-Zealand wool.",
+    "description": "Submit artwork or choose from patterns—custom size, color palette, and pile height in 100% New Zealand wool.",
     "tags": ["rug", "hand tufted", "custom design"]
   }
 ]
