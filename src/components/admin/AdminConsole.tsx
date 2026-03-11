@@ -362,9 +362,11 @@ export default function AdminConsole({
                   Storage mode
                 </p>
                 <p className="mt-3 text-lg font-semibold text-white">
-                  {siteStorageInfo.mode === 'github'
-                    ? 'GitHub-backed'
-                    : 'Local file'}
+                  {siteStorageInfo.mode === 'database'
+                    ? 'PostgreSQL'
+                    : siteStorageInfo.mode === 'github'
+                      ? 'GitHub-backed'
+                      : 'Local file'}
                 </p>
                 <p className="mt-3 text-sm leading-7 text-slate-300">
                   {siteStorageInfo.note}

@@ -3,7 +3,9 @@ import path from 'node:path';
 
 import { unstable_noStore as noStore } from 'next/cache';
 
-export type SiteStorageMode = 'github' | 'local-file';
+import { getDatabaseClient, hasDatabaseConnection } from '@/lib/database';
+
+export type SiteStorageMode = 'database' | 'github' | 'local-file';
 
 type RawSiteStatus = {
   active?: boolean;
@@ -17,6 +19,12 @@ type GitHubConfig = {
   branch: string;
   path: string;
   token?: string;
+};
+
+type DatabaseRow = {
+  active: boolean;
+  updated_at: string | Date;
+  updated_by: string;
 };
 
 export type SiteStatus = {
@@ -36,6 +44,25 @@ const LOCAL_STATUS_FILE = path.join(process.cwd(), 'site-status.json');
 
 function isHostedDeployment() {
   return process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
+}
+
+async function ensureDatabaseStatusTable() {
+  const sql = getDatabaseClient();
+
+  await sql`
+    create table if not exists site_status_controls (
+      key text primary key,
+      active boolean not null default true,
+      updated_at timestamptz not null default now(),
+      updated_by text not null default 'system'
+    )
+  `;
+
+  await sql`
+    insert into site_status_controls (key, active, updated_at, updated_by)
+    values ('public_site_status', true, now(), 'system')
+    on conflict (key) do nothing
+  `;
 }
 
 function normalizeStatus(
@@ -112,6 +139,55 @@ async function writeLocalStatus(status: Omit<SiteStatus, 'storageMode'>) {
   await writeFile(LOCAL_STATUS_FILE, `${JSON.stringify(record, null, 2)}\n`);
 
   return normalizeStatus(record, 'local-file');
+}
+
+async function readDatabaseStatus() {
+  await ensureDatabaseStatusTable();
+
+  const sql = getDatabaseClient();
+  const rows = await sql<DatabaseRow[]>`
+    select active, updated_at, updated_by
+    from site_status_controls
+    where key = 'public_site_status'
+    limit 1
+  `;
+
+  const row = rows[0];
+
+  if (!row) {
+    throw new Error('Unable to read site status row from the database.');
+  }
+
+  return normalizeStatus(
+    {
+      active: row.active,
+      updatedAt: new Date(row.updated_at).toISOString(),
+      updatedBy: row.updated_by,
+    },
+    'database',
+  );
+}
+
+async function writeDatabaseStatus(status: Omit<SiteStatus, 'storageMode'>) {
+  await ensureDatabaseStatusTable();
+
+  const sql = getDatabaseClient();
+
+  await sql`
+    insert into site_status_controls (key, active, updated_at, updated_by)
+    values (
+      'public_site_status',
+      ${status.active},
+      ${status.updatedAt}::timestamptz,
+      ${status.updatedBy}
+    )
+    on conflict (key) do update set
+      active = excluded.active,
+      updated_at = excluded.updated_at,
+      updated_by = excluded.updated_by
+  `;
+
+  return normalizeStatus(status, 'database');
 }
 
 async function readGitHubStatus(config: GitHubConfig) {
@@ -201,6 +277,14 @@ async function writeGitHubStatus(
 }
 
 export function getSiteStorageInfo(): SiteStorageInfo {
+  if (hasDatabaseConnection()) {
+    return {
+      mode: 'database',
+      canUpdate: true,
+      note: 'Persists the public site status in PostgreSQL via DATABASE_URL.',
+    };
+  }
+
   const gitHubConfig = getGitHubConfig();
 
   if (gitHubConfig) {
@@ -231,6 +315,10 @@ export function getSiteStorageInfo(): SiteStorageInfo {
 export async function getSiteStatus() {
   noStore();
 
+  if (hasDatabaseConnection()) {
+    return readDatabaseStatus();
+  }
+
   const gitHubConfig = getGitHubConfig();
 
   if (gitHubConfig) {
@@ -254,6 +342,10 @@ export async function updateSiteStatus(active: boolean, updatedBy = 'admin') {
     updatedAt: new Date().toISOString(),
     updatedBy,
   };
+
+  if (hasDatabaseConnection()) {
+    return writeDatabaseStatus(nextStatus);
+  }
 
   const gitHubConfig = getGitHubConfig();
 
