@@ -207,6 +207,7 @@ export default function AdminConsole({
                     value={username}
                     onChange={(event) => setUsername(event.target.value)}
                     disabled={isBusy || !adminConfigured}
+                    autoComplete="username"
                     className="w-full rounded-2xl border border-white/10 bg-[#091423] px-4 py-3 text-white outline-none transition focus:border-[#4f8fbf] focus:ring-2 focus:ring-[#4f8fbf]/30 disabled:cursor-not-allowed disabled:opacity-60"
                   />
                 </label>
@@ -220,6 +221,7 @@ export default function AdminConsole({
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     disabled={isBusy || !adminConfigured}
+                    autoComplete="current-password"
                     className="w-full rounded-2xl border border-white/10 bg-[#091423] px-4 py-3 text-white outline-none transition focus:border-[#4f8fbf] focus:ring-2 focus:ring-[#4f8fbf]/30 disabled:cursor-not-allowed disabled:opacity-60"
                   />
                 </label>

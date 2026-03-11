@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ivory font-sans text-charcoal;
+    background-image:
+      radial-gradient(circle at top, rgba(184, 137, 78, 0.08), transparent 28%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(247, 241, 232, 0.92));
+  }
+
+  ::selection {
+    @apply bg-walnut text-ivory;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/40 bg-white/70 backdrop-blur-xl;
+  }
+}
