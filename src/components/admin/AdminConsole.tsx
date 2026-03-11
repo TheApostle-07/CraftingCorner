@@ -20,8 +20,8 @@ type Props = {
   adminConfigured: boolean;
   adminNote: string;
   initialAuthenticated: boolean;
-  initialStatus: SiteStatus;
-  storageInfo: SiteStorageInfo;
+  initialStatus: SiteStatus | null;
+  storageInfo: SiteStorageInfo | null;
 };
 
 type ApiPayload = {
@@ -40,16 +40,19 @@ export default function AdminConsole({
 }: Props) {
   const [authenticated, setAuthenticated] = useState(initialAuthenticated);
   const [status, setStatus] = useState(initialStatus);
+  const [siteStorageInfo, setSiteStorageInfo] = useState(storageInfo);
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [isBusy, setIsBusy] = useState(false);
 
-  const updatedAtLabel = new Intl.DateTimeFormat('en-IN', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
-    timeZone: 'UTC',
-  }).format(new Date(status.updatedAt));
+  const updatedAtLabel = status
+    ? new Intl.DateTimeFormat('en-IN', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+        timeZone: 'UTC',
+      }).format(new Date(status.updatedAt))
+    : null;
 
   async function readJson(response: Response) {
     return (await response.json()) as ApiPayload;
@@ -80,6 +83,9 @@ export default function AdminConsole({
       if (data.status) {
         setStatus(data.status);
       }
+      if (data.storageInfo) {
+        setSiteStorageInfo(data.storageInfo);
+      }
       setPassword('');
       setMessage(data.message || 'Signed in.');
       setIsBusy(false);
@@ -102,6 +108,9 @@ export default function AdminConsole({
     startTransition(() => {
       if (response.ok && data.status) {
         setStatus(data.status);
+        if (data.storageInfo) {
+          setSiteStorageInfo(data.storageInfo);
+        }
         setMessage(
           data.message ||
             `Site marked ${nextActive ? 'Active' : 'Not Active'} successfully.`,
@@ -126,6 +135,8 @@ export default function AdminConsole({
       if (response.ok) {
         setAuthenticated(false);
         setPassword('');
+        setStatus(null);
+        setSiteStorageInfo(null);
       }
       setMessage(data.message || 'Signed out.');
       setIsBusy(false);
@@ -175,7 +186,13 @@ export default function AdminConsole({
           </Link>
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+        <div
+          className={`mt-10 grid gap-8 ${
+            authenticated
+              ? 'lg:grid-cols-[0.95fr_1.05fr]'
+              : 'mx-auto max-w-2xl lg:grid-cols-1'
+          }`}
+        >
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -279,84 +296,82 @@ export default function AdminConsole({
             ) : null}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-            className="rounded-[2rem] border border-white/10 bg-white/7 p-8 shadow-[0_24px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl"
-          >
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm uppercase tracking-[0.24em] text-slate-400">
-                  Public website
-                </p>
-                <h2 className="mt-3 text-3xl font-semibold text-white">
-                  {status.active ? 'Active' : 'Not Active'}
-                </h2>
-                <p className="mt-3 max-w-xl text-sm leading-7 text-slate-300">
-                  Updated {updatedAtLabel} UTC by {status.updatedBy}.
-                </p>
+          {authenticated && status && siteStorageInfo ? (
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+              className="rounded-[2rem] border border-white/10 bg-white/7 p-8 shadow-[0_24px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl"
+            >
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.24em] text-slate-400">
+                    Public website
+                  </p>
+                  <h2 className="mt-3 text-3xl font-semibold text-white">
+                    {status.active ? 'Active' : 'Not Active'}
+                  </h2>
+                  <p className="mt-3 max-w-xl text-sm leading-7 text-slate-300">
+                    Updated {updatedAtLabel} UTC by {status.updatedBy}.
+                  </p>
+                </div>
+
+                <div
+                  className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${
+                    status.active
+                      ? 'bg-emerald-400/15 text-emerald-200'
+                      : 'bg-amber-400/15 text-amber-200'
+                  }`}
+                >
+                  {status.active ? (
+                    <Power className="h-4 w-4" />
+                  ) : (
+                    <PowerOff className="h-4 w-4" />
+                  )}
+                  {status.active ? 'Site is live' : 'Payment hold page is live'}
+                </div>
               </div>
 
-              <div
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold ${
-                  status.active
-                    ? 'bg-emerald-400/15 text-emerald-200'
-                    : 'bg-amber-400/15 text-amber-200'
-                }`}
-              >
-                {status.active ? (
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                <button
+                  type="button"
+                  disabled={
+                    !siteStorageInfo.canUpdate || isBusy || status.active
+                  }
+                  onClick={() => handleToggle(true)}
+                  className="inline-flex items-center justify-center gap-2 rounded-[1.5rem] border border-emerald-400/25 bg-emerald-400/10 px-5 py-4 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/15 disabled:cursor-not-allowed disabled:opacity-50"
+                >
                   <Power className="h-4 w-4" />
-                ) : (
+                  Set Active
+                </button>
+                <button
+                  type="button"
+                  disabled={
+                    !siteStorageInfo.canUpdate || isBusy || !status.active
+                  }
+                  onClick={() => handleToggle(false)}
+                  className="inline-flex items-center justify-center gap-2 rounded-[1.5rem] border border-amber-400/25 bg-amber-400/10 px-5 py-4 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/15 disabled:cursor-not-allowed disabled:opacity-50"
+                >
                   <PowerOff className="h-4 w-4" />
-                )}
-                {status.active ? 'Site is live' : 'Payment hold page is live'}
+                  Set Not Active
+                </button>
               </div>
-            </div>
 
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <button
-                type="button"
-                disabled={
-                  !authenticated ||
-                  !storageInfo.canUpdate ||
-                  isBusy ||
-                  status.active
-                }
-                onClick={() => handleToggle(true)}
-                className="inline-flex items-center justify-center gap-2 rounded-[1.5rem] border border-emerald-400/25 bg-emerald-400/10 px-5 py-4 text-sm font-semibold text-emerald-100 transition hover:bg-emerald-400/15 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <Power className="h-4 w-4" />
-                Set Active
-              </button>
-              <button
-                type="button"
-                disabled={
-                  !authenticated ||
-                  !storageInfo.canUpdate ||
-                  isBusy ||
-                  !status.active
-                }
-                onClick={() => handleToggle(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-[1.5rem] border border-amber-400/25 bg-amber-400/10 px-5 py-4 text-sm font-semibold text-amber-100 transition hover:bg-amber-400/15 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                <PowerOff className="h-4 w-4" />
-                Set Not Active
-              </button>
-            </div>
-
-            <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-[#091423] p-6">
-              <p className="text-sm uppercase tracking-[0.24em] text-slate-400">
-                Storage mode
-              </p>
-              <p className="mt-3 text-lg font-semibold text-white">
-                {storageInfo.mode === 'github' ? 'GitHub-backed' : 'Local file'}
-              </p>
-              <p className="mt-3 text-sm leading-7 text-slate-300">
-                {storageInfo.note}
-              </p>
-            </div>
-          </motion.div>
+              <div className="mt-8 rounded-[1.5rem] border border-white/10 bg-[#091423] p-6">
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-400">
+                  Storage mode
+                </p>
+                <p className="mt-3 text-lg font-semibold text-white">
+                  {siteStorageInfo.mode === 'github'
+                    ? 'GitHub-backed'
+                    : 'Local file'}
+                </p>
+                <p className="mt-3 text-sm leading-7 text-slate-300">
+                  {siteStorageInfo.note}
+                </p>
+              </div>
+            </motion.div>
+          ) : null}
         </div>
       </div>
     </section>

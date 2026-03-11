@@ -8,6 +8,15 @@ import {
 } from '@/lib/siteStatus';
 
 export async function GET() {
+  if (!(await isAdminAuthenticated())) {
+    return NextResponse.json(
+      {
+        message: 'Admin authentication required.',
+      },
+      { status: 401 },
+    );
+  }
+
   return NextResponse.json({
     status: await getSiteStatus(),
     storageInfo: getSiteStorageInfo(),

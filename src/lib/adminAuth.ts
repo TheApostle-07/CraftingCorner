@@ -1,4 +1,4 @@
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
 
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -34,10 +34,36 @@ function safeCompare(left: string, right: string) {
   return timingSafeEqual(leftBuffer, rightBuffer);
 }
 
-function getSessionToken() {
-  return createHash('sha256')
-    .update(`${getAdminUsername()}:${getAdminPassword()}:${getSessionSecret()}`)
-    .digest('hex');
+function signSessionPayload(payload: string) {
+  return createHmac('sha256', getSessionSecret()).update(payload).digest('hex');
+}
+
+function createSessionToken() {
+  const expiresAt = Date.now() + SESSION_MAX_AGE * 1000;
+  const nonce = randomBytes(16).toString('hex');
+  const payload = `${getAdminUsername()}.${expiresAt}.${nonce}`;
+  const signature = signSessionPayload(payload);
+
+  return `${expiresAt}.${nonce}.${signature}`;
+}
+
+function verifySessionToken(sessionValue: string) {
+  const [expiresAtRaw, nonce, signature] = sessionValue.split('.');
+
+  if (!expiresAtRaw || !nonce || !signature) {
+    return false;
+  }
+
+  const expiresAt = Number(expiresAtRaw);
+
+  if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
+    return false;
+  }
+
+  const payload = `${getAdminUsername()}.${expiresAt}.${nonce}`;
+  const expectedSignature = signSessionPayload(payload);
+
+  return safeCompare(signature, expectedSignature);
 }
 
 export function isAdminConfigured() {
@@ -71,15 +97,15 @@ export async function isAdminAuthenticated() {
   const cookieStore = await cookies();
   const sessionValue = cookieStore.get(ADMIN_SESSION_COOKIE)?.value || '';
 
-  return safeCompare(sessionValue, getSessionToken());
+  return verifySessionToken(sessionValue);
 }
 
 export function attachAdminSession(response: NextResponse) {
   response.cookies.set({
     name: ADMIN_SESSION_COOKIE,
-    value: getSessionToken(),
+    value: createSessionToken(),
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
     path: '/',
     maxAge: SESSION_MAX_AGE,
@@ -91,7 +117,7 @@ export function clearAdminSession(response: NextResponse) {
     name: ADMIN_SESSION_COOKIE,
     value: '',
     httpOnly: true,
-    sameSite: 'lax',
+    sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
     path: '/',
     maxAge: 0,

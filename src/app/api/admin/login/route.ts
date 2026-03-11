@@ -8,6 +8,10 @@ import {
 } from '@/lib/adminAuth';
 import { getSiteStatus, getSiteStorageInfo } from '@/lib/siteStatus';
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export async function POST(request: Request) {
   if (!isAdminConfigured()) {
     return NextResponse.json(
@@ -24,6 +28,8 @@ export async function POST(request: Request) {
   };
 
   if (!verifyAdminCredentials(body.username || '', body.password || '')) {
+    await sleep(600);
+
     return NextResponse.json(
       {
         message: 'Invalid admin credentials.',

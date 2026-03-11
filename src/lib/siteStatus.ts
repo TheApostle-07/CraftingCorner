@@ -34,6 +34,10 @@ export type SiteStorageInfo = {
 
 const LOCAL_STATUS_FILE = path.join(process.cwd(), 'site-status.json');
 
+function isHostedDeployment() {
+  return process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
+}
+
 function normalizeStatus(
   raw: RawSiteStatus,
   storageMode: SiteStorageMode,
@@ -209,10 +213,18 @@ export function getSiteStorageInfo(): SiteStorageInfo {
     };
   }
 
+  if (isHostedDeployment()) {
+    return {
+      mode: 'local-file',
+      canUpdate: false,
+      note: 'Hosted deployments must use GitHub-backed status storage for a real persistent toggle. Add SITE_STATUS_GITHUB_TOKEN and the repo settings in the server environment.',
+    };
+  }
+
   return {
     mode: 'local-file',
     canUpdate: true,
-    note: 'Uses /site-status.json on the server filesystem. On Vercel or another ephemeral host, switch to GitHub mode for persistent site-wide control.',
+    note: 'Uses /site-status.json on the local filesystem for development.',
   };
 }
 
@@ -247,6 +259,12 @@ export async function updateSiteStatus(active: boolean, updatedBy = 'admin') {
 
   if (gitHubConfig) {
     return writeGitHubStatus(gitHubConfig, nextStatus);
+  }
+
+  if (isHostedDeployment()) {
+    throw new Error(
+      'Hosted status updates require GitHub-backed storage. Set SITE_STATUS_GITHUB_TOKEN and the repo configuration env vars first.',
+    );
   }
 
   return writeLocalStatus(nextStatus);

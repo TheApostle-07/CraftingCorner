@@ -9,10 +9,9 @@ import { getSiteStatus, getSiteStorageInfo } from '@/lib/siteStatus';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
-  const [initialAuthenticated, initialStatus] = await Promise.all([
-    isAdminAuthenticated(),
-    getSiteStatus(),
-  ]);
+  const initialAuthenticated = await isAdminAuthenticated();
+  const initialStatus = initialAuthenticated ? await getSiteStatus() : null;
+  const storageInfo = initialAuthenticated ? getSiteStorageInfo() : null;
 
   return (
     <AdminConsole
@@ -20,7 +19,7 @@ export default async function AdminPage() {
       adminNote={getAdminConfigurationNote()}
       initialAuthenticated={initialAuthenticated}
       initialStatus={initialStatus}
-      storageInfo={getSiteStorageInfo()}
+      storageInfo={storageInfo}
     />
   );
 }
