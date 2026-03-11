@@ -1,9 +1,8 @@
 // src/app/products/page.tsx
-import FloatingWhatsapp from '../../components/FloatingWhatsapp';
-import ProductCard from '../../components/ProductCard';
-import { loadAllProducts } from '../../lib/loaders.server';
-import productTypes from '../../data/productTypes.json';
-import type { Product } from '../../lib/types';
+import ProductCard from '@/components/ProductCard';
+import productTypes from '@/data/productTypes.json';
+import { loadAllProducts } from '@/lib/loaders.server';
+import type { Product } from '@/lib/types';
 
 
 

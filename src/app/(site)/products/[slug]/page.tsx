@@ -4,13 +4,13 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import ProductView from '../../../components/ProductView';
+import ProductView from '@/components/ProductView';
 import {
   allCategories,
   loadProducts,
   loadAllProducts,
   type Product,
-} from '../../../lib/loaders.server';
+} from '@/lib/loaders.server';
 
 /* ---------- static-site helpers ---------- */
 export const dynamicParams = false;

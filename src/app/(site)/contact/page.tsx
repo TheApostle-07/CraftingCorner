@@ -13,7 +13,7 @@ import { motion, Variants } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Home, Phone, Mail, MapPin, Send as SendIcon } from 'lucide-react';
-import { sendLead } from '../../lib/sendLead';
+import { sendLead } from '@/lib/sendLead';
 
 /* ─────────────────────────────── Animations ──────────────────────────────── */
 const fadeUp: Variants = {

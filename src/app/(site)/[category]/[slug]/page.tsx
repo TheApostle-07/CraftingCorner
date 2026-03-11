@@ -3,14 +3,13 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 
-import FloatingWhatsapp from '../../../components/FloatingWhatsapp';
-import ProductCard from '../../../components/ProductCard'; // for related items
+import ProductCard from '@/components/ProductCard'; // for related items
 
 import {
   allCategories,
   getCategory,
   loadProducts,
-} from '../../../lib/loaders.server';
+} from '@/lib/loaders.server';
 
 // ───────────────────────────────────────────────────────────────────────────────
 // Static-site helpers
@@ -160,12 +159,6 @@ export default async function ProductPage({
             </div>
           </section>
         )}
-
-        {/* ——— WhatsApp CTA ——— */}
-        <FloatingWhatsapp
-          phone="+919999999999"
-          message={`Hi! I'm interested in the ${product.title}. Could you tell me more?`}
-        />
       </main>
     </>
   );

@@ -7,13 +7,12 @@ import Image from "next/image";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import FloatingWhatsapp from "../../components/FloatingWhatsapp";
-import ProductCard from "../../components/ProductCard";
+import ProductCard from "@/components/ProductCard";
 import {
   allCategories,
   getCategory,
   loadProducts,
-} from "../../lib/loaders.server";
+} from "@/lib/loaders.server";
 
 // ────────────────────────────────────────────────────────────────────────────────
 // Static-site helpers
@@ -97,12 +96,6 @@ export default async function CategoryPage({
   />
 ))}
       </section>
-
-      {/* WhatsApp floating action */}
-      <FloatingWhatsapp
-        phone="+919999999999"
-        message={`Hi! I'm interested in ${cat.title}. Could you tell me more?`}
-      />
     </main>
   );
 }

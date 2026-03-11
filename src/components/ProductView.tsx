@@ -7,7 +7,6 @@
 import { MotionConfig, motion } from 'framer-motion';
 import Image from 'next/image';
 import ProductCard from './ProductCard';
-import FloatingWhatsapp from './FloatingWhatsapp';
 
 import type { Product } from '../lib/loaders.server';
 
@@ -116,12 +115,6 @@ export default function ProductView({ product, related }: Props) {
             </div>
           </section>
         )}
-
-        {/* ── WhatsApp CTA ─────────────────────────────────── */}
-        <FloatingWhatsapp
-          phone="+919999999999"
-          message={`Hi! I'm interested in the ${product.title}. Could you tell me more?`}
-        />
       </motion.main>
     </MotionConfig>
   );

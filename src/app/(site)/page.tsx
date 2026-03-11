@@ -12,11 +12,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { X } from 'lucide-react';
 import { AiFillStar } from 'react-icons/ai';
 
-import Hero from '../components/Hero';
-import ProductCard from '../components/ProductCard';
-import { allCategories } from '../lib/categories'; // client-safe helper
-import type { Category } from '../lib/types';
-import { sendLead } from '../lib/sendLead';
+import Hero from '@/components/Hero';
+import ProductCard from '@/components/ProductCard';
+import { allCategories } from '@/lib/categories'; // client-safe helper
+import type { Category } from '@/lib/types';
+import { sendLead } from '@/lib/sendLead';
 
 
 // ─────────────────────────────────────────────────────────────
