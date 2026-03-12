@@ -23,11 +23,11 @@ export default function PaymentPendingExperience() {
     <section
       className={`${bodyFont.className} relative min-h-screen overflow-hidden bg-[#f6fbff] px-4 py-8 text-[#1f3651] sm:px-6 sm:py-12`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(250,221,134,0.3),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(138,184,222,0.24),_transparent_28%),linear-gradient(180deg,_#fcfeff_0%,_#eef6fd_52%,_#f7fbff_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,241,94,0.32),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(138,184,222,0.24),_transparent_28%),linear-gradient(180deg,_#fcfeff_0%,_#eef6fd_52%,_#f7fbff_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(40,88,132,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(40,88,132,0.04)_1px,transparent_1px)] bg-[size:120px_120px] opacity-40" />
       <motion.div
         aria-hidden="true"
-        className="absolute -left-16 top-16 h-64 w-64 rounded-full bg-[#f2ce75]/32 blur-3xl"
+        className="absolute -left-16 top-16 h-64 w-64 rounded-full bg-[#fff15a]/32 blur-3xl"
         animate={shouldReduceMotion ? undefined : { y: [-18, 22, -18], x: [0, 20, 0] }}
         transition={
           shouldReduceMotion
@@ -58,9 +58,9 @@ export default function PaymentPendingExperience() {
               initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.88 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.65, ease: 'easeOut', delay: 0.08 }}
-              className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-[#ecc76b]/55 bg-[radial-gradient(circle,_rgba(250,222,141,0.92),_rgba(255,255,255,0.96)_58%,_rgba(132,173,210,0.2)_100%)] shadow-[0_22px_70px_rgba(116,162,203,0.22)] sm:h-52 sm:w-52"
+              className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-[#fff15a]/60 bg-[radial-gradient(circle,_rgba(255,245,120,0.96),_rgba(255,255,255,0.98)_58%,_rgba(132,173,210,0.2)_100%)] shadow-[0_22px_70px_rgba(255,239,79,0.2)] sm:h-52 sm:w-52"
             >
-              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-[#8fb6d8]/25 bg-white/95 text-[#d7a544] shadow-[0_14px_36px_rgba(116,162,203,0.18)] sm:h-36 sm:w-36">
+              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-[#fff49a] bg-white/95 text-[#e0cf00] shadow-[0_14px_36px_rgba(255,239,79,0.18)] sm:h-36 sm:w-36">
                 <TriangleAlert className="h-16 w-16 sm:h-20 sm:w-20" />
               </div>
             </motion.div>
@@ -78,7 +78,7 @@ export default function PaymentPendingExperience() {
               confirmed.
             </p>
 
-            <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-[#d8a94a] to-transparent" />
+            <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-[#f0e84e] to-transparent" />
 
             <div className="mt-8 sm:mt-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#7a99b5] sm:text-xs">
@@ -92,9 +92,9 @@ export default function PaymentPendingExperience() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Contact Expert Dev Studio"
-                className="group flex w-full max-w-xl flex-col items-center gap-4 rounded-[1.6rem] border border-[#dce9f4] bg-white/90 px-5 py-5 text-center shadow-[0_20px_55px_rgba(84,122,161,0.12)] transition duration-300 hover:-translate-y-1 hover:border-[#bdd4e9] hover:shadow-[0_26px_65px_rgba(84,122,161,0.16)] sm:flex-row sm:justify-between sm:px-6 sm:text-left"
+                className="group flex w-full max-w-xl flex-col items-center gap-5 rounded-[1.6rem] border border-[#dce9f4] bg-white/90 px-5 py-6 text-center shadow-[0_20px_55px_rgba(84,122,161,0.12)] transition duration-300 hover:-translate-y-1 hover:border-[#bdd4e9] hover:shadow-[0_26px_65px_rgba(84,122,161,0.16)] sm:px-6"
               >
-                <div className="flex flex-col items-center gap-4 sm:flex-row">
+                <div className="flex flex-col items-center gap-4 text-center">
                   <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#e5eef6] bg-[#f4f9fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
                     <Image
                       src="/expert-dev-studio-favicon.ico"
@@ -105,11 +105,13 @@ export default function PaymentPendingExperience() {
                       unoptimized
                     />
                   </div>
-                  <div>
-                    <p className={`${headingFont.className} text-xl font-semibold text-[#17304d]`}>
+                  <div className="flex flex-col items-center text-center">
+                    <p
+                      className={`${headingFont.className} text-xl font-semibold text-[#17304d]`}
+                    >
                       Expert Dev Studio
                     </p>
-                    <p className="mt-1 text-sm text-[#5b7691]">
+                    <p className="mt-1 max-w-[18rem] text-sm text-[#5b7691] sm:max-w-none">
                       Billing support and website reactivation
                     </p>
                   </div>
@@ -120,8 +122,8 @@ export default function PaymentPendingExperience() {
                 </div>
               </Link>
 
-              <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[#ecd07d] bg-[#fff8e0] px-5 py-2.5 text-center text-sm text-[#816420]">
-                <BriefcaseBusiness className="h-4 w-4 text-[#c79631]" />
+              <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[#f2ea64] bg-[#fffde0] px-5 py-2.5 text-center text-sm text-[#756900]">
+                <BriefcaseBusiness className="h-4 w-4 text-[#d2c300]" />
                 Professional billing hold in effect
               </div>
             </div>
