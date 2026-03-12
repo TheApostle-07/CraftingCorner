@@ -23,11 +23,11 @@ export default function PaymentPendingExperience() {
     <section
       className={`${bodyFont.className} relative min-h-screen overflow-hidden bg-[#f6fbff] px-4 py-8 text-[#1f3651] sm:px-6 sm:py-12`}
     >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,241,94,0.32),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(138,184,222,0.24),_transparent_28%),linear-gradient(180deg,_#fcfeff_0%,_#eef6fd_52%,_#f7fbff_100%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,194,26,0.28),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(138,184,222,0.24),_transparent_28%),linear-gradient(180deg,_#fcfeff_0%,_#eef6fd_52%,_#f7fbff_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(40,88,132,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(40,88,132,0.04)_1px,transparent_1px)] bg-[size:120px_120px] opacity-40" />
       <motion.div
         aria-hidden="true"
-        className="absolute -left-16 top-16 h-64 w-64 rounded-full bg-[#fff15a]/32 blur-3xl"
+        className="absolute -left-16 top-16 h-64 w-64 rounded-full bg-[#ffc21a]/28 blur-3xl"
         animate={shouldReduceMotion ? undefined : { y: [-18, 22, -18], x: [0, 20, 0] }}
         transition={
           shouldReduceMotion
@@ -58,11 +58,49 @@ export default function PaymentPendingExperience() {
               initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.88 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.65, ease: 'easeOut', delay: 0.08 }}
-              className="mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-[#fff15a]/60 bg-[radial-gradient(circle,_rgba(255,245,120,0.96),_rgba(255,255,255,0.98)_58%,_rgba(132,173,210,0.2)_100%)] shadow-[0_22px_70px_rgba(255,239,79,0.2)] sm:h-52 sm:w-52"
+              className="relative mx-auto flex h-40 w-40 items-center justify-center rounded-full border border-[#ffd24d]/65 bg-[radial-gradient(circle,_rgba(255,213,79,0.9),_rgba(255,255,255,0.98)_56%,_rgba(132,173,210,0.2)_100%)] shadow-[0_22px_70px_rgba(255,194,26,0.22)] sm:h-52 sm:w-52"
             >
-              <div className="flex h-28 w-28 items-center justify-center rounded-full border border-[#fff49a] bg-white/95 text-[#e0cf00] shadow-[0_14px_36px_rgba(255,239,79,0.18)] sm:h-36 sm:w-36">
+              <motion.div
+                aria-hidden="true"
+                className="absolute inset-3 rounded-full border border-[#ffe17f]/75"
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : { scale: [0.96, 1.05, 0.96], opacity: [0.38, 0.74, 0.38] }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
+                }
+              />
+              <motion.div
+                aria-hidden="true"
+                className="absolute inset-0 rounded-full border border-[#ffc21a]/35"
+                animate={
+                  shouldReduceMotion
+                    ? undefined
+                    : { scale: [0.92, 1.08, 0.92], opacity: [0.2, 0.5, 0.2] }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : { duration: 2.8, repeat: Infinity, ease: 'easeInOut' }
+                }
+              />
+              <motion.div
+                className="flex h-28 w-28 items-center justify-center rounded-full border border-[#ffe17f] bg-white/95 text-[#e2a300] shadow-[0_14px_36px_rgba(255,194,26,0.18)] sm:h-36 sm:w-36"
+                animate={
+                  shouldReduceMotion ? undefined : { scale: [1, 1.035, 1] }
+                }
+                transition={
+                  shouldReduceMotion
+                    ? undefined
+                    : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
+                }
+              >
                 <TriangleAlert className="h-16 w-16 sm:h-20 sm:w-20" />
-              </div>
+              </motion.div>
             </motion.div>
 
             <h1
@@ -78,7 +116,7 @@ export default function PaymentPendingExperience() {
               confirmed.
             </p>
 
-            <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-[#f0e84e] to-transparent" />
+            <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-[#ffc21a] to-transparent" />
 
             <div className="mt-8 sm:mt-10">
               <p className="text-[11px] font-semibold uppercase tracking-[0.34em] text-[#7a99b5] sm:text-xs">
@@ -122,8 +160,8 @@ export default function PaymentPendingExperience() {
                 </div>
               </Link>
 
-              <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[#f2ea64] bg-[#fffde0] px-5 py-2.5 text-center text-sm text-[#756900]">
-                <BriefcaseBusiness className="h-4 w-4 text-[#d2c300]" />
+              <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[#ffd24d] bg-[#fff7da] px-5 py-2.5 text-center text-sm text-[#7b5f00]">
+                <BriefcaseBusiness className="h-4 w-4 text-[#d39a00]" />
                 Professional billing hold in effect
               </div>
             </div>
