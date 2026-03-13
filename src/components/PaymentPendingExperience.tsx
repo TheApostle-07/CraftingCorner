@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Montserrat, Poppins } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowUpRight, BriefcaseBusiness, TriangleAlert } from 'lucide-react';
+import { ArrowUpRight, ServerCog, Wrench } from 'lucide-react';
 
 const headingFont = Montserrat({
   subsets: ['latin'],
@@ -99,21 +99,21 @@ export default function PaymentPendingExperience() {
                     : { duration: 1.8, repeat: Infinity, ease: 'easeInOut' }
                 }
               >
-                <TriangleAlert className="h-16 w-16 sm:h-20 sm:w-20" />
+                <ServerCog className="h-16 w-16 sm:h-20 sm:w-20" />
               </motion.div>
             </motion.div>
 
             <h1
               className={`${headingFont.className} mx-auto mt-6 max-w-3xl text-3xl font-semibold leading-[1.02] text-[#17304d] sm:mt-8 sm:text-5xl lg:text-[3.65rem]`}
             >
-              Payment Pending
+              Server Upgrade Required
             </h1>
 
             <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-[#4d647a] sm:mt-6 sm:text-lg sm:leading-8">
-              This website is temporarily unavailable until the outstanding
-              payment is cleared. Kindly contact Expert Dev Studio to reactivate
-              the website. Access can be restored as soon as the payment is
-              confirmed.
+              This website is temporarily unavailable while a required server
+              upgrade is pending. Kindly contact Expert Dev Studio to coordinate
+              the upgrade and restore access as soon as the updated environment
+              is ready.
             </p>
 
             <div className="mx-auto mt-8 h-px w-24 bg-gradient-to-r from-transparent via-[#ffc21a] to-transparent" />
@@ -150,7 +150,7 @@ export default function PaymentPendingExperience() {
                       Expert Dev Studio
                     </p>
                     <p className="mt-1 max-w-[18rem] text-sm text-[#5b7691] sm:max-w-none">
-                      Billing support and website reactivation
+                      Upgrade coordination and website restoration
                     </p>
                   </div>
                 </div>
@@ -161,8 +161,8 @@ export default function PaymentPendingExperience() {
               </Link>
 
               <div className="inline-flex items-center justify-center gap-2 rounded-full border border-[#ffd24d] bg-[#fff7da] px-5 py-2.5 text-center text-sm text-[#7b5f00]">
-                <BriefcaseBusiness className="h-4 w-4 text-[#d39a00]" />
-                Professional billing hold in effect
+                <Wrench className="h-4 w-4 text-[#d39a00]" />
+                Professional infrastructure upgrade in effect
               </div>
             </div>
           </div>
