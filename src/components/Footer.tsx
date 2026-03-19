@@ -28,31 +28,31 @@
          whileInView={{ opacity: 1, y: 0 }}
          transition={{ duration: 0.8, ease: 'easeOut' }}
          viewport={{ once: true, amount: 0.25 }}
-         className="mt-24 border-t border-walnut/30 bg-ivory/80 backdrop-blur-md"
-       >
+        className="mt-24 border-t border-[#ccb39a] bg-[linear-gradient(180deg,rgba(247,241,232,0.96),rgba(255,255,255,0.98))] text-[#243648] shadow-[inset_0_1px_0_rgba(255,255,255,0.72)] backdrop-blur-md"
+      >
          {/* --- top grid --------------------------------------------------- */}
          <div className="mx-auto grid max-w-7xl gap-y-12 gap-x-8 px-4 py-16 sm:grid-cols-2 lg:grid-cols-3">
            {/* 1 / Brand column */}
-           <div className="text-center sm:text-left">
-             <h2 className="font-display text-2xl text-walnut">Crafting&nbsp;Corner</h2>
-             <p className="mt-4 max-w-xs text-sm text-charcoal/80">
-               Hand-crafted furniture made to last generations.
-             </p>
-             <p className="mt-2 max-w-xs text-sm text-charcoal/80">
-               Crafting Corner curates artisanal furniture pieces, blending traditional craftsmanship with modern design to bring you timeless and enduring home decor.
-             </p>
-           </div>
+          <div className="text-center sm:text-left">
+            <h2 className="font-display text-2xl text-[#6E4B34]">Crafting&nbsp;Corner</h2>
+            <p className="mt-4 max-w-xs text-sm leading-6 text-[#42576b]">
+              Hand-crafted furniture made to last generations.
+            </p>
+            <p className="mt-2 max-w-xs text-sm leading-6 text-[#42576b]">
+              Crafting Corner curates artisanal furniture pieces, blending traditional craftsmanship with modern design to bring you timeless and enduring home decor.
+            </p>
+          </div>
    
            {/* 2 / Navigation column */}
            <div className="flex flex-col items-center gap-2 sm:items-start sm:gap-3">
              {nav.map((n) => (
-               <Link
-                 key={n.href}
-                 href={n.href}
-                 className="text-sm text-charcoal/80 transition hover:text-walnut"
-               >
-                 {n.label}
-               </Link>
+              <Link
+                key={n.href}
+                href={n.href}
+                className="text-sm font-medium text-[#33485c] transition hover:text-[#6E4B34]"
+              >
+                {n.label}
+              </Link>
              ))}
            </div>
    
@@ -62,15 +62,15 @@
                onSubmit={(e) => e.preventDefault()}
                className="flex w-full max-w-md overflow-hidden rounded-brand border border-walnut/30 sm:max-w-xs"
              >
-               <input
-                 type="email"
-                 required
-                 placeholder="Your email"
-                 className="flex-1 bg-transparent px-3 py-2 text-sm outline-none placeholder:text-charcoal/60"
-               />
-               <button
-                 type="submit"
-                 className="bg-clay px-4 py-2 text-sm text-ivory transition hover:bg-clay/90"
+              <input
+                type="email"
+                required
+                placeholder="Your email"
+                className="flex-1 bg-transparent px-3 py-2 text-sm text-[#243648] outline-none placeholder:text-[#617487]"
+              />
+              <button
+                type="submit"
+                className="bg-clay px-4 py-2 text-sm text-ivory transition hover:bg-clay/90"
                >
                  Join
                </button>
@@ -78,35 +78,35 @@
    
              {/* socials */}
              <div className="mt-6 flex justify-center gap-4 sm:justify-start">
-               <Link
-                 href="https://www.instagram.com/craftingcornermohali/"
-                 aria-label="Instagram"
-                 className="rounded-full p-2 transition hover:bg-walnut/10"
-               >
-                 <Instagram className="h-5 w-5" />
-               </Link>
-               <Link
-                 href=" https://www.facebook.com/profile.php?id=61574155822550"
-                 aria-label="Facebook"
-                 className="rounded-full p-2 transition hover:bg-walnut/10"
-               >
-                 <Facebook className="h-5 w-5" />
-               </Link>
-               <Link
-                 href="https://www.linkedin.com/company/crafting-corner-mohali/"
-                 aria-label="LinkedIn"
-                 className="rounded-full p-2 transition hover:bg-walnut/10"
-               >
-                 <Linkedin className="h-5 w-5" />
-               </Link>
+              <Link
+                href="https://www.instagram.com/craftingcornermohali/"
+                aria-label="Instagram"
+                className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
+              >
+                <Instagram className="h-5 w-5" />
+              </Link>
+              <Link
+                href=" https://www.facebook.com/profile.php?id=61574155822550"
+                aria-label="Facebook"
+                className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
+              >
+                <Facebook className="h-5 w-5" />
+              </Link>
+              <Link
+                href="https://www.linkedin.com/company/crafting-corner-mohali/"
+                aria-label="LinkedIn"
+                className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
+              >
+                <Linkedin className="h-5 w-5" />
+              </Link>
              </div>
            </div>
          </div>
    
          {/* bottom bar */}
-         <div className="border-t border-walnut/20 py-6 px-4 text-center text-sm text-charcoal/70">
-           © {year} Crafting Corner · All rights reserved.
-         </div>
-       </motion.footer>
-     );
-   }
+        <div className="border-t border-[#ccb39a]/70 px-4 py-6 text-center text-sm text-[#536779]">
+          © {year} Crafting Corner · All rights reserved.
+        </div>
+      </motion.footer>
+    );
+  }

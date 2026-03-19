@@ -130,26 +130,31 @@ export default function PaymentPendingExperience() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Contact Expert Dev Studio"
-                className="group flex w-full max-w-xl flex-col items-center gap-5 rounded-[1.6rem] border border-[#dce9f4] bg-white/90 px-5 py-6 text-center shadow-[0_20px_55px_rgba(84,122,161,0.12)] transition duration-300 hover:-translate-y-1 hover:border-[#bdd4e9] hover:shadow-[0_26px_65px_rgba(84,122,161,0.16)] sm:px-6"
+                className="group flex w-full max-w-xl flex-col items-center gap-5 rounded-[1.6rem] border border-[#dce9f4] bg-white/90 px-4 py-5 text-center shadow-[0_20px_55px_rgba(84,122,161,0.12)] transition duration-300 hover:-translate-y-1 hover:border-[#bdd4e9] hover:shadow-[0_26px_65px_rgba(84,122,161,0.16)] sm:px-6 sm:py-6"
               >
-                <div className="flex flex-col items-center gap-4 text-center">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#e5eef6] bg-[#f4f9fd] shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+                <div className="flex w-full max-w-lg items-center gap-4 rounded-[1.5rem] border border-[#3b5368] bg-[linear-gradient(135deg,#17304d_0%,#203d5c_52%,#314d67_100%)] px-4 py-3 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_18px_44px_rgba(26,51,79,0.22)] sm:gap-5 sm:px-5 sm:py-4">
+                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.15rem] bg-[radial-gradient(circle_at_30%_30%,#2dc0f7_0%,#1f82c2_34%,#17456d_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_10px_22px_rgba(13,43,70,0.38)] ring-1 ring-white/12 sm:h-[4.25rem] sm:w-[4.25rem]">
+                    <div className="absolute inset-[1px] rounded-[1rem] border border-white/12" />
+                    <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-[#ffd84d] blur-[10px] opacity-80" />
                     <Image
                       src="/expert-dev-studio-favicon.ico"
                       alt="Expert Dev Studio logo"
-                      width={42}
-                      height={42}
-                      className="h-10 w-10 rounded-xl object-contain"
+                      width={40}
+                      height={40}
+                      className="relative h-8 w-8 object-contain drop-shadow-[0_3px_10px_rgba(255,255,255,0.18)] sm:h-10 sm:w-10"
                       unoptimized
                     />
                   </div>
-                  <div className="flex flex-col items-center text-center">
+                  <div className="min-w-0 flex-1">
                     <p
-                      className={`${headingFont.className} text-xl font-semibold text-[#17304d]`}
+                      className={`${headingFont.className} text-lg font-semibold tracking-[0.01em] text-white sm:text-[1.45rem]`}
                     >
                       Expert Dev Studio
                     </p>
-                    <p className="mt-1 max-w-[18rem] text-sm text-[#5b7691] sm:max-w-none">
+                    <p className="mt-1 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-[#afc6dc] sm:text-[0.78rem]">
+                      Upgrade Support and Reactivation
+                    </p>
+                    <p className="mt-2 max-w-[18rem] text-sm leading-6 text-[#d8e6f1] sm:max-w-none">
                       Upgrade coordination and website restoration
                     </p>
                   </div>
