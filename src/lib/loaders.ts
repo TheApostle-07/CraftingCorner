@@ -1,24 +1,54 @@
-// src/lib/loaders.ts
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
-
+import bedroomProducts from '../data/products/bedroom.json';
 import categories from '../data/categories.json';
+import customProducts from '../data/products/custom.json';
+import diningRoomProducts from '../data/products/dining-room.json';
+import kidsRoomProducts from '../data/products/kids-room.json';
+import kitchenBarProducts from '../data/products/kitchen-bar.json';
+import livingRoomProducts from '../data/products/living-room.json';
+import officeProducts from '../data/products/office.json';
+import outdoorProducts from '../data/products/outdoor.json';
 import type { Category, Product } from './types';
 
-// ─── categories helpers ────────────────────────────────────────────────────────
 export const allCategories = categories as Category[];
 
 export const getCategory = (slug: string) =>
-  allCategories.find(c => c.slug === slug);
+  allCategories.find((category) => category.slug === slug);
 
-// ─── products loader (no more dynamic import) ─────────────────────────────────
+const categoryProductMap: Record<string, Product[]> = {
+  bedroom: (bedroomProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'bedroom',
+  })),
+  custom: (customProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'custom',
+  })),
+  'dining-room': (diningRoomProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'dining-room',
+  })),
+  'kids-room': (kidsRoomProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'kids-room',
+  })),
+  'kitchen-bar': (kitchenBarProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'kitchen-bar',
+  })),
+  'living-room': (livingRoomProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'living-room',
+  })),
+  office: (officeProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'office',
+  })),
+  outdoor: (outdoorProducts as Product[]).map((product) => ({
+    ...product,
+    category: product.category || 'outdoor',
+  })),
+};
+
 export async function loadProducts(catSlug: string): Promise<Product[]> {
-  const file = path.join(
-    process.cwd(),
-    'src', 'data', 'products',
-    `${catSlug}.json`,
-  );
-
-  const json = await readFile(file, 'utf-8');
-  return JSON.parse(json) as Product[];
+  return categoryProductMap[catSlug] || [];
 }

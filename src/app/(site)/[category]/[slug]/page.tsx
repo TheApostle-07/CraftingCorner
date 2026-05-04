@@ -96,7 +96,7 @@ export default async function ProductPage({
 
           {/* Details */}
           <div className="flex flex-col justify-center space-y-6">
-            <h1 className="font-display text-4xl font-semibold text-ivory">
+            <h1 className="font-display text-4xl font-semibold text-walnut">
               {product.title}
             </h1>
 
@@ -105,7 +105,7 @@ export default async function ProductPage({
             </span>
 
             {product.description && (
-              <p className="leading-relaxed text-ivory/90">
+              <p className="leading-relaxed text-charcoal/90">
                 {product.description}
               </p>
             )}

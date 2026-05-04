@@ -1,67 +1,109 @@
 /* --------------------------------------------------------------------------
-   src/lib/loaders.server.ts           (server-only)
-   Helpers for reading product JSON directly from disk
+   src/lib/loaders.server.ts
+   Server helpers for reading category and product JSON safely in hosted builds.
 --------------------------------------------------------------------------- */
+import bedroomProducts from '../data/products/bedroom.json';
+import customProducts from '../data/products/custom.json';
+import diningRoomProducts from '../data/products/dining-room.json';
+import kidsRoomProducts from '../data/products/kids-room.json';
+import kitchenBarProducts from '../data/products/kitchen-bar.json';
+import livingRoomProducts from '../data/products/living-room.json';
+import officeProducts from '../data/products/office.json';
+import outdoorProducts from '../data/products/outdoor.json';
 import type { Product } from './types';
-import { getCategory, allCategories } from './categories';
+import { allCategories, getCategory } from './categories';
 
-/** Read `/src/data/products/<category>.json` */
-export async function loadProducts(catSlug: string): Promise<Product[]> {
-  const { readFile } = await import('node:fs/promises');
-  const { join }     = await import('node:path');
-
-  const file = join(process.cwd(), 'src', 'data', 'products', `${catSlug}.json`);
-
-  try {
-    const json = await readFile(file, 'utf8');
-    if (json.trim() === '') return [];
-    return JSON.parse(json) as Product[];
-  } catch (err) {
-    console.error(`[loadProducts] Failed to read "${file}":`, err);
-    return [];
-  }
+function withCategory(products: Product[], category: string): Product[] {
+  return products.map((product) => ({
+    ...product,
+    category: product.category || category,
+  }));
 }
 
-/** Read the master list at `/src/data/products.json`
- *  1.  In production (Vercel), the JSON is bundled by Next.js so we can
- *      `import` it directly.
- *  2.  Locally we fall back to an explicit fs read so hot‑reloading still works.
- */
-export async function loadAllProducts(): Promise<Product[]> {
-  // ── 1. Try the bundled import (works in serverless/edge) ─────────────
+const categoryProductMap: Record<string, Product[]> = {
+  bedroom: withCategory(bedroomProducts as Product[], 'bedroom'),
+  custom: withCategory(customProducts as Product[], 'custom'),
+  'dining-room': withCategory(diningRoomProducts as Product[], 'dining-room'),
+  'kids-room': withCategory(kidsRoomProducts as Product[], 'kids-room'),
+  'kitchen-bar': withCategory(kitchenBarProducts as Product[], 'kitchen-bar'),
+  'living-room': withCategory(livingRoomProducts as Product[], 'living-room'),
+  office: withCategory(officeProducts as Product[], 'office'),
+  outdoor: withCategory(outdoorProducts as Product[], 'outdoor'),
+};
+
+function dedupeProducts(products: Product[]): Product[] {
+  return Array.from(
+    new Map(products.map((product) => [product.slug, product])).values(),
+  );
+}
+
+/** Read `/src/data/products/<category>.json` with bundled-data fallback. */
+export async function loadProducts(catSlug: string): Promise<Product[]> {
+  const bundledProducts = categoryProductMap[catSlug];
+  if (bundledProducts?.length) {
+    return bundledProducts;
+  }
+
   try {
-    /** `import()` returns the *bundled* JSON.
-     *    • In dev this is an object with a `default` key.
-     *    • In prod (after next‑json-loader optimisations) it can be either
-     *      an array of products **or** the productTypes map depending on
-     *      what was bundled.
-     *  We normalise everything to a flat Product[] here. */
+    const { readFile } = await import('node:fs/promises');
+    const { join } = await import('node:path');
+    const file = join(process.cwd(), 'src', 'data', 'products', `${catSlug}.json`);
+    const json = await readFile(file, 'utf8');
+
+    if (json.trim()) {
+      return withCategory(JSON.parse(json) as Product[], catSlug);
+    }
+  } catch (err) {
+    console.error(`[loadProducts] Failed to load category "${catSlug}":`, err);
+  }
+
+  const fallbackProducts = await loadAllProducts();
+  return fallbackProducts.filter((product) => product.category === catSlug);
+}
+
+/** Read the master list at `/src/data/products.json` and flatten it. */
+export async function loadAllProducts(): Promise<Product[]> {
+  const categoryProducts = dedupeProducts(
+    Object.values(categoryProductMap).flat(),
+  );
+  if (categoryProducts.length) {
+    return categoryProducts;
+  }
+
+  try {
     const mod = (await import('../data/products.json')) as { default: unknown };
     const raw = mod.default as unknown;
 
-    const arr: Product[] = Array.isArray(raw)
-      ? (raw as Product[])
-      : (Object.values(raw as Record<string, Product[]>).flat() as Product[]);
+    if (Array.isArray(raw)) {
+      return dedupeProducts(raw as Product[]);
+    }
 
-    return arr;
+    return dedupeProducts(
+      Object.values(raw as Record<string, Product[]>).flat() as Product[],
+    );
   } catch {
-    /* no‑op – fall through to fs */
+    /* fall through to fs */
   }
 
-  // ── 2. Fallback: read from disk (local dev) ──────────────────────────
   try {
     const { readFile } = await import('node:fs/promises');
     const { join } = await import('node:path');
     const file = join(process.cwd(), 'src', 'data', 'products.json');
-
     const json = await readFile(file, 'utf8');
-    return json.trim() ? (JSON.parse(json) as Product[]) : [];
+
+    if (!json.trim()) {
+      return [];
+    }
+
+    const raw = JSON.parse(json) as Product[] | Record<string, Product[]>;
+    return dedupeProducts(
+      Array.isArray(raw) ? raw : Object.values(raw).flat(),
+    );
   } catch (err) {
     console.error('[loadAllProducts] Failed to load products:', err);
     return [];
   }
 }
 
-// Re-export helpers/types
 export { allCategories, getCategory };
 export type { Product };
