@@ -11,13 +11,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { X } from 'lucide-react';
 
+import productsData from '@/data/products.json';
 import Hero from '@/components/Hero';
 import ProductCard from '@/components/ProductCard';
 import { allCategories } from '@/lib/categories'; // client-safe helper
-import type { Category } from '@/lib/types';
+import type { Category, Product } from '@/lib/types';
 import { sendLead } from '@/lib/sendLead';
 
 type TestimonialAvatarVariant = 'aditi' | 'rohan' | 'maya' | 'daniel';
+type ShelfProduct = Pick<Product, 'slug' | 'title' | 'price' | 'img'>;
+
+const productCatalog = productsData as Record<string, Product[]>;
+const allCatalogProducts = Object.values(productCatalog).flat() as Product[];
+const productBySlug = new Map(allCatalogProducts.map((product) => [product.slug, product]));
+
+function pickShelfProducts(slugs: string[]): ShelfProduct[] {
+  return slugs
+    .map((slug) => productBySlug.get(slug))
+    .filter((product): product is Product => Boolean(product))
+    .map(({ slug, title, price, img }) => ({ slug, title, price, img }));
+}
 
 
 // ─────────────────────────────────────────────────────────────
@@ -29,90 +42,29 @@ export default function Home() {
   /* --------------------------------------------------------------------
         1.  DATA  — static shelves (JSON / hard-coded for now)
   -------------------------------------------------------------------- */
-  const bestSellers = [
-    {
-      title: 'Sheesham King-Size Bed',
-      price: 72_500,
-      img: '/assets/img/products/bestseller_1.png',
-      slug: 'sheesham-king-bed',
-    },
-    {
-      title: 'Jaipur Hand-Carved Console',
-      price: 29_900,
-      img: '/assets/img/products/bestseller_2.png',
-      slug: 'jaipur-console',
-    },
-    {
-      title: 'Rattan Patio Lounger',
-      price: 18_450,
-      img: '/assets/img/products/bestseller_3.png',
-      slug: 'rattan-lounger',
-    },
-    
-  ];
+  const bestSellers = pickShelfProducts([
+    'sirohi-king-platform-bed',
+    'nimbus-sectional-sofa',
+    'solaire-dining-table',
+  ]);
 
-  const featured = [
-    {
-      title: 'Oak Dining Table',
-      price: 45_000,
-      img: '/assets/img/products/featured_1.png',
-      slug: 'oak-dining-table',
-    },
-    {
-      title: 'Walnut Armchair',
-      price: 28_000,
-      img: '/assets/img/products/featured_2.png',
-      slug: 'walnut-armchair',
-    },
-    {
-        title: 'Live-Edge Acacia Coffee Table',
-        price: 24_999,
-        img: '/assets/img/products/featured_3.png',
-        slug: 'acacia-coffee-table',
-      },
-  ];
+  const featured = pickShelfProducts([
+    'aranya-teak-tv-console',
+    'kashmir-walnut-coffee-table',
+    'indigo-velvet-accent-chair',
+  ]);
 
-  const topPicks = [
-    {
-      title: 'Teak Bookshelf Ladder',
-      price: 14_750,
-      img: '/assets/img/products/top_1.png',
-      slug: 'teak-bookshelf-ladder',
-    },
-    {
-      title: 'Udaipur Mirror with Jali Work',
-      price: 9_950,
-      img: '/assets/img/products/top_2.png',
-      slug: 'udaipur-mirror',
-    },
-    {
-      title: 'Cane-Weave Dining Chair',
-      price: 7_299,
-      img: '/assets/img/products/top_3.png',
-      slug: 'cane-dining-chair',
-    },
-  ];
+  const topPicks = pickShelfProducts([
+    'mysuru-rosewood-bookshelf',
+    'cascade-bar-stool',
+    'sutra-rattan-side-table',
+  ]);
 
-  const recommended = [
-    {
-      title: 'Modular Shoe Rack',
-      price: 4_699,
-      img: '/assets/img/products/rc_1.png',
-      slug: 'modular-shoe-rack'
-    },
-    {
-      title: 'Kids’ Study Desk',
-      price: 6_399,
-      img: '/assets/img/products/rc_2.png',
-      slug: 'kids-study-desk'
-    },
-    {
-      title: 'Fabric Storage Ottoman',
-      price: 3_250,
-      img: '/assets/img/products/rc_3.png',
-      slug: 'fabric-storage-ottoman'
-    }
-  ];
+  const recommended = pickShelfProducts([
+    'ergoflex-mesh-chair',
+    'convertible-playhouse-bed',
+    'artisan-acacia-board',
+  ]);
 
   /* ---------- Browse‑by‑Products tiles ---------- */
   const browseProducts = [
@@ -170,6 +122,8 @@ export default function Home() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [submitState, setSubmitState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [submitFeedback, setSubmitFeedback] = useState('');
 
     // simple regex helpers (10‑digit Indian mobile & basic e‑mail)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -187,23 +141,34 @@ export default function Home() {
 
      const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
-  if (!isValid) return;
+  if (!isValid || submitState === 'submitting') return;
+
+  setSubmitState('submitting');
+  setSubmitFeedback('');
 
   // Send details to the Apps Script endpoint
   const ok = await sendLead(name.trim(), email.trim(), phone.trim());
 
   if (ok) {
-    hideModal();        // close modal once saved
-    setName('');        // clear inputs
+    setSubmitState('success');
+    setSubmitFeedback('Thanks. Your details have been received and our team will contact you shortly.');
+    setName('');
     setEmail('');
     setPhone('');
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('leadModalShown', 'true');
+      window.setTimeout(() => hideModal(), 2200);
+    }
   } else {
-    alert('Sorry, something went wrong. Please try again.');
+    setSubmitState('error');
+    setSubmitFeedback('Something went wrong while sending your details. Please try again in a moment.');
   }
 };
 
     const hideModal = () => {
       setShowModal(false);
+      setSubmitState('idle');
+      setSubmitFeedback('');
       if (typeof window !== 'undefined') {
         sessionStorage.setItem('leadModalShown', 'true');
       }
@@ -238,58 +203,90 @@ export default function Home() {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-            className="relative w-[92%] max-w-md rounded-2xl bg-ivory/95 p-8 shadow-2xl ring-4 ring-white"
+            className="relative w-[92%] max-w-md rounded-[1.75rem] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,241,232,0.96))] p-6 shadow-2xl ring-1 ring-black/5 sm:p-8"
           >
             {/* close button */}
             <button
               onClick={hideModal}
               aria-label="Close"
-              className="absolute right-4 top-4 text-white hover:text-white/80"
+              className="absolute right-4 top-4 rounded-full p-2 text-walnut/80 transition hover:bg-walnut/10 hover:text-walnut"
             >
               <X className="h-6 w-6" />
             </button>
 
-            <h3 className="mb-2 text-center font-display text-xl font-semibold text-white">
-              Stay in the Loop
+            <div className="mx-auto mb-4 inline-flex rounded-full border border-walnut/10 bg-walnut/5 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-walnut/75">
+              Stay in the loop
+            </div>
+            <h3 className="mb-2 text-center font-display text-2xl font-semibold text-walnut">
+              Get updates from Crafting Corner
             </h3>
-            <p className="mb-6 text-center text-sm text-white/80">
-              Get exclusive offers & design tips delivered to your inbox.
+            <p className="mb-6 text-center text-sm leading-6 text-charcoal/75 sm:text-[0.95rem]">
+              Share your details for exclusive offers, launches, and handcrafted furniture updates.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
-                required
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Mobile Number"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full rounded-md border border-charcoal/20 px-4 py-2 outline-none focus:ring-2 focus:ring-walnut"
-                required
-              />
-
-              <button
-                type="submit"
-                disabled={!isValid}
-                className="w-full rounded-md bg-white py-2 font-medium text-walnut ring-1 ring-walnut transition disabled:cursor-not-allowed disabled:opacity-60"
+            {submitState === 'success' ? (
+              <div
+                role="status"
+                aria-live="polite"
+                className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-5 text-center"
               >
-                Notify Me
-              </button>
-            </form>
+                <p className="text-lg font-semibold text-emerald-800">
+                  Details received
+                </p>
+                <p className="mt-2 text-sm leading-6 text-emerald-700">
+                  {submitFeedback}
+                </p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full rounded-xl border border-charcoal/15 bg-white px-4 py-3 text-charcoal outline-none transition focus:border-walnut/50 focus:ring-2 focus:ring-walnut/20"
+                  required
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full rounded-xl border border-charcoal/15 bg-white px-4 py-3 text-charcoal outline-none transition focus:border-walnut/50 focus:ring-2 focus:ring-walnut/20"
+                  required
+                />
+                <input
+                  type="tel"
+                  placeholder="Mobile Number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  className="w-full rounded-xl border border-charcoal/15 bg-white px-4 py-3 text-charcoal outline-none transition focus:border-walnut/50 focus:ring-2 focus:ring-walnut/20"
+                  required
+                />
+
+                {submitFeedback ? (
+                  <div
+                    role={submitState === 'error' ? 'alert' : 'status'}
+                    aria-live="polite"
+                    className={`rounded-xl px-4 py-3 text-sm leading-6 ${
+                      submitState === 'error'
+                        ? 'border border-rose-200 bg-rose-50 text-rose-700'
+                        : 'border border-emerald-200 bg-emerald-50 text-emerald-700'
+                    }`}
+                  >
+                    {submitFeedback}
+                  </div>
+                ) : null}
+
+                <button
+                  type="submit"
+                  disabled={!isValid || submitState === 'submitting'}
+                  className="w-full rounded-xl bg-walnut py-3 font-medium text-ivory transition hover:bg-[#5c3e2c] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {submitState === 'submitting' ? 'Sending...' : 'Notify Me'}
+                </button>
+              </form>
+            )}
           </motion.div>
         </div>
       )}
