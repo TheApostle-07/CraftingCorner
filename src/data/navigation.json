@@ -1,0 +1,30 @@
+[
+  {
+    "id": "nav_home",
+    "label": "Home",
+    "href": "/",
+    "visibility": "published",
+    "sortOrder": 1
+  },
+  {
+    "id": "nav_categories",
+    "label": "Categories",
+    "href": "#categories",
+    "visibility": "published",
+    "sortOrder": 2
+  },
+  {
+    "id": "nav_about",
+    "label": "About",
+    "href": "/about",
+    "visibility": "published",
+    "sortOrder": 3
+  },
+  {
+    "id": "nav_contact",
+    "label": "Contact",
+    "href": "/contact",
+    "visibility": "published",
+    "sortOrder": 4
+  }
+]

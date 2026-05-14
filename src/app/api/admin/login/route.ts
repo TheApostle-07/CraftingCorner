@@ -6,7 +6,6 @@ import {
   isAdminConfigured,
   verifyAdminCredentials,
 } from '@/lib/adminAuth';
-import { getSiteStatus, getSiteStorageInfo } from '@/lib/siteStatus';
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -41,8 +40,6 @@ export async function POST(request: Request) {
   const response = NextResponse.json({
     authenticated: true,
     message: 'Admin session started.',
-    status: await getSiteStatus(),
-    storageInfo: getSiteStorageInfo(),
   });
 
   attachAdminSession(response);

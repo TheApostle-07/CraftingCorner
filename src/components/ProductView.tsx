@@ -6,8 +6,11 @@
 
 import { MotionConfig, motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
+import { MessageCircle } from 'lucide-react';
 import ProductCard from './ProductCard';
 
+import siteData from '@/data/site.json';
 import type { Product } from '../lib/loaders.server';
 
 type Props = {
@@ -18,6 +21,12 @@ type Props = {
 export default function ProductView({ product, related }: Props) {
   // make gallery always an array
   const gallery = Array.isArray(product.img) ? product.img : [product.img];
+  const productUrl = `https://craftingcorner.in/products/${product.slug}`;
+  const enquiryMessage = siteData.whatsapp.productMessageTemplate
+    .replace('{{productName}}', product.title)
+    .replace('{{price}}', `₹${product.price.toLocaleString('en-IN')}`)
+    .replace('{{productUrl}}', productUrl);
+  const whatsappHref = `https://wa.me/${siteData.whatsapp.number.replace(/\D/g, '')}?text=${encodeURIComponent(enquiryMessage)}`;
 
   return (
     <MotionConfig transition={{ duration: 0.5, ease: 'easeOut' }}>
@@ -75,6 +84,18 @@ export default function ProductView({ product, related }: Props) {
                 ))}
               </ul>
             )}
+
+            {siteData.whatsapp.enabled ? (
+              <Link
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-max items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(37,211,102,0.22)] transition hover:bg-[#1DA851]"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Enquire on WhatsApp
+              </Link>
+            ) : null}
           </motion.div>
         </section>
 

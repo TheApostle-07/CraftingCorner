@@ -38,8 +38,10 @@ export async function generateMetadata({
   if (!cat) return {};
 
   return {
-    title: `${cat.title} | Crafting Corner`,
-    description: `Explore handcrafted ${cat.title.toLowerCase()} designed for Indian homes.`,
+    title: cat.seo?.title || `${cat.title} | Crafting Corner`,
+    description:
+      cat.seo?.description ||
+      `Explore handcrafted ${cat.title.toLowerCase()} designed for Indian homes.`,
     openGraph: {
       images: [cat.image],
     },
@@ -80,21 +82,16 @@ export default async function CategoryPage({
             {cat.title}
           </h1>
           <p className="mx-auto mt-4 max-w-md text-lg text-white/90">
-            Discover heirloom-quality pieces crafted to elevate modern Indian
-            living spaces.
+            {cat.subtitle}
           </p>
         </div>
       </section>
 
       {/* Products grid */}
       <section className="mx-auto grid max-w-6xl grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-8 px-4">
-      {products.map((p) => (
-  <ProductCard
-    key={p.slug}
-    {...p}
-    img={Array.isArray(p.img) ? p.img[0] : p.img}
-  />
-))}
+        {products.map((p) => (
+          <ProductCard key={p.id || p.slug} {...p} />
+        ))}
       </section>
     </main>
   );

@@ -9,9 +9,9 @@
 
    import { motion, useScroll, useTransform } from 'framer-motion';
    import Image from 'next/image';
-   import Link from 'next/link';
 
    import { Great_Vibes } from 'next/font/google';
+   import type { HomepageData } from '@/lib/types';
 
    // Elegant script for headline
    const greatVibes = Great_Vibes({
@@ -20,7 +20,7 @@
      display: 'swap',
    });
    
-   export default function Hero() {
+   export default function Hero({ data }: { data?: HomepageData['hero'] }) {
      /* Parallax bg offset */
      const { scrollY } = useScroll();
      const yBg = useTransform(scrollY, [0, 600], ['0%', '15%']);
@@ -30,7 +30,7 @@
          {/* Background */}
          <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10">
            <Image
-             src="/assets/img/CC_Hero_1.png"
+             src={data?.backgroundImage || '/assets/img/CC_Hero_1.png'}
              alt=""
              fill
              priority
@@ -50,7 +50,7 @@
            className="relative mb-4 h-48 w-48 sm:h-64 sm:w-64"
          >
             <Image
-              src="/assets/img/logo.png"
+              src={data?.logoImage || '/assets/img/logo.png'}
               alt="Crafting Corner logo"
               width={512}
               height={512}
@@ -65,9 +65,7 @@
             className={`${greatVibes.className} mb-1 sm:mb-3 lg:mb-4 italic text-4xl leading-snug sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-md`}
           >
             {/* Responsive headline – each word stacks on xs and flows inline ≥sm */}
-            <span className="block sm:inline">Timeless&nbsp;</span>
-            <span className="block sm:inline whitespace-nowrap">Hand‑Crafted&nbsp;</span>
-            <span className="block sm:inline text-brass">Furniture</span>
+            {data?.title || 'Timeless Hand-Crafted Furniture'}
            </motion.h1>
    
            <motion.p
@@ -76,7 +74,7 @@
              transition={{ delay: 0.3, duration: 0.8 }}
              className="mb-16 sm:mb-20 max-w-xl text-base sm:text-lg md:text-xl"
            >
-             Made to transcend trends, built to last generations.
+             {data?.subtitle || 'Made to transcend trends, built to last generations.'}
            </motion.p>
          </div>
    
@@ -104,7 +102,7 @@
              <path d="M12 5v14M19 12l-7 7-7-7" />
            </svg>
            <span className="mt-1 block text-xs uppercase tracking-widest">
-             Scroll
+             {data?.scrollLabel || 'Scroll'}
            </span>
          </motion.button>
        </section>

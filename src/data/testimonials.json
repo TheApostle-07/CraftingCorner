@@ -1,0 +1,42 @@
+[
+  {
+    "id": "test_aditi_mehra",
+    "name": "Aditi Mehra",
+    "role": "Mohali Homeowner",
+    "projectType": "Bedroom Furnishing",
+    "location": "Punjab, India",
+    "quote": "Needed a warm wood bedroom setup that felt premium without crowding the room. The sizing, finish previews, and final installation all felt measured and properly thought through.",
+    "visibility": "published",
+    "sortOrder": 1
+  },
+  {
+    "id": "test_rohan_suri",
+    "name": "Rohan Suri",
+    "role": "Bengaluru Apartment Owner",
+    "projectType": "Dining Upgrade",
+    "location": "Karnataka, India",
+    "quote": "The main priority was getting a dining table that looked refined but could handle everyday family use. The joinery, finish consistency, and overall proportions felt dependable in person.",
+    "visibility": "published",
+    "sortOrder": 2
+  },
+  {
+    "id": "test_maya_chen",
+    "name": "Maya Chen",
+    "role": "Singapore Condo Client",
+    "projectType": "Living Room Styling",
+    "location": "Singapore",
+    "quote": "What stood out was the clarity before production. Material references, finish direction, and the final visual weight of the pieces stayed aligned with the look we had discussed.",
+    "visibility": "published",
+    "sortOrder": 3
+  },
+  {
+    "id": "test_daniel_okafor",
+    "name": "Daniel Okafor",
+    "role": "Dubai Villa Renovation",
+    "projectType": "Custom Lounge Pieces",
+    "location": "United Arab Emirates",
+    "quote": "The requirement was simple: clean silhouettes, solid build quality, and furniture that would still feel comfortable for daily use. The final pieces landed with the right balance of detail and restraint.",
+    "visibility": "published",
+    "sortOrder": 4
+  }
+]

@@ -1,101 +1,316 @@
 [
-    {
-      "title": "Living Room",
-      "slug": "living-room",
-      "icon": "sofa",
-      "image": "/assets/img/category/living_room_cat.png",
-      "subs": [
-        { "title": "Sofas & Sectionals", "slug": "sofas",           "image": "/assets/category/sofas.jpg" },
-        { "title": "Recliners",            "slug": "recliners",       "image": "/assets/category/recliners.jpg" },
-        { "title": "Coffee & Center Tables","slug": "coffee-tables",  "image": "/assets/category/coffee-tables.jpg" },
-        { "title": "TV Units & Media",     "slug": "tv-units",       "image": "/assets/category/tv-units.jpg" },
-        { "title": "Book Shelves",         "slug": "book-shelves",   "image": "/assets/category/book-shelves.jpg" },
-        { "title": "Side Tables",          "slug": "side-tables",    "image": "/assets/category/side-tables.jpg" }
-      ]
+  {
+    "id": "cat_living_room",
+    "slug": "living-room",
+    "name": "Living Room",
+    "title": "Living Room",
+    "subtitle": "Discover heirloom-quality pieces crafted to elevate modern Indian living spaces.",
+    "image": "/assets/img/category/living_room_cat.png",
+    "alt": "Living Room category image",
+    "icon": "sofa",
+    "visibility": "published",
+    "sortOrder": 1,
+    "seo": {
+      "title": "Living Room | Crafting Corner",
+      "description": "Explore handcrafted living room designed for Indian homes."
     },
-    {
-      "title": "Bedroom",
-      "slug": "bedroom",
-      "icon": "bed-double",
-      "image": "/assets/img/category/bed_room_cat.png",
-      "subs": [
-        { "title": "Beds",               "slug": "beds",            "image": "/assets/category/beds.jpg" },
-        { "title": "Wardrobes",          "slug": "wardrobes",       "image": "/assets/category/wardrobes.jpg" },
-        { "title": "Bedside Tables",     "slug": "bedside-tables",  "image": "/assets/category/bedside-tables.jpg" },
-        { "title": "Dressers & Mirrors", "slug": "dressers",        "image": "/assets/category/dressers.jpg" },
-        { "title": "Mattresses",         "slug": "mattresses",      "image": "/assets/category/mattresses.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Sofas & Sectionals",
+        "slug": "sofas",
+        "image": "/assets/category/sofas.jpg"
+      },
+      {
+        "title": "Recliners",
+        "slug": "recliners",
+        "image": "/assets/category/recliners.jpg"
+      },
+      {
+        "title": "Coffee & Center Tables",
+        "slug": "coffee-tables",
+        "image": "/assets/category/coffee-tables.jpg"
+      },
+      {
+        "title": "TV Units & Media",
+        "slug": "tv-units",
+        "image": "/assets/category/tv-units.jpg"
+      },
+      {
+        "title": "Book Shelves",
+        "slug": "book-shelves",
+        "image": "/assets/category/book-shelves.jpg"
+      },
+      {
+        "title": "Side Tables",
+        "slug": "side-tables",
+        "image": "/assets/category/side-tables.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_bedroom",
+    "slug": "bedroom",
+    "name": "Bedroom",
+    "title": "Bedroom",
+    "subtitle": "Warm, well-built bedroom furniture designed for calm everyday living.",
+    "image": "/assets/img/category/bed_room_cat.png",
+    "alt": "Bedroom category image",
+    "icon": "bed-double",
+    "visibility": "published",
+    "sortOrder": 2,
+    "seo": {
+      "title": "Bedroom | Crafting Corner",
+      "description": "Explore handcrafted bedroom designed for Indian homes."
     },
-    {
-      "title": "Dining Room",
-      "slug": "dining-room",
-      "icon": "fork-knife",
-      "image": "/assets/img/category/dining_room_cat.png",
-      "subs": [
-        { "title": "Dining Tables", "slug": "dining-tables", "image": "/assets/category/dining-tables.jpg" },
-        { "title": "Dining Chairs", "slug": "dining-chairs", "image": "/assets/category/dining-chairs.jpg" },
-        { "title": "Dining Sets",  "slug": "dining-sets",   "image": "/assets/category/dining-sets.jpg" },
-        { "title": "Benches",      "slug": "benches",       "image": "/assets/category/benches.jpg" },
-        { "title": "Bar Units",    "slug": "bar-units",     "image": "/assets/category/bar-units.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Beds",
+        "slug": "beds",
+        "image": "/assets/category/beds.jpg"
+      },
+      {
+        "title": "Wardrobes",
+        "slug": "wardrobes",
+        "image": "/assets/category/wardrobes.jpg"
+      },
+      {
+        "title": "Bedside Tables",
+        "slug": "bedside-tables",
+        "image": "/assets/category/bedside-tables.jpg"
+      },
+      {
+        "title": "Dressers & Mirrors",
+        "slug": "dressers",
+        "image": "/assets/category/dressers.jpg"
+      },
+      {
+        "title": "Mattresses",
+        "slug": "mattresses",
+        "image": "/assets/category/mattresses.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_dining_room",
+    "slug": "dining-room",
+    "name": "Dining Room",
+    "title": "Dining Room",
+    "subtitle": "Dining pieces made for hosting, family meals, and long conversations.",
+    "image": "/assets/img/category/dining_room_cat.png",
+    "alt": "Dining Room category image",
+    "icon": "fork-knife",
+    "visibility": "published",
+    "sortOrder": 3,
+    "seo": {
+      "title": "Dining Room | Crafting Corner",
+      "description": "Explore handcrafted dining room designed for Indian homes."
     },
-    {
-      "title": "Study & Office",
-      "slug": "office",
-      "icon": "briefcase",
-      "image": "/assets/img/category/study_office_cat.png",
-      "subs": [
-        { "title": "Office Chairs",   "slug": "office-chairs",   "image": "/assets/category/office-chairs.jpg" },
-        { "title": "Study Desks",     "slug": "study-desks",     "image": "/assets/category/study-desks.jpg" },
-        { "title": "Bookcases",       "slug": "bookcases",       "image": "/assets/category/bookcases.jpg" },
-        { "title": "Filing Cabinets", "slug": "filing-cabinets", "image": "/assets/category/filing-cabinets.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Dining Tables",
+        "slug": "dining-tables",
+        "image": "/assets/category/dining-tables.jpg"
+      },
+      {
+        "title": "Dining Chairs",
+        "slug": "dining-chairs",
+        "image": "/assets/category/dining-chairs.jpg"
+      },
+      {
+        "title": "Dining Sets",
+        "slug": "dining-sets",
+        "image": "/assets/category/dining-sets.jpg"
+      },
+      {
+        "title": "Benches",
+        "slug": "benches",
+        "image": "/assets/category/benches.jpg"
+      },
+      {
+        "title": "Bar Units",
+        "slug": "bar-units",
+        "image": "/assets/category/bar-units.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_office",
+    "slug": "office",
+    "name": "Study & Office",
+    "title": "Study & Office",
+    "subtitle": "Work-ready desks, seating, and storage with a handcrafted furniture language.",
+    "image": "/assets/img/category/study_office_cat.png",
+    "alt": "Study & Office category image",
+    "icon": "briefcase",
+    "visibility": "published",
+    "sortOrder": 4,
+    "seo": {
+      "title": "Study & Office | Crafting Corner",
+      "description": "Explore handcrafted study & office designed for Indian homes."
     },
-    {
-      "title": "Outdoor",
-      "slug": "outdoor",
-      "icon": "sun",
-      "image": "/assets/img/category/outdoor_cat.png",
-      "subs": [
-        { "title": "Patio Sets",   "slug": "patio-sets",   "image": "/assets/category/patio-sets.jpg" },
-        { "title": "Garden Chairs", "slug": "garden-chairs", "image": "/assets/category/garden-chairs.jpg" },
-        { "title": "Swings",        "slug": "swings",        "image": "/assets/category/swings.jpg" },
-        { "title": "Loungers",      "slug": "loungers",      "image": "/assets/category/loungers.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Office Chairs",
+        "slug": "office-chairs",
+        "image": "/assets/category/office-chairs.jpg"
+      },
+      {
+        "title": "Study Desks",
+        "slug": "study-desks",
+        "image": "/assets/category/study-desks.jpg"
+      },
+      {
+        "title": "Bookcases",
+        "slug": "bookcases",
+        "image": "/assets/category/bookcases.jpg"
+      },
+      {
+        "title": "Filing Cabinets",
+        "slug": "filing-cabinets",
+        "image": "/assets/category/filing-cabinets.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_outdoor",
+    "slug": "outdoor",
+    "name": "Outdoor",
+    "title": "Outdoor",
+    "subtitle": "Durable outdoor pieces for balconies, gardens, patios, and open-air lounging.",
+    "image": "/assets/img/category/outdoor_cat.png",
+    "alt": "Outdoor category image",
+    "icon": "sun",
+    "visibility": "published",
+    "sortOrder": 5,
+    "seo": {
+      "title": "Outdoor | Crafting Corner",
+      "description": "Explore handcrafted outdoor designed for Indian homes."
     },
-    {
-      "title": "Kids Room",
-      "slug": "kids-room",
-      "icon": "baby",
-      "image": "/assets/img/category/kids_room_cat.png",
-      "subs": [
-        { "title": "Kids Beds",      "slug": "kids-beds",      "image": "/assets/category/kids-beds.jpg" },
-        { "title": "Study Tables",   "slug": "kids-study",    "image": "/assets/category/kids-study.jpg" },
-        { "title": "Toy Storage",    "slug": "toy-storage",   "image": "/assets/category/toy-storage.jpg" },
-        { "title": "Kids Seating",   "slug": "kids-seating",  "image": "/assets/category/kids-seating.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Patio Sets",
+        "slug": "patio-sets",
+        "image": "/assets/category/patio-sets.jpg"
+      },
+      {
+        "title": "Garden Chairs",
+        "slug": "garden-chairs",
+        "image": "/assets/category/garden-chairs.jpg"
+      },
+      {
+        "title": "Swings",
+        "slug": "swings",
+        "image": "/assets/category/swings.jpg"
+      },
+      {
+        "title": "Loungers",
+        "slug": "loungers",
+        "image": "/assets/category/loungers.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_kids_room",
+    "slug": "kids-room",
+    "name": "Kids Room",
+    "title": "Kids Room",
+    "subtitle": "Thoughtful kids furniture built for play, storage, rest, and study.",
+    "image": "/assets/img/category/kids_room_cat.png",
+    "alt": "Kids Room category image",
+    "icon": "baby",
+    "visibility": "published",
+    "sortOrder": 6,
+    "seo": {
+      "title": "Kids Room | Crafting Corner",
+      "description": "Explore handcrafted kids room designed for Indian homes."
     },
-    {
-      "title": "Custom Furniture",
-      "slug": "custom",
-      "icon": "archive",
-      "image": "/assets/img/category/H&S_cat.png",
-      "subs": [
-        { "title": "Shoe Racks",      "slug": "shoe-racks",      "image": "/assets/category/shoe-racks.jpg" },
-        { "title": "Console Tables",  "slug": "console-tables",  "image": "/assets/category/console-tables.jpg" },
-        { "title": "Cabinets",        "slug": "cabinets",        "image": "/assets/category/cabinets.jpg" }
-      ]
+    "subs": [
+      {
+        "title": "Kids Beds",
+        "slug": "kids-beds",
+        "image": "/assets/category/kids-beds.jpg"
+      },
+      {
+        "title": "Study Tables",
+        "slug": "kids-study",
+        "image": "/assets/category/kids-study.jpg"
+      },
+      {
+        "title": "Toy Storage",
+        "slug": "toy-storage",
+        "image": "/assets/category/toy-storage.jpg"
+      },
+      {
+        "title": "Kids Seating",
+        "slug": "kids-seating",
+        "image": "/assets/category/kids-seating.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_custom",
+    "slug": "custom",
+    "name": "Custom Furniture",
+    "title": "Custom Furniture",
+    "subtitle": "Bespoke furniture and storage pieces made around your home and measurements.",
+    "image": "/assets/img/category/H&S_cat.png",
+    "alt": "Custom Furniture category image",
+    "icon": "archive",
+    "visibility": "published",
+    "sortOrder": 7,
+    "seo": {
+      "title": "Custom Furniture | Crafting Corner",
+      "description": "Explore handcrafted custom furniture designed for Indian homes."
     },
-    {
-      "title": "Kitchen & Bar",
-      "slug": "kitchen-bar",
-      "icon": "wine",
-      "image": "/assets/img/category/K&B_cat.png",
-      "subs": [
-        { "title": "Bar Stools",      "slug": "bar-stools",      "image": "/assets/category/bar-stools.jpg" },
-        { "title": "Kitchen Islands", "slug": "kitchen-islands", "image": "/assets/category/kitchen-islands.jpg" },
-        { "title": "Trolleys",        "slug": "trolleys",        "image": "/assets/category/trolleys.jpg" }
-      ]
-    }
-  ]
-  
+    "subs": [
+      {
+        "title": "Shoe Racks",
+        "slug": "shoe-racks",
+        "image": "/assets/category/shoe-racks.jpg"
+      },
+      {
+        "title": "Console Tables",
+        "slug": "console-tables",
+        "image": "/assets/category/console-tables.jpg"
+      },
+      {
+        "title": "Cabinets",
+        "slug": "cabinets",
+        "image": "/assets/category/cabinets.jpg"
+      }
+    ]
+  },
+  {
+    "id": "cat_kitchen_bar",
+    "slug": "kitchen-bar",
+    "name": "Kitchen & Bar",
+    "title": "Kitchen & Bar",
+    "subtitle": "Kitchen, bar, and utility pieces with practical details and refined finishes.",
+    "image": "/assets/img/category/K&B_cat.png",
+    "alt": "Kitchen & Bar category image",
+    "icon": "wine",
+    "visibility": "published",
+    "sortOrder": 8,
+    "seo": {
+      "title": "Kitchen & Bar | Crafting Corner",
+      "description": "Explore handcrafted kitchen & bar designed for Indian homes."
+    },
+    "subs": [
+      {
+        "title": "Bar Stools",
+        "slug": "bar-stools",
+        "image": "/assets/category/bar-stools.jpg"
+      },
+      {
+        "title": "Kitchen Islands",
+        "slug": "kitchen-islands",
+        "image": "/assets/category/kitchen-islands.jpg"
+      },
+      {
+        "title": "Trolleys",
+        "slug": "trolleys",
+        "image": "/assets/category/trolleys.jpg"
+      }
+    ]
+  }
+]

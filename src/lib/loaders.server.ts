@@ -1,109 +1,96 @@
-/* --------------------------------------------------------------------------
-   src/lib/loaders.server.ts
-   Server helpers for reading category and product JSON safely in hosted builds.
---------------------------------------------------------------------------- */
-import bedroomProducts from '../data/products/bedroom.json';
-import customProducts from '../data/products/custom.json';
-import diningRoomProducts from '../data/products/dining-room.json';
-import kidsRoomProducts from '../data/products/kids-room.json';
-import kitchenBarProducts from '../data/products/kitchen-bar.json';
-import livingRoomProducts from '../data/products/living-room.json';
-import officeProducts from '../data/products/office.json';
-import outdoorProducts from '../data/products/outdoor.json';
-import type { Product } from './types';
-import { allCategories, getCategory } from './categories';
+import categoriesData from '../data/categories.json';
+import productsData from '../data/products.json';
+import type { Category, Product, ProductImage } from './types';
 
-function withCategory(products: Product[], category: string): Product[] {
-  return products.map((product) => ({
-    ...product,
-    category: product.category || category,
+function normalizeImages(product: Product): ProductImage[] {
+  if (Array.isArray(product.images) && product.images.length > 0) {
+    return product.images;
+  }
+
+  const imageUrls = Array.isArray(product.img) ? product.img : [product.img].filter(Boolean);
+
+  return imageUrls.map((url, index) => ({
+    url: url || '',
+    alt: index === 0 ? product.title || product.name || 'Product image' : `${product.title || product.name} view ${index + 1}`,
+    isPrimary: index === 0,
   }));
 }
 
-const categoryProductMap: Record<string, Product[]> = {
-  bedroom: withCategory(bedroomProducts as Product[], 'bedroom'),
-  custom: withCategory(customProducts as Product[], 'custom'),
-  'dining-room': withCategory(diningRoomProducts as Product[], 'dining-room'),
-  'kids-room': withCategory(kidsRoomProducts as Product[], 'kids-room'),
-  'kitchen-bar': withCategory(kitchenBarProducts as Product[], 'kitchen-bar'),
-  'living-room': withCategory(livingRoomProducts as Product[], 'living-room'),
-  office: withCategory(officeProducts as Product[], 'office'),
-  outdoor: withCategory(outdoorProducts as Product[], 'outdoor'),
-};
+function normalizeProduct(product: Product): Product {
+  const title = product.title || product.name || '';
+  const category = product.categorySlug || product.category || '';
+  const images = normalizeImages({ ...product, title });
+  const img = images.length > 1 ? images.map((image) => image.url) : images[0]?.url || '';
 
-function dedupeProducts(products: Product[]): Product[] {
-  return Array.from(
-    new Map(products.map((product) => [product.slug, product])).values(),
-  );
+  return {
+    ...product,
+    name: product.name || title,
+    title,
+    category,
+    categorySlug: category,
+    images,
+    img,
+    shortDescription: product.shortDescription || product.description || '',
+    description: product.description || product.shortDescription || '',
+    tags: product.tags || [],
+    sections: product.sections || {},
+    visibility: product.visibility || 'published',
+    sortOrder: product.sortOrder || 0,
+  };
 }
 
-/** Read `/src/data/products/<category>.json` with bundled-data fallback. */
+function normalizeCategory(category: Category, index: number): Category {
+  const title = category.title || category.name || '';
+
+  return {
+    ...category,
+    id: category.id || `cat_${category.slug.replace(/[^a-z0-9]+/gi, '_')}`,
+    name: category.name || title,
+    title,
+    subtitle:
+      category.subtitle ||
+      `Explore handcrafted ${title.toLowerCase()} designed for Indian homes.`,
+    alt: category.alt || `${title} category image`,
+    visibility: category.visibility || 'published',
+    sortOrder: category.sortOrder || index + 1,
+  };
+}
+
+function flattenProducts(raw: unknown): Product[] {
+  if (Array.isArray(raw)) {
+    return raw as Product[];
+  }
+
+  return Object.values(raw as Record<string, Product[]>).flat();
+}
+
+function publishedProduct(product: Product) {
+  return product.visibility !== 'draft';
+}
+
+function publishedCategory(category: Category) {
+  return category.visibility !== 'draft';
+}
+
+export const allCategories = (categoriesData as Category[])
+  .map(normalizeCategory)
+  .filter(publishedCategory)
+  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+const allProducts = flattenProducts(productsData)
+  .map(normalizeProduct)
+  .filter(publishedProduct)
+  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+export const getCategory = (slug: string) =>
+  allCategories.find((category) => category.slug === slug);
+
 export async function loadProducts(catSlug: string): Promise<Product[]> {
-  const bundledProducts = categoryProductMap[catSlug];
-  if (bundledProducts?.length) {
-    return bundledProducts;
-  }
-
-  try {
-    const { readFile } = await import('node:fs/promises');
-    const { join } = await import('node:path');
-    const file = join(process.cwd(), 'src', 'data', 'products', `${catSlug}.json`);
-    const json = await readFile(file, 'utf8');
-
-    if (json.trim()) {
-      return withCategory(JSON.parse(json) as Product[], catSlug);
-    }
-  } catch (err) {
-    console.error(`[loadProducts] Failed to load category "${catSlug}":`, err);
-  }
-
-  const fallbackProducts = await loadAllProducts();
-  return fallbackProducts.filter((product) => product.category === catSlug);
+  return allProducts.filter((product) => product.categorySlug === catSlug);
 }
 
-/** Read the master list at `/src/data/products.json` and flatten it. */
 export async function loadAllProducts(): Promise<Product[]> {
-  const categoryProducts = dedupeProducts(
-    Object.values(categoryProductMap).flat(),
-  );
-  if (categoryProducts.length) {
-    return categoryProducts;
-  }
-
-  try {
-    const mod = (await import('../data/products.json')) as { default: unknown };
-    const raw = mod.default as unknown;
-
-    if (Array.isArray(raw)) {
-      return dedupeProducts(raw as Product[]);
-    }
-
-    return dedupeProducts(
-      Object.values(raw as Record<string, Product[]>).flat() as Product[],
-    );
-  } catch {
-    /* fall through to fs */
-  }
-
-  try {
-    const { readFile } = await import('node:fs/promises');
-    const { join } = await import('node:path');
-    const file = join(process.cwd(), 'src', 'data', 'products.json');
-    const json = await readFile(file, 'utf8');
-
-    if (!json.trim()) {
-      return [];
-    }
-
-    const raw = JSON.parse(json) as Product[] | Record<string, Product[]>;
-    return dedupeProducts(
-      Array.isArray(raw) ? raw : Object.values(raw).flat(),
-    );
-  } catch (err) {
-    console.error('[loadAllProducts] Failed to load products:', err);
-    return [];
-  }
+  return allProducts;
 }
 
-export { allCategories, getCategory };
 export type { Product };

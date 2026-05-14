@@ -11,25 +11,65 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { X } from 'lucide-react';
 
+import homepageData from '@/data/homepage.json';
 import productsData from '@/data/products.json';
+import productTypesData from '@/data/productTypes.json';
+import testimonialsData from '@/data/testimonials.json';
 import Hero from '@/components/Hero';
 import ProductCard from '@/components/ProductCard';
 import { allCategories } from '@/lib/categories'; // client-safe helper
-import type { Category, Product } from '@/lib/types';
+import type { Category, HomepageData, Product, ProductType, Testimonial } from '@/lib/types';
 import { sendLead } from '@/lib/sendLead';
 
 type TestimonialAvatarVariant = 'aditi' | 'rohan' | 'maya' | 'daniel';
 type ShelfProduct = Pick<Product, 'slug' | 'title' | 'price' | 'img'>;
 
-const productCatalog = productsData as Record<string, Product[]>;
-const allCatalogProducts = Object.values(productCatalog).flat() as Product[];
-const productBySlug = new Map(allCatalogProducts.map((product) => [product.slug, product]));
+const homepage = homepageData as HomepageData;
+const allCatalogProducts = (productsData as Product[])
+  .filter((product) => product.visibility !== 'draft')
+  .map((product) => ({
+    ...product,
+    title: product.title || product.name || '',
+    img:
+      product.img ||
+      (product.images && product.images.length > 1
+        ? product.images.map((image) => image.url)
+        : product.images?.[0]?.url || ''),
+    category: product.categorySlug || product.category,
+  }));
+const productBySlug = new Map(
+  allCatalogProducts.map((product) => [product.slug, product]),
+);
+const productTypes = (productTypesData as ProductType[])
+  .filter((type) => type.visibility !== 'draft')
+  .sort((a, b) => a.sortOrder - b.sortOrder);
+const testimonials = (testimonialsData as Testimonial[])
+  .filter((testimonial) => testimonial.visibility !== 'draft')
+  .sort((a, b) => a.sortOrder - b.sortOrder);
 
 function pickShelfProducts(slugs: string[]): ShelfProduct[] {
   return slugs
     .map((slug) => productBySlug.get(slug))
     .filter((product): product is Product => Boolean(product))
     .map(({ slug, title, price, img }) => ({ slug, title, price, img }));
+}
+
+function orderBySlugs<T extends { slug: string }>(items: T[], slugs: string[]) {
+  const bySlug = new Map(items.map((item) => [item.slug, item]));
+  const ordered = slugs
+    .map((slug) => bySlug.get(slug))
+    .filter((item): item is T => Boolean(item));
+
+  return [
+    ...ordered,
+    ...items.filter((item) => !slugs.includes(item.slug)),
+  ];
+}
+
+function getAvatarVariant(index: number): TestimonialAvatarVariant {
+  return (['aditi', 'rohan', 'maya', 'daniel'] as TestimonialAvatarVariant[])[
+    index % 4
+  ];
 }
 
 
@@ -42,80 +82,23 @@ export default function Home() {
   /* --------------------------------------------------------------------
         1.  DATA  — static shelves (JSON / hard-coded for now)
   -------------------------------------------------------------------- */
-  const bestSellers = pickShelfProducts([
-    'sirohi-king-platform-bed',
-    'nimbus-sectional-sofa',
-    'solaire-dining-table',
-  ]);
+  const bestSellers = pickShelfProducts(
+    homepage.sections.bestSellers.productSlugs,
+  );
+  const featured = pickShelfProducts(homepage.sections.featured.productSlugs);
+  const topPicks = pickShelfProducts(homepage.sections.topPicks.productSlugs);
+  const recommended = pickShelfProducts(
+    homepage.sections.recommended.productSlugs,
+  );
 
-  const featured = pickShelfProducts([
-    'aranya-teak-tv-console',
-    'kashmir-walnut-coffee-table',
-    'indigo-velvet-accent-chair',
-  ]);
-
-  const topPicks = pickShelfProducts([
-    'mysuru-rosewood-bookshelf',
-    'cascade-bar-stool',
-    'sutra-rattan-side-table',
-  ]);
-
-  const recommended = pickShelfProducts([
-    'ergoflex-mesh-chair',
-    'convertible-playhouse-bed',
-    'artisan-acacia-board',
-  ]);
-
-  /* ---------- Browse‑by‑Products tiles ---------- */
-  const browseProducts = [
-    { title: 'Dining Table Set', slug: 'dining-table-set', img: '/assets/img/products/browse_dining.png' },
-    { title: 'Sofa Set', slug: 'sofa-set', img: '/assets/img/products/browse_sofa.png' },
-    { title: 'Rugs', slug: 'rugs', img: '/assets/img/products/browse_rugs.png' },
-    { title: 'Centre Tables', slug: 'centre-tables', img: '/assets/img/products/browse_centre.png' },
-    { title: 'Console', slug: 'console', img: '/assets/img/products/browse_console.png' },
-    { title: 'Chairs', slug: 'chairs', img: '/assets/img/products/browse_chairs.png' },
-    { title: 'Beds', slug: 'beds', img: '/assets/img/products/browse_beds.png' },
-    { title: 'Coffee / Side Table', slug: 'coffee-side-table', img: '/assets/img/products/browse_coffee.png' },
-  ];
-
-  const testimonials = [
-    {
-      name: 'Aditi Mehra',
-      role: 'Mohali Homeowner',
-      project: 'Bedroom Furnishing',
-      location: 'Punjab, India',
-      feedback:
-        'Needed a warm wood bedroom setup that felt premium without crowding the room. The sizing, finish previews, and final installation all felt measured and properly thought through.',
-      avatar: 'aditi' as TestimonialAvatarVariant,
-    },
-    {
-      name: 'Rohan Suri',
-      role: 'Bengaluru Apartment Owner',
-      project: 'Dining Upgrade',
-      location: 'Karnataka, India',
-      feedback:
-        'The main priority was getting a dining table that looked refined but could handle everyday family use. The joinery, finish consistency, and overall proportions felt dependable in person.',
-      avatar: 'rohan' as TestimonialAvatarVariant,
-    },
-    {
-      name: 'Maya Chen',
-      role: 'Singapore Condo Client',
-      project: 'Living Room Styling',
-      location: 'Singapore',
-      feedback:
-        'What stood out was the clarity before production. Material references, finish direction, and the final visual weight of the pieces stayed aligned with the look we had discussed.',
-      avatar: 'maya' as TestimonialAvatarVariant,
-    },
-    {
-      name: 'Daniel Okafor',
-      role: 'Dubai Villa Renovation',
-      project: 'Custom Lounge Pieces',
-      location: 'United Arab Emirates',
-      feedback:
-        'The requirement was simple: clean silhouettes, solid build quality, and furniture that would still feel comfortable for daily use. The final pieces landed with the right balance of detail and restraint.',
-      avatar: 'daniel' as TestimonialAvatarVariant,
-    },
-  ];
+  const browseProducts = orderBySlugs(
+    productTypes,
+    homepage.sections.browseProducts.productTypeOrder,
+  ).map((type) => ({
+    title: type.name,
+    slug: type.slug,
+    img: type.image,
+  }));
 
     // ──────────────────────────── Visitor lead‑capture modal ────────────────────────────
     const [showModal, setShowModal] = useState(false);
@@ -178,15 +161,23 @@ export default function Home() {
         2.  CATEGORY CAROUSEL LOGIC
   -------------------------------------------------------------------- */
   const [page, setPage] = useState(0);
+  const homepageCategories = useMemo(
+    () =>
+      orderBySlugs(
+        allCategories,
+        homepage.sections.browseCategories.categoryOrder,
+      ),
+    [],
+  );
 
   // break categories into pages of 4
   const pages = useMemo(() => {
     const chunks: Category[][] = [];
-    for (let i = 0; i < allCategories.length; i += CATS_PER_PAGE) {
-      chunks.push(allCategories.slice(i, i + CATS_PER_PAGE));
+    for (let i = 0; i < homepageCategories.length; i += CATS_PER_PAGE) {
+      chunks.push(homepageCategories.slice(i, i + CATS_PER_PAGE));
     }
     return chunks;
-  }, []);
+  }, [homepageCategories]);
 
   const next = () => setPage((p) => (p + 1) % pages.length);
   const prev = () => setPage((p) => (p - 1 + pages.length) % pages.length);
@@ -291,12 +282,13 @@ export default function Home() {
         </div>
       )}
       {/* ───────────────────────── Hero ───────────────────────── */}
-      <Hero />
+      <Hero data={homepage.hero} />
 
       {/* ───────────────────── Categories carousel ────────────── */}
+      {homepage.sections.browseCategories.visible && pages.length > 0 ? (
       <section id="categories" className="relative mx-auto mt-16 max-w-6xl px-8 lg:px-4">
         <h2 className="mb-8 font-display text-2xl font-semibold text-walnut lg:mb-6">
-          Browse by Category
+          {homepage.sections.browseCategories.heading}
         </h2>
 
         <div className="relative overflow-visible">
@@ -362,11 +354,13 @@ export default function Home() {
           </div>
         </div>
       </section>
+      ) : null}
 
       {/* ───────────────────── Browse‑by‑Products grid ─────────────── */}
+      {homepage.sections.browseProducts.visible && browseProducts.length > 0 ? (
        <section id="browse-products" className="mx-auto mt-20 max-w-6xl px-8 lg:px-4">
         <h2 className="mb-8 font-display text-2xl font-semibold text-walnut lg:mb-6">
-          Browse by Products
+          {homepage.sections.browseProducts.heading}
         </h2>
 
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
@@ -392,23 +386,34 @@ export default function Home() {
           ))}
         </div>
       </section>
+      ) : null}
 
       {/* ───────────────────── Product Shelves ────────────────── */}
-      <Shelf title="Best Sellers" items={bestSellers} />
-      <Shelf title="Featured Products" items={featured} />
-      <Shelf title="Top Picks" items={topPicks} />
-      <Shelf title="Recommended for You" items={recommended} />
+      {homepage.sections.bestSellers.visible ? (
+        <Shelf title={homepage.sections.bestSellers.heading} items={bestSellers} />
+      ) : null}
+      {homepage.sections.featured.visible ? (
+        <Shelf title={homepage.sections.featured.heading} items={featured} />
+      ) : null}
+      {homepage.sections.topPicks.visible ? (
+        <Shelf title={homepage.sections.topPicks.heading} items={topPicks} />
+      ) : null}
+      {homepage.sections.recommended.visible ? (
+        <Shelf
+          title={homepage.sections.recommended.heading}
+          items={recommended}
+        />
+      ) : null}
 
       {/* ───────────────────── Testimonials ───────────────────── */}
+      {homepage.sections.testimonials.visible && testimonials.length > 0 ? (
       <section className="mx-auto my-20 max-w-6xl px-4">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-display text-2xl font-semibold text-walnut">
-            Client Perspectives
+            {homepage.sections.testimonials.heading}
           </h2>
           <p className="mt-3 text-sm leading-7 text-charcoal/70 sm:text-base">
-            A more grounded snapshot of the kind of feedback design-led buyers
-            usually care about most: fit, finish, communication, and how the
-            furniture finally sits in the room.
+            {homepage.sections.testimonials.subheading}
           </p>
         </div>
         <motion.div
@@ -420,7 +425,7 @@ export default function Home() {
             visible: { transition: { staggerChildren: 0.2 } }
           }}
         >
-          {testimonials.map((t) => (
+          {testimonials.map((t, index) => (
             <motion.div
               key={t.name}
               className="flex h-full flex-col rounded-[1.75rem] border border-[#e4d8ca] bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(247,241,232,0.82))] p-6 text-left shadow-[0_16px_40px_rgba(110,75,52,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_22px_50px_rgba(110,75,52,0.12)]"
@@ -430,7 +435,7 @@ export default function Home() {
               }}
             >
               <div className="flex items-start gap-4">
-                <TestimonialAvatar variant={t.avatar} name={t.name} />
+                <TestimonialAvatar variant={getAvatarVariant(index)} name={t.name} />
                 <div className="min-w-0">
                   <p className="font-display text-xl font-semibold text-walnut">
                     {t.name}
@@ -442,19 +447,20 @@ export default function Home() {
               </div>
               <div className="mt-5 flex flex-wrap gap-2">
                 <span className="rounded-full bg-[#efe2d4] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-walnut/80">
-                  {t.project}
+                  {t.projectType}
                 </span>
                 <span className="rounded-full border border-[#e0d0c0] bg-white/80 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.14em] text-charcoal/60">
                   {t.location}
                 </span>
               </div>
               <p className="mt-5 flex-1 text-sm leading-7 text-charcoal/80 sm:text-[0.97rem]">
-                {t.feedback}
+                  {t.quote}
               </p>
             </motion.div>
           ))}
         </motion.div>
       </section>
+      ) : null}
     </>
   );
 }
@@ -467,7 +473,7 @@ function Shelf({
   items,
 }: {
   title: string;
-  items: { title: string; price: number; img: string; slug: string }[];
+  items: { title: string; price: number; img?: string | string[]; slug: string }[];
 }) {
   if (items.length === 0) return null;
 

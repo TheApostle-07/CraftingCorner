@@ -46,6 +46,10 @@ function isHostedDeployment() {
   return process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 }
 
+function useDatabaseStatus() {
+  return process.env.SITE_STATUS_STORAGE === 'database' && hasDatabaseConnection();
+}
+
 async function ensureDatabaseStatusTable() {
   const sql = getDatabaseClient();
 
@@ -277,11 +281,11 @@ async function writeGitHubStatus(
 }
 
 export function getSiteStorageInfo(): SiteStorageInfo {
-  if (hasDatabaseConnection()) {
+  if (useDatabaseStatus()) {
     return {
       mode: 'database',
       canUpdate: true,
-      note: 'Persists the public site status in PostgreSQL via DATABASE_URL.',
+      note: 'Persists the public site status in PostgreSQL because SITE_STATUS_STORAGE=database is explicitly set.',
     };
   }
 
@@ -315,7 +319,7 @@ export function getSiteStorageInfo(): SiteStorageInfo {
 export async function getSiteStatus() {
   noStore();
 
-  if (hasDatabaseConnection()) {
+  if (useDatabaseStatus()) {
     return readDatabaseStatus();
   }
 
@@ -343,7 +347,7 @@ export async function updateSiteStatus(active: boolean, updatedBy = 'admin') {
     updatedBy,
   };
 
-  if (hasDatabaseConnection()) {
+  if (useDatabaseStatus()) {
     return writeDatabaseStatus(nextStatus);
   }
 

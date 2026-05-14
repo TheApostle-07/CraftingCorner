@@ -1,4 +1,9 @@
-import { createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
+import {
+  createHash,
+  createHmac,
+  randomBytes,
+  timingSafeEqual,
+} from 'node:crypto';
 
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -13,6 +18,10 @@ function getAdminUsername() {
 
 function getAdminPassword() {
   return process.env.ADMIN_PASSWORD || '';
+}
+
+function getAdminPasswordHash() {
+  return process.env.ADMIN_PASSWORD_HASH || '';
 }
 
 function getSessionSecret() {
@@ -67,7 +76,7 @@ function verifySessionToken(sessionValue: string) {
 }
 
 export function isAdminConfigured() {
-  return Boolean(getAdminPassword() && getSessionSecret());
+  return Boolean((getAdminPassword() || getAdminPasswordHash()) && getSessionSecret());
 }
 
 export function getAdminConfigurationNote() {
@@ -75,7 +84,7 @@ export function getAdminConfigurationNote() {
     return 'Admin credentials are configured on the server.';
   }
 
-  return 'Set ADMIN_PASSWORD and ADMIN_SESSION_SECRET before using the admin login. ADMIN_USERNAME is optional and defaults to "admin".';
+  return 'Set ADMIN_PASSWORD_HASH or ADMIN_PASSWORD, plus ADMIN_SESSION_SECRET, before using the admin login. ADMIN_USERNAME is optional and defaults to "admin".';
 }
 
 export function verifyAdminCredentials(username: string, password: string) {
@@ -83,9 +92,17 @@ export function verifyAdminCredentials(username: string, password: string) {
     return false;
   }
 
+  const configuredHash = getAdminPasswordHash().replace(/^sha256:/, '');
+  const passwordOk = configuredHash
+    ? safeCompare(
+        createHash('sha256').update(password).digest('hex'),
+        configuredHash,
+      )
+    : safeCompare(password, getAdminPassword());
+
   return (
     safeCompare(username, getAdminUsername()) &&
-    safeCompare(password, getAdminPassword())
+    passwordOk
   );
 }
 

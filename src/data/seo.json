@@ -1,0 +1,24 @@
+{
+  "defaults": {
+    "title": "Crafting Corner | Hand-Crafted Furniture",
+    "description": "Premium handcrafted furniture for modern Indian homes."
+  },
+  "pages": {
+    "home": {
+      "title": "Crafting Corner | Hand-Crafted Furniture",
+      "description": "Discover handcrafted furniture made to last generations."
+    },
+    "about": {
+      "title": "About Crafting Corner",
+      "description": "Learn about Crafting Corner and our approach to handcrafted furniture."
+    },
+    "contact": {
+      "title": "Contact Crafting Corner",
+      "description": "Contact Crafting Corner for furniture enquiries and custom pieces."
+    },
+    "products": {
+      "title": "Products | Crafting Corner",
+      "description": "Browse handcrafted furniture products from Crafting Corner."
+    }
+  }
+}

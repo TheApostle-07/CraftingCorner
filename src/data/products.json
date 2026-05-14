@@ -1,313 +1,2150 @@
-{
-  "dining-table-set": [
-    {
-      "title": "Solaire 6-Seater Dining Table",
-      "slug": "solaire-dining-table",
-      "price": 42800,
-      "img": ["/assets/img/products/solaire-table-1.png"]
+[
+  {
+    "id": "prod_living_room_nimbus_sectional_sofa",
+    "slug": "nimbus-sectional-sofa",
+    "name": "Nimbus L‑Sectional Sofa",
+    "title": "Nimbus L‑Sectional Sofa",
+    "categorySlug": "living-room",
+    "productTypeSlug": "sofa-set",
+    "price": 78500,
+    "compareAtPrice": null,
+    "shortDescription": "Spacious L‑shaped sectional upholstered in a stain‑resistant linen blend. Seats up to six comfortably.",
+    "description": "Spacious L‑shaped sectional upholstered in a stain‑resistant linen blend. Seats up to six comfortably.",
+    "images": [
+      {
+        "url": "/assets/img/products/nimbus-sofa-1.png",
+        "alt": "Nimbus L‑Sectional Sofa",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/nimbus-sofa-2.png",
+        "alt": "Nimbus L‑Sectional Sofa view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/nimbus-sofa-1.png",
+      "/assets/img/products/nimbus-sofa-2.png"
+    ],
+    "tags": [
+      "sofa",
+      "sectional",
+      "family seating"
+    ],
+    "sections": {
+      "bestSeller": true,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Solaire Upholstered Chair",
-      "slug": "solaire-upholstered-chair",
-      "price": 6850,
-      "img": ["/assets/img/products/solaire-chair.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Nimbus L‑Sectional Sofa | Crafting Corner",
+      "description": "Buy Nimbus L‑Sectional Sofa from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Rajasthan Sheesham Bench",
-      "slug": "rajasthan-sheesham-bench",
-      "price": 11200,
-      "img": ["/assets/img/products/rajasthan-bench.png"]
+    "sortOrder": 1,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_living_room_aranya_teak_tv_console",
+    "slug": "aranya-teak-tv-console",
+    "name": "Aranya Teak TV Console",
+    "title": "Aranya Teak TV Console",
+    "categorySlug": "living-room",
+    "productTypeSlug": "console",
+    "price": 32500,
+    "compareAtPrice": null,
+    "shortDescription": "Hand‑joined solid‑teak media console with rattan sliding shutters and cable‑management ports.",
+    "description": "Hand‑joined solid‑teak media console with rattan sliding shutters and cable‑management ports.",
+    "images": [
+      {
+        "url": "/assets/img/products/aranya-tv-unit.png",
+        "alt": "Aranya Teak TV Console",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/aranya-tv-unit.png",
+    "tags": [
+      "tv unit",
+      "storage",
+      "teak"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": true,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Cascade Marble Lazy Susan",
-      "slug": "cascade-marble-lazy-susan",
-      "price": 3490,
-      "img": ["/assets/img/products/cascade-lazy-susan.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Aranya Teak TV Console | Crafting Corner",
+      "description": "Buy Aranya Teak TV Console from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Noor Cane-Front Sideboard",
-      "slug": "noor-cane-sideboard",
-      "price": 36800,
-      "img": ["/assets/img/products/noor-sideboard-1.png"]
+    "sortOrder": 2,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_living_room_kashmir_walnut_coffee_table",
+    "slug": "kashmir-walnut-coffee-table",
+    "name": "Kashmir Walnut Coffee Table",
+    "title": "Kashmir Walnut Coffee Table",
+    "categorySlug": "living-room",
+    "productTypeSlug": "centre-tables",
+    "price": 24999,
+    "compareAtPrice": null,
+    "shortDescription": "Live‑edge walnut top on matte‑black hairpin legs—each piece showcases unique grain patterns.",
+    "description": "Live‑edge walnut top on matte‑black hairpin legs—each piece showcases unique grain patterns.",
+    "images": [
+      {
+        "url": "/assets/img/products/kashmir-coffee-1.png",
+        "alt": "Kashmir Walnut Coffee Table",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/kashmir-coffee-2.png",
+        "alt": "Kashmir Walnut Coffee Table view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/kashmir-coffee-1.png",
+      "/assets/img/products/kashmir-coffee-2.png"
+    ],
+    "tags": [
+      "coffee table",
+      "live edge",
+      "walnut"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": true,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Eclipse Pendant Light",
-      "slug": "eclipse-pendant-light",
-      "price": 7450,
-      "img": ["/assets/img/products/eclipse-pendant.png"]
-    }
-  ],
-
-  "sofa-set": [
-    {
-      "title": "Nimbus L-Sectional Sofa",
-      "slug": "nimbus-sectional-sofa",
-      "price": 78500,
-      "img": ["/assets/img/products/nimbus-sofa-1.png", "/assets/img/products/nimbus-sofa-2.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Kashmir Walnut Coffee Table | Crafting Corner",
+      "description": "Buy Kashmir Walnut Coffee Table from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Tailor-Made Sectional Sofa",
-      "slug": "tailor-made-sectional-sofa",
-      "price": 104500,
-      "img": ["/assets/img/products/custom-sectional-1.png"]
+    "sortOrder": 3,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_living_room_indigo_velvet_accent_chair",
+    "slug": "indigo-velvet-accent-chair",
+    "name": "Indigo Velvet Accent Chair",
+    "title": "Indigo Velvet Accent Chair",
+    "categorySlug": "living-room",
+    "productTypeSlug": "chairs",
+    "price": 18950,
+    "compareAtPrice": null,
+    "shortDescription": "Plush accent chair with channel‑tufted backrest and solid‑ash frame, finished in a deep indigo velvet.",
+    "description": "Plush accent chair with channel‑tufted backrest and solid‑ash frame, finished in a deep indigo velvet.",
+    "images": [
+      {
+        "url": "/assets/img/products/indigo-accent-chair.png",
+        "alt": "Indigo Velvet Accent Chair",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/indigo-accent-chair.png",
+    "tags": [
+      "chair",
+      "velvet",
+      "lounge"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": true,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Calm Recliner Lounger",
-      "slug": "calm-recliner-lounger",
-      "price": 26990,
-      "img": ["/assets/img/products/calm-recliner-1.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Indigo Velvet Accent Chair | Crafting Corner",
+      "description": "Buy Indigo Velvet Accent Chair from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "CalmGlow Bedside Lamp",
-      "slug": "calmglow-bedside-lamp",
-      "price": 4250,
-      "img": ["/assets/img/products/calmglow-lamp.png"]
+    "sortOrder": 4,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_living_room_calm_recliner_lounger",
+    "slug": "calm-recliner-lounger",
+    "name": "Calm Recliner Lounger",
+    "title": "Calm Recliner Lounger",
+    "categorySlug": "living-room",
+    "productTypeSlug": "sofa-set",
+    "price": 26990,
+    "compareAtPrice": null,
+    "shortDescription": "Ergonomic push‑back recliner with high‑density foam and breathable faux‑leather upholstery.",
+    "description": "Ergonomic push‑back recliner with high‑density foam and breathable faux‑leather upholstery.",
+    "images": [
+      {
+        "url": "/assets/img/products/calm-recliner-1.png",
+        "alt": "Calm Recliner Lounger",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/calm-recliner-2.png",
+        "alt": "Calm Recliner Lounger view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/calm-recliner-1.png",
+      "/assets/img/products/calm-recliner-2.png"
+    ],
+    "tags": [
+      "recliner",
+      "lounger",
+      "comfort"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Indigo Velvet Ottoman",
-      "slug": "indigo-velvet-ottoman",
-      "price": 8590,
-      "img": ["/assets/img/products/indigo-ottoman.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Calm Recliner Lounger | Crafting Corner",
+      "description": "Buy Calm Recliner Lounger from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Artisan Acacia Magazine Rack",
-      "slug": "artisan-acacia-magazine-rack",
-      "price": 2990,
-      "img": ["/assets/img/products/artisan-rack.png"]
-    }
-  ],
-
-  "rugs": [
-    {
-      "title": "Himalaya Wool Area Rug 5×8",
-      "slug": "himalaya-wool-rug",
-      "price": 16999,
-      "img": "/assets/img/products/himalaya-rug.png"
+    "sortOrder": 5,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_living_room_sutra_rattan_side_table",
+    "slug": "sutra-rattan-side-table",
+    "name": "Sutra Rattan Side Table",
+    "title": "Sutra Rattan Side Table",
+    "categorySlug": "living-room",
+    "productTypeSlug": "coffee-side-table",
+    "price": 8450,
+    "compareAtPrice": null,
+    "shortDescription": "Lightweight yet sturdy cane‑weave side table with concealed storage for remotes and magazines.",
+    "description": "Lightweight yet sturdy cane‑weave side table with concealed storage for remotes and magazines.",
+    "images": [
+      {
+        "url": "/assets/img/products/sutra-side-table.png",
+        "alt": "Sutra Rattan Side Table",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/sutra-side-table.png",
+    "tags": [
+      "side table",
+      "rattan",
+      "storage"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": true,
+      "recommended": false
     },
-    {
-      "title": "Seagrass Outdoor Area Rug 6×9",
-      "slug": "seagrass-outdoor-rug",
-      "price": 7750,
-      "img": "/assets/img/products/seagrass-rug.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Sutra Rattan Side Table | Crafting Corner",
+      "description": "Buy Sutra Rattan Side Table from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Signature Hand-Tufted Rug",
-      "slug": "signature-handtufted-rug",
-      "price": 31200,
-      "img": "/assets/img/products/custom-rug.png"
+    "sortOrder": 6,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_sirohi_king_platform_bed",
+    "slug": "sirohi-king-platform-bed",
+    "name": "Sirohi King Platform Bed",
+    "title": "Sirohi King Platform Bed",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "beds",
+    "price": 64900,
+    "compareAtPrice": null,
+    "shortDescription": "Low-profile solid-teak platform bed with tapered legs and ventilated slat base—no box-spring needed.",
+    "description": "Low-profile solid-teak platform bed with tapered legs and ventilated slat base—no box-spring needed.",
+    "images": [
+      {
+        "url": "/assets/img/products/sirohi-bed-1.png",
+        "alt": "Sirohi King Platform Bed",
+        "isPrimary": true
+      }
+    ],
+    "img": [
+      "/assets/img/products/sirohi-bed-1.png"
+    ],
+    "tags": [
+      "bed",
+      "king size",
+      "platform"
+    ],
+    "sections": {
+      "bestSeller": true,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Serene Cotton Quilt — Queen",
-      "slug": "serene-cotton-quilt",
-      "price": 4950,
-      "img": "/assets/img/products/serene-quilt.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Sirohi King Platform Bed | Crafting Corner",
+      "description": "Buy Sirohi King Platform Bed from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Puzzle Play Mat (6×6 ft)",
-      "slug": "puzzle-play-mat",
-      "price": 4590,
-      "img": "/assets/img/products/puzzle-mat.png"
+    "sortOrder": 101,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_aura_walnut_dresser",
+    "slug": "aura-walnut-dresser",
+    "name": "Aura Walnut Dresser — 6 Drawers",
+    "title": "Aura Walnut Dresser — 6 Drawers",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "",
+    "price": 34200,
+    "compareAtPrice": null,
+    "shortDescription": "Spacious six-drawer dresser in American-walnut veneer with soft-close glides and brass pulls.",
+    "description": "Spacious six-drawer dresser in American-walnut veneer with soft-close glides and brass pulls.",
+    "images": [
+      {
+        "url": "/assets/img/products/aura-dresser.png",
+        "alt": "Aura Walnut Dresser — 6 Drawers",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/aura-dresser.png",
+    "tags": [
+      "dresser",
+      "walnut",
+      "soft close"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Sahara Jute Area Rug 6×9",
-      "slug": "sahara-jute-rug",
-      "price": 11500,
-      "img": "/assets/img/products/sahara-jute-rug.png"
-    }
-  ],
-
-  "centre-tables": [
-    {
-      "title": "Kashmir Walnut Coffee Table",
-      "slug": "kashmir-walnut-coffee-table",
-      "price": 24999,
-      "img": ["/assets/img/products/kashmir-coffee-1.png", "/assets/img/products/kashmir-coffee-2.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Aura Walnut Dresser — 6 Drawers | Crafting Corner",
+      "description": "Buy Aura Walnut Dresser — 6 Drawers from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Verde Raised Planter Box",
-      "slug": "verde-raised-planter",
-      "price": 6450,
-      "img": "/assets/img/products/verde-planter.png"
+    "sortOrder": 102,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_zen_mirror_vanity",
+    "slug": "zen-mirror-vanity",
+    "name": "Zen Mirror Vanity Set",
+    "title": "Zen Mirror Vanity Set",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "beds",
+    "price": 26800,
+    "compareAtPrice": null,
+    "shortDescription": "Compact vanity table with built-in LED ring mirror, hidden jewelry drawer, and cushioned stool.",
+    "description": "Compact vanity table with built-in LED ring mirror, hidden jewelry drawer, and cushioned stool.",
+    "images": [
+      {
+        "url": "/assets/img/products/zen-vanity-1.png",
+        "alt": "Zen Mirror Vanity Set",
+        "isPrimary": true
+      }
+    ],
+    "img": [
+      "/assets/img/products/zen-vanity-1.png"
+    ],
+    "tags": [
+      "vanity",
+      "mirror",
+      "LED"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Coastal Teak Patio Table",
-      "slug": "coastal-teak-patio-table",
-      "price": 26800,
-      "img": "/assets/img/products/coastal-patio-table.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Zen Mirror Vanity Set | Crafting Corner",
+      "description": "Buy Zen Mirror Vanity Set from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Aura Marble End Table",
-      "slug": "aura-marble-end-table",
-      "price": 15500,
-      "img": "/assets/img/products/aura-end-table.png"
+    "sortOrder": 103,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_serene_cotton_quilt",
+    "slug": "serene-cotton-quilt",
+    "name": "Serene Cotton Quilt — Queen",
+    "title": "Serene Cotton Quilt — Queen",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "rugs",
+    "price": 4950,
+    "compareAtPrice": null,
+    "shortDescription": "Lightweight 100% cotton quilt with hand-stitched kantha detailing; reversible ivory & sage.",
+    "description": "Lightweight 100% cotton quilt with hand-stitched kantha detailing; reversible ivory & sage.",
+    "images": [
+      {
+        "url": "/assets/img/products/serene-quilt.png",
+        "alt": "Serene Cotton Quilt — Queen",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/serene-quilt.png",
+    "tags": [
+      "quilt",
+      "cotton",
+      "kantha"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Helix Glass Side Table",
-      "slug": "helix-glass-side-table",
-      "price": 9950,
-      "img": "/assets/img/products/helix-glass-side.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Serene Cotton Quilt — Queen | Crafting Corner",
+      "description": "Buy Serene Cotton Quilt — Queen from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Orbit Metal End Table",
-      "slug": "orbit-metal-end-table",
-      "price": 8500,
-      "img": "/assets/img/products/orbit-glass-coffee.png"
-    }
-  ],
-
-  "console": [
-    {
-      "title": "Aranya Teak TV Console",
-      "slug": "aranya-teak-tv-console",
-      "price": 32500,
-      "img": "/assets/img/products/aranya-tv-unit.png"
+    "sortOrder": 104,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_himalaya_wool_rug",
+    "slug": "himalaya-wool-rug",
+    "name": "Himalaya Wool Area Rug 5×8",
+    "title": "Himalaya Wool Area Rug 5×8",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "rugs",
+    "price": 16999,
+    "compareAtPrice": null,
+    "shortDescription": "Hand-tufted New-Zealand wool rug in muted geometric pattern; ethically produced in Bhadohi.",
+    "description": "Hand-tufted New-Zealand wool rug in muted geometric pattern; ethically produced in Bhadohi.",
+    "images": [
+      {
+        "url": "/assets/img/products/himalaya-rug.png",
+        "alt": "Himalaya Wool Area Rug 5×8",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/himalaya-rug.png",
+    "tags": [
+      "rug",
+      "wool",
+      "hand tufted"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Riviera Bar Cabinet",
-      "slug": "riviera-bar-cabinet",
-      "price": 41900,
-      "img": ["/assets/img/products/riviera-bar-1.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Himalaya Wool Area Rug 5×8 | Crafting Corner",
+      "description": "Buy Himalaya Wool Area Rug 5×8 from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Mysuru Rosewood Bookshelf",
-      "slug": "mysuru-rosewood-bookshelf",
-      "price": 21800,
-      "img": "/assets/img/products/mysuru-bookshelf.png"
+    "sortOrder": 105,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_bedroom_calmglow_bedside_lamp",
+    "slug": "calmglow-bedside-lamp",
+    "name": "CalmGlow Bedside Lamp",
+    "title": "CalmGlow Bedside Lamp",
+    "categorySlug": "bedroom",
+    "productTypeSlug": "sofa-set",
+    "price": 4250,
+    "compareAtPrice": null,
+    "shortDescription": "Frosted-glass dome lamp with touch dimmer and warm-white LED bulb included.",
+    "description": "Frosted-glass dome lamp with touch dimmer and warm-white LED bulb included.",
+    "images": [
+      {
+        "url": "/assets/img/products/calmglow-lamp.png",
+        "alt": "CalmGlow Bedside Lamp",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/calmglow-lamp.png",
+    "tags": [
+      "lamp",
+      "LED",
+      "dimmer"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Zenith Walnut Bookshelf",
-      "slug": "zenith-walnut-bookshelf",
-      "price": 21750,
-      "img": "/assets/img/products/zenith-bookshelf.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "CalmGlow Bedside Lamp | Crafting Corner",
+      "description": "Buy CalmGlow Bedside Lamp from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Vault Steel Filing Cabinet",
-      "slug": "vault-filing-cabinet",
-      "price": 11999,
-      "img": "/assets/img/products/vault-filing.png"
+    "sortOrder": 106,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_solaire_dining_table",
+    "slug": "solaire-dining-table",
+    "name": "Solaire 6-Seater Dining Table",
+    "title": "Solaire 6-Seater Dining Table",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "dining-table-set",
+    "price": 42800,
+    "compareAtPrice": null,
+    "shortDescription": "Rectangular solid-oak dining table with chamfered edges and a satin-matte finish.",
+    "description": "Rectangular solid-oak dining table with chamfered edges and a satin-matte finish.",
+    "images": [
+      {
+        "url": "/assets/img/products/solaire-table-1.png",
+        "alt": "Solaire 6-Seater Dining Table",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/solaire-table-2.png",
+        "alt": "Solaire 6-Seater Dining Table view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/solaire-table-1.png",
+      "/assets/img/products/solaire-table-2.png"
+    ],
+    "tags": [
+      "dining table",
+      "oak",
+      "6 seater"
+    ],
+    "sections": {
+      "bestSeller": true,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Clarity Acoustic Desk Divider",
-      "slug": "clarity-acoustic-divider",
-      "price": 6290,
-      "img": "/assets/img/products/clarity-divider.png"
-    }
-  ],
-
-  "chairs": [
-    {
-      "title": "Indigo Velvet Accent Chair",
-      "slug": "indigo-velvet-accent-chair",
-      "price": 18950,
-      "img": "/assets/img/products/indigo-accent-chair.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Solaire 6-Seater Dining Table | Crafting Corner",
+      "description": "Buy Solaire 6-Seater Dining Table from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "ErgoFlex Mesh Task Chair",
-      "slug": "ergoflex-mesh-chair",
-      "price": 14990,
-      "img": "/assets/img/products/ergoflex-chair.png"
+    "sortOrder": 201,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_solaire_upholstered_chair",
+    "slug": "solaire-upholstered-chair",
+    "name": "Solaire Upholstered Chair",
+    "title": "Solaire Upholstered Chair",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "dining-table-set",
+    "price": 6850,
+    "compareAtPrice": null,
+    "shortDescription": "Matching oak dining chair with charcoal-linen cushion and ergonomic curved backrest.",
+    "description": "Matching oak dining chair with charcoal-linen cushion and ergonomic curved backrest.",
+    "images": [
+      {
+        "url": "/assets/img/products/solaire-chair.png",
+        "alt": "Solaire Upholstered Chair",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/solaire-chair.png",
+    "tags": [
+      "chair",
+      "upholstered",
+      "oak"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Breeze Wicker Lounge Chair",
-      "slug": "breeze-wicker-lounge",
-      "price": 12990,
-      "img": "/assets/img/products/breeze-lounge.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Solaire Upholstered Chair | Crafting Corner",
+      "description": "Buy Solaire Upholstered Chair from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Monogram Leather Office Chair",
-      "slug": "monogram-leather-chair",
-      "price": 21950,
-      "img": "/assets/img/products/custom-leather-chair.png"
+    "sortOrder": 202,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_rajasthan_sheesham_bench",
+    "slug": "rajasthan-sheesham-bench",
+    "name": "Rajasthan Sheesham Bench",
+    "title": "Rajasthan Sheesham Bench",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "dining-table-set",
+    "price": 11200,
+    "compareAtPrice": null,
+    "shortDescription": "Sheesham-wood bench featuring hand-turned legs—pairs perfectly with rustic tables.",
+    "description": "Sheesham-wood bench featuring hand-turned legs—pairs perfectly with rustic tables.",
+    "images": [
+      {
+        "url": "/assets/img/products/rajasthan-bench.png",
+        "alt": "Rajasthan Sheesham Bench",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/rajasthan-bench.png",
+    "tags": [
+      "bench",
+      "sheesham",
+      "hand turned"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Cascade Adjustable Bar Stool",
-      "slug": "cascade-bar-stool",
-      "price": 4950,
-      "img": "/assets/img/products/cascade-stool.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Rajasthan Sheesham Bench | Crafting Corner",
+      "description": "Buy Rajasthan Sheesham Bench from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Calm Recliner Lounger",
-      "slug": "calm-recliner-lounger",
-      "price": 26990,
-      "img": "/assets/img/products/calm-recliner-1.png"
-    }
-  ],
-
-  "beds": [
-    {
-      "title": "Sirohi King Platform Bed",
-      "slug": "sirohi-king-platform-bed",
-      "price": 64900,
-      "img": ["/assets/img/products/sirohi-bed-1.png"]
+    "sortOrder": 203,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_noor_cane_sideboard",
+    "slug": "noor-cane-sideboard",
+    "name": "Noor Cane-Front Sideboard",
+    "title": "Noor Cane-Front Sideboard",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "dining-table-set",
+    "price": 36800,
+    "compareAtPrice": null,
+    "shortDescription": "Four-door mango-wood buffet with natural-cane panels and adjustable interior shelving.",
+    "description": "Four-door mango-wood buffet with natural-cane panels and adjustable interior shelving.",
+    "images": [
+      {
+        "url": "/assets/img/products/noor-sideboard-1.png",
+        "alt": "Noor Cane-Front Sideboard",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/noor-sideboard-2.png",
+        "alt": "Noor Cane-Front Sideboard view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/noor-sideboard-1.png",
+      "/assets/img/products/noor-sideboard-2.png"
+    ],
+    "tags": [
+      "sideboard",
+      "cane",
+      "storage"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "CloudSoft Upholstered Headboard",
-      "slug": "cloudsoft-upholstered-headboard",
-      "price": 14499,
-      "img": ["/assets/img/products/cloudsoft-headboard-1.png", "/assets/img/products/cloudsoft-headboard-2.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Noor Cane-Front Sideboard | Crafting Corner",
+      "description": "Buy Noor Cane-Front Sideboard from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Zen Mirror Vanity Set",
-      "slug": "zen-mirror-vanity",
-      "price": 26800,
-      "img": ["/assets/img/products/zen-vanity-1.png", "/assets/img/products/zen-vanity-2.png"]
+    "sortOrder": 204,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_eclipse_pendant_light",
+    "slug": "eclipse-pendant-light",
+    "name": "Eclipse Pendant Light",
+    "title": "Eclipse Pendant Light",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "dining-table-set",
+    "price": 7450,
+    "compareAtPrice": null,
+    "shortDescription": "Dual-disc brass and frosted-glass pendant, height-adjustable for perfect table illumination.",
+    "description": "Dual-disc brass and frosted-glass pendant, height-adjustable for perfect table illumination.",
+    "images": [
+      {
+        "url": "/assets/img/products/eclipse-pendant.png",
+        "alt": "Eclipse Pendant Light",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/eclipse-pendant.png",
+    "tags": [
+      "lighting",
+      "pendant",
+      "brass"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Starship Bunk Bed",
-      "slug": "starship-bunk-bed",
-      "price": 36500,
-      "img": ["/assets/img/products/starship-bunk-1.png", "/assets/img/products/starship-bunk-2.png"]
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Eclipse Pendant Light | Crafting Corner",
+      "description": "Buy Eclipse Pendant Light from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Convertible Loft Playhouse Bed",
-      "slug": "convertible-playhouse-bed",
-      "price": 52500,
-      "img": ["/assets/img/products/custom-playhouse-1.png", "/assets/img/products/custom-playhouse-2.png"]
+    "sortOrder": 205,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_dining_room_terracotta_dinnerware_set",
+    "slug": "terracotta-dinnerware-set",
+    "name": "Terracotta Dinnerware — 16-Pc Set",
+    "title": "Terracotta Dinnerware — 16-Pc Set",
+    "categorySlug": "dining-room",
+    "productTypeSlug": "",
+    "price": 5999,
+    "compareAtPrice": null,
+    "shortDescription": "Hand-glazed terracotta plates and bowls; oven, microwave, and dishwasher safe.",
+    "description": "Hand-glazed terracotta plates and bowls; oven, microwave, and dishwasher safe.",
+    "images": [
+      {
+        "url": "/assets/img/products/terracotta-dinnerware.png",
+        "alt": "Terracotta Dinnerware — 16-Pc Set",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/terracotta-dinnerware.png",
+    "tags": [
+      "dinnerware",
+      "terracotta",
+      "hand glazed"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Custom Upholstered Bed Headboard",
-      "slug": "custom-upholstered-headboard",
-      "price": 22990,
-      "img": "/assets/img/products/custom-headboard.png"
-    }
-  ],
-
-  "coffee-side-table": [
-    {
-      "title": "Sutra Rattan Side Table",
-      "slug": "sutra-rattan-side-table",
-      "price": 8450,
-      "img": "/assets/img/products/sutra-side-table.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Terracotta Dinnerware — 16-Pc Set | Crafting Corner",
+      "description": "Buy Terracotta Dinnerware — 16-Pc Set from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Terra Ceramic Mixing Bowl Set",
-      "slug": "terra-ceramic-bowls",
-      "price": 3190,
-      "img": "/assets/img/products/terra-bowls.png"
+    "sortOrder": 206,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_ergoflex_mesh_chair",
+    "slug": "ergoflex-mesh-chair",
+    "name": "ErgoFlex Mesh Task Chair",
+    "title": "ErgoFlex Mesh Task Chair",
+    "categorySlug": "office",
+    "productTypeSlug": "chairs",
+    "price": 14990,
+    "compareAtPrice": null,
+    "shortDescription": "Breathable mesh back, 3D arm-rests, and synchronous tilt for all-day ergonomic support.",
+    "description": "Breathable mesh back, 3D arm-rests, and synchronous tilt for all-day ergonomic support.",
+    "images": [
+      {
+        "url": "/assets/img/products/ergoflex-chair.png",
+        "alt": "ErgoFlex Mesh Task Chair",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/ergoflex-chair.png",
+    "tags": [
+      "chair",
+      "mesh",
+      "ergonomic"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": true
     },
-    {
-      "title": "Ember Cast-Iron Skillet 12″",
-      "slug": "ember-cast-iron-12",
-      "price": 3790,
-      "img": "/assets/img/products/ember-skillet.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "ErgoFlex Mesh Task Chair | Crafting Corner",
+      "description": "Buy ErgoFlex Mesh Task Chair from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Focus LED Desk Lamp",
-      "slug": "focus-led-lamp",
-      "price": 3950,
-      "img": "/assets/img/products/focus-desk-lamp.png"
+    "sortOrder": 301,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_zenith_walnut_bookshelf",
+    "slug": "zenith-walnut-bookshelf",
+    "name": "Zenith Walnut Bookshelf",
+    "title": "Zenith Walnut Bookshelf",
+    "categorySlug": "office",
+    "productTypeSlug": "console",
+    "price": 21750,
+    "compareAtPrice": null,
+    "shortDescription": "Five-tier open bookshelf in rich American-walnut veneer with adjustable shelves.",
+    "description": "Five-tier open bookshelf in rich American-walnut veneer with adjustable shelves.",
+    "images": [
+      {
+        "url": "/assets/img/products/zenith-bookshelf.png",
+        "alt": "Zenith Walnut Bookshelf",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/zenith-bookshelf.png",
+    "tags": [
+      "bookshelf",
+      "walnut",
+      "storage"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
     },
-    {
-      "title": "Artisan Acacia Cutting Board",
-      "slug": "artisan-acacia-board",
-      "price": 2250,
-      "img": "/assets/img/products/artisan-board.png"
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Zenith Walnut Bookshelf | Crafting Corner",
+      "description": "Buy Zenith Walnut Bookshelf from Crafting Corner. Premium hand-crafted furniture made to last generations."
     },
-    {
-      "title": "Granite Mortar & Pestle 6″",
-      "slug": "granite-mortar-pestle",
-      "price": 1890,
-      "img": "/assets/img/products/granite-mortar.png"
-    }
-  ]
-}
+    "sortOrder": 302,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_vault_filing_cabinet",
+    "slug": "vault-filing-cabinet",
+    "name": "Vault Steel Filing Cabinet",
+    "title": "Vault Steel Filing Cabinet",
+    "categorySlug": "office",
+    "productTypeSlug": "console",
+    "price": 11999,
+    "compareAtPrice": null,
+    "shortDescription": "Powder-coated steel cabinet with smooth ball-bearing drawers and lockable top section.",
+    "description": "Powder-coated steel cabinet with smooth ball-bearing drawers and lockable top section.",
+    "images": [
+      {
+        "url": "/assets/img/products/vault-filing.png",
+        "alt": "Vault Steel Filing Cabinet",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/vault-filing.png",
+    "tags": [
+      "filing cabinet",
+      "steel",
+      "lockable"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Vault Steel Filing Cabinet | Crafting Corner",
+      "description": "Buy Vault Steel Filing Cabinet from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 303,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_focus_led_lamp",
+    "slug": "focus-led-lamp",
+    "name": "Focus LED Desk Lamp",
+    "title": "Focus LED Desk Lamp",
+    "categorySlug": "office",
+    "productTypeSlug": "coffee-side-table",
+    "price": 3950,
+    "compareAtPrice": null,
+    "shortDescription": "Minimalist task lamp with 3-stage touch dimmer and adjustable arm; 50,000-hour LED.",
+    "description": "Minimalist task lamp with 3-stage touch dimmer and adjustable arm; 50,000-hour LED.",
+    "images": [
+      {
+        "url": "/assets/img/products/focus-desk-lamp.png",
+        "alt": "Focus LED Desk Lamp",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/focus-desk-lamp.png",
+    "tags": [
+      "lamp",
+      "LED",
+      "dimmable"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Focus LED Desk Lamp | Crafting Corner",
+      "description": "Buy Focus LED Desk Lamp from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 304,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_clarity_acoustic_divider",
+    "slug": "clarity-acoustic-divider",
+    "name": "Clarity Acoustic Desk Divider",
+    "title": "Clarity Acoustic Desk Divider",
+    "categorySlug": "office",
+    "productTypeSlug": "console",
+    "price": 6290,
+    "compareAtPrice": null,
+    "shortDescription": "PET-felt privacy panel that dampens noise and mounts tool-free to most desk tops.",
+    "description": "PET-felt privacy panel that dampens noise and mounts tool-free to most desk tops.",
+    "images": [
+      {
+        "url": "/assets/img/products/clarity-divider.png",
+        "alt": "Clarity Acoustic Desk Divider",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/clarity-divider.png",
+    "tags": [
+      "divider",
+      "acoustic panel",
+      "privacy"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Clarity Acoustic Desk Divider | Crafting Corner",
+      "description": "Buy Clarity Acoustic Desk Divider from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 305,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_office_orbit_glass_coffee_table",
+    "slug": "orbit-glass-coffee-table",
+    "name": "Orbit Glass Coffee Table",
+    "title": "Orbit Glass Coffee Table",
+    "categorySlug": "office",
+    "productTypeSlug": "",
+    "price": 9950,
+    "compareAtPrice": null,
+    "shortDescription": "Compact coffee table with tempered-glass top and matte-black geometric frame—ideal for work lounges.",
+    "description": "Compact coffee table with tempered-glass top and matte-black geometric frame—ideal for work lounges.",
+    "images": [
+      {
+        "url": "/assets/img/products/orbit-glass-coffee.png",
+        "alt": "Orbit Glass Coffee Table",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/orbit-glass-coffee.png",
+    "tags": [
+      "coffee table",
+      "glass",
+      "office lounge"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Orbit Glass Coffee Table | Crafting Corner",
+      "description": "Buy Orbit Glass Coffee Table from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 306,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_breeze_wicker_lounge",
+    "slug": "breeze-wicker-lounge",
+    "name": "Breeze Wicker Lounge Chair",
+    "title": "Breeze Wicker Lounge Chair",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "chairs",
+    "price": 12990,
+    "compareAtPrice": null,
+    "shortDescription": "Hand‑woven PE‑rattan lounge chair with powder‑coated steel frame and removable headrest pillow.",
+    "description": "Hand‑woven PE‑rattan lounge chair with powder‑coated steel frame and removable headrest pillow.",
+    "images": [
+      {
+        "url": "/assets/img/products/breeze-lounge.png",
+        "alt": "Breeze Wicker Lounge Chair",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/breeze-lounge.png",
+    "tags": [
+      "lounge chair",
+      "wicker",
+      "rattan"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Breeze Wicker Lounge Chair | Crafting Corner",
+      "description": "Buy Breeze Wicker Lounge Chair from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 401,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_rajasthan_teak_garden_bench",
+    "slug": "rajasthan-teak-garden-bench",
+    "name": "Rajasthan Teak Garden Bench",
+    "title": "Rajasthan Teak Garden Bench",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "",
+    "price": 11200,
+    "compareAtPrice": null,
+    "shortDescription": "Durable solid‑teak bench with hand‑turned legs and a natural oil finish—perfect for patios or garden paths.",
+    "description": "Durable solid‑teak bench with hand‑turned legs and a natural oil finish—perfect for patios or garden paths.",
+    "images": [
+      {
+        "url": "/assets/img/products/rajasthan-bench.png",
+        "alt": "Rajasthan Teak Garden Bench",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/rajasthan-bench.png",
+    "tags": [
+      "bench",
+      "teak",
+      "outdoor seating"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Rajasthan Teak Garden Bench | Crafting Corner",
+      "description": "Buy Rajasthan Teak Garden Bench from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 402,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_verde_raised_planter",
+    "slug": "verde-raised-planter",
+    "name": "Verde Raised Planter Box",
+    "title": "Verde Raised Planter Box",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "centre-tables",
+    "price": 6450,
+    "compareAtPrice": null,
+    "shortDescription": "Galvanized steel planter with drainage holes and shelf—ideal height for balcony herbs or veggies.",
+    "description": "Galvanized steel planter with drainage holes and shelf—ideal height for balcony herbs or veggies.",
+    "images": [
+      {
+        "url": "/assets/img/products/verde-planter.png",
+        "alt": "Verde Raised Planter Box",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/verde-planter.png",
+    "tags": [
+      "planter",
+      "raised bed",
+      "gardening"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Verde Raised Planter Box | Crafting Corner",
+      "description": "Buy Verde Raised Planter Box from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 403,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_seagrass_outdoor_rug",
+    "slug": "seagrass-outdoor-rug",
+    "name": "Seagrass Outdoor Area Rug 6×9",
+    "title": "Seagrass Outdoor Area Rug 6×9",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "rugs",
+    "price": 7750,
+    "compareAtPrice": null,
+    "shortDescription": "Hand‑braided seagrass rug with latex backing that adds natural texture and comfort to alfresco spaces.",
+    "description": "Hand‑braided seagrass rug with latex backing that adds natural texture and comfort to alfresco spaces.",
+    "images": [
+      {
+        "url": "/assets/img/products/seagrass-rug.png",
+        "alt": "Seagrass Outdoor Area Rug 6×9",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/seagrass-rug.png",
+    "tags": [
+      "rug",
+      "seagrass",
+      "patio decor"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Seagrass Outdoor Area Rug 6×9 | Crafting Corner",
+      "description": "Buy Seagrass Outdoor Area Rug 6×9 from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 404,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_sahara_jute_patio_rug",
+    "slug": "sahara-jute-patio-rug",
+    "name": "Sahara Jute Patio Rug 5×8",
+    "title": "Sahara Jute Patio Rug 5×8",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "",
+    "price": 6990,
+    "compareAtPrice": null,
+    "shortDescription": "Tightly woven natural‑jute rug tough enough for verandas yet soft under bare feet.",
+    "description": "Tightly woven natural‑jute rug tough enough for verandas yet soft under bare feet.",
+    "images": [
+      {
+        "url": "/assets/img/products/sahara-jute-rug.png",
+        "alt": "Sahara Jute Patio Rug 5×8",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/sahara-jute-rug.png",
+    "tags": [
+      "rug",
+      "jute",
+      "outdoor"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Sahara Jute Patio Rug 5×8 | Crafting Corner",
+      "description": "Buy Sahara Jute Patio Rug 5×8 from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 405,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_outdoor_nova_nesting_patio_stools",
+    "slug": "nova-nesting-patio-stools",
+    "name": "Nova Nesting Patio Stools — Set of 3",
+    "title": "Nova Nesting Patio Stools — Set of 3",
+    "categorySlug": "outdoor",
+    "productTypeSlug": "",
+    "price": 9850,
+    "compareAtPrice": null,
+    "shortDescription": "Space‑saving trio of powder‑coated steel stools that stack neatly when not in use.",
+    "description": "Space‑saving trio of powder‑coated steel stools that stack neatly when not in use.",
+    "images": [
+      {
+        "url": "/assets/img/products/nova-nesting-stools.png",
+        "alt": "Nova Nesting Patio Stools — Set of 3",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/nova-nesting-stools.png",
+    "tags": [
+      "stools",
+      "nesting",
+      "outdoor furniture"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Nova Nesting Patio Stools — Set of 3 | Crafting Corner",
+      "description": "Buy Nova Nesting Patio Stools — Set of 3 from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 406,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kids_room_starship_bunk_bed",
+    "slug": "starship-bunk-bed",
+    "name": "Starship Bunk Bed",
+    "title": "Starship Bunk Bed",
+    "categorySlug": "kids-room",
+    "productTypeSlug": "beds",
+    "price": 36500,
+    "compareAtPrice": null,
+    "shortDescription": "Space-themed twin-over-twin bunk with built-in ladder, guard rails, and glow-in-the-dark decals.",
+    "description": "Space-themed twin-over-twin bunk with built-in ladder, guard rails, and glow-in-the-dark decals.",
+    "images": [
+      {
+        "url": "/assets/img/products/starship-bunk-1.png",
+        "alt": "Starship Bunk Bed",
+        "isPrimary": true
+      }
+    ],
+    "img": [
+      "/assets/img/products/starship-bunk-1.png"
+    ],
+    "tags": [
+      "bunk bed",
+      "space theme",
+      "twin"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Starship Bunk Bed | Crafting Corner",
+      "description": "Buy Starship Bunk Bed from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 501,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kids_room_aurora_shag_rug",
+    "slug": "aurora-shag-rug",
+    "name": "Aurora Shag Rug",
+    "title": "Aurora Shag Rug",
+    "categorySlug": "kids-room",
+    "productTypeSlug": "",
+    "price": 5890,
+    "compareAtPrice": null,
+    "shortDescription": "Ultra-soft high-pile rug in pastel gradient hues—perfect for cozying up reading nooks or play zones.",
+    "description": "Ultra-soft high-pile rug in pastel gradient hues—perfect for cozying up reading nooks or play zones.",
+    "images": [
+      {
+        "url": "/assets/img/products/aurora-shag-rug.png",
+        "alt": "Aurora Shag Rug",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/aurora-shag-rug.png",
+    "tags": [
+      "rug",
+      "shag",
+      "pastel"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Aurora Shag Rug | Crafting Corner",
+      "description": "Buy Aurora Shag Rug from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 502,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kids_room_puzzle_play_mat",
+    "slug": "puzzle-play-mat",
+    "name": "Puzzle Play Mat (6×6 ft)",
+    "title": "Puzzle Play Mat (6×6 ft)",
+    "categorySlug": "kids-room",
+    "productTypeSlug": "rugs",
+    "price": 4590,
+    "compareAtPrice": null,
+    "shortDescription": "Interlocking EVA-foam tiles with letters & numbers; wipe-clean and safe for crawlers.",
+    "description": "Interlocking EVA-foam tiles with letters & numbers; wipe-clean and safe for crawlers.",
+    "images": [
+      {
+        "url": "/assets/img/products/puzzle-mat.png",
+        "alt": "Puzzle Play Mat (6×6 ft)",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/puzzle-mat.png",
+    "tags": [
+      "play mat",
+      "foam tiles",
+      "educational"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Puzzle Play Mat (6×6 ft) | Crafting Corner",
+      "description": "Buy Puzzle Play Mat (6×6 ft) from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 503,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kids_room_sangam_nesting_toy_table",
+    "slug": "sangam-nesting-toy-table",
+    "name": "Sangam Nesting Toy Table Set",
+    "title": "Sangam Nesting Toy Table Set",
+    "categorySlug": "kids-room",
+    "productTypeSlug": "",
+    "price": 9850,
+    "compareAtPrice": null,
+    "shortDescription": "Two-in-one table and stool set crafted for creative play—space-saving and colorful.",
+    "description": "Two-in-one table and stool set crafted for creative play—space-saving and colorful.",
+    "images": [
+      {
+        "url": "/assets/img/products/sangam-nesting.png",
+        "alt": "Sangam Nesting Toy Table Set",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/sangam-nesting.png",
+    "tags": [
+      "nesting table",
+      "play table",
+      "kids"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Sangam Nesting Toy Table Set | Crafting Corner",
+      "description": "Buy Sangam Nesting Toy Table Set from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 505,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kids_room_cloudglow_bedside_lamp",
+    "slug": "cloudglow-bedside-lamp",
+    "name": "CloudGlow Bedside Lamp",
+    "title": "CloudGlow Bedside Lamp",
+    "categorySlug": "kids-room",
+    "productTypeSlug": "",
+    "price": 2990,
+    "compareAtPrice": null,
+    "shortDescription": "Gentle bedside lamp with frosted dome and soft LED lighting to soothe bedtime fears.",
+    "description": "Gentle bedside lamp with frosted dome and soft LED lighting to soothe bedtime fears.",
+    "images": [
+      {
+        "url": "/assets/img/products/calmglow-lamp.png",
+        "alt": "CloudGlow Bedside Lamp",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/calmglow-lamp.png",
+    "tags": [
+      "lamp",
+      "LED",
+      "bedside"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "CloudGlow Bedside Lamp | Crafting Corner",
+      "description": "Buy CloudGlow Bedside Lamp from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 506,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_bespoke_live_edge_table",
+    "slug": "bespoke-live-edge-table",
+    "name": "Bespoke Live-Edge Dining Table",
+    "title": "Bespoke Live-Edge Dining Table",
+    "categorySlug": "custom",
+    "productTypeSlug": "",
+    "price": 86500,
+    "compareAtPrice": null,
+    "shortDescription": "Made-to-order slab table in your choice of walnut, acacia, or teak—edge profile, finish, and dimensions fully customizable.",
+    "description": "Made-to-order slab table in your choice of walnut, acacia, or teak—edge profile, finish, and dimensions fully customizable.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-liveedge-1.png",
+        "alt": "Bespoke Live-Edge Dining Table",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/custom-liveedge-2.png",
+        "alt": "Bespoke Live-Edge Dining Table view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/custom-liveedge-1.png",
+      "/assets/img/products/custom-liveedge-2.png"
+    ],
+    "tags": [
+      "custom",
+      "dining table",
+      "live edge"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Bespoke Live-Edge Dining Table | Crafting Corner",
+      "description": "Buy Bespoke Live-Edge Dining Table from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 601,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_modular_wardrobe_system",
+    "slug": "modular-wardrobe-system",
+    "name": "Modular Wardrobe System",
+    "title": "Modular Wardrobe System",
+    "categorySlug": "custom",
+    "productTypeSlug": "",
+    "price": 72900,
+    "compareAtPrice": null,
+    "shortDescription": "Configure doors, drawers, and internal shelves to your exact closet layout—available in 6 finishes.",
+    "description": "Configure doors, drawers, and internal shelves to your exact closet layout—available in 6 finishes.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-wardrobe-1.png",
+        "alt": "Modular Wardrobe System",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/custom-wardrobe-2.png",
+        "alt": "Modular Wardrobe System view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/custom-wardrobe-1.png",
+      "/assets/img/products/custom-wardrobe-2.png"
+    ],
+    "tags": [
+      "wardrobe",
+      "modular",
+      "custom sizing"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Modular Wardrobe System | Crafting Corner",
+      "description": "Buy Modular Wardrobe System from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 602,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_custom_upholstered_headboard",
+    "slug": "custom-upholstered-headboard",
+    "name": "Custom Upholstered Bed Headboard",
+    "title": "Custom Upholstered Bed Headboard",
+    "categorySlug": "custom",
+    "productTypeSlug": "beds",
+    "price": 22990,
+    "compareAtPrice": null,
+    "shortDescription": "Pick fabric, tufting style, and height for a headboard that fits any bed frame perfectly.",
+    "description": "Pick fabric, tufting style, and height for a headboard that fits any bed frame perfectly.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-headboard.png",
+        "alt": "Custom Upholstered Bed Headboard",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/custom-headboard.png",
+    "tags": [
+      "headboard",
+      "upholstered",
+      "made to order"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Custom Upholstered Bed Headboard | Crafting Corner",
+      "description": "Buy Custom Upholstered Bed Headboard from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 603,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_tailor_made_sectional_sofa",
+    "slug": "tailor-made-sectional-sofa",
+    "name": "Tailor-Made Sectional Sofa",
+    "title": "Tailor-Made Sectional Sofa",
+    "categorySlug": "custom",
+    "productTypeSlug": "sofa-set",
+    "price": 104500,
+    "compareAtPrice": null,
+    "shortDescription": "Select length, arm style, fabric, and cushion density—ships in modular pieces for easy setup.",
+    "description": "Select length, arm style, fabric, and cushion density—ships in modular pieces for easy setup.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-sectional-1.png",
+        "alt": "Tailor-Made Sectional Sofa",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/custom-sectional-2.png",
+        "alt": "Tailor-Made Sectional Sofa view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/custom-sectional-1.png",
+      "/assets/img/products/custom-sectional-2.png"
+    ],
+    "tags": [
+      "sofa",
+      "sectional",
+      "custom fabric"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Tailor-Made Sectional Sofa | Crafting Corner",
+      "description": "Buy Tailor-Made Sectional Sofa from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 604,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_convertible_playhouse_bed",
+    "slug": "convertible-playhouse-bed",
+    "name": "Convertible Loft Playhouse Bed",
+    "title": "Convertible Loft Playhouse Bed",
+    "categorySlug": "custom",
+    "productTypeSlug": "beds",
+    "price": 52500,
+    "compareAtPrice": null,
+    "shortDescription": "Design your own color scheme and curtain set—loft converts to study nook as kids grow.",
+    "description": "Design your own color scheme and curtain set—loft converts to study nook as kids grow.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-playhouse-1.png",
+        "alt": "Convertible Loft Playhouse Bed",
+        "isPrimary": true
+      },
+      {
+        "url": "/assets/img/products/custom-playhouse-2.png",
+        "alt": "Convertible Loft Playhouse Bed view 2",
+        "isPrimary": false
+      }
+    ],
+    "img": [
+      "/assets/img/products/custom-playhouse-1.png",
+      "/assets/img/products/custom-playhouse-2.png"
+    ],
+    "tags": [
+      "kids",
+      "loft bed",
+      "playhouse"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": true
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Convertible Loft Playhouse Bed | Crafting Corner",
+      "description": "Buy Convertible Loft Playhouse Bed from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 605,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_custom_signature_handtufted_rug",
+    "slug": "signature-handtufted-rug",
+    "name": "Signature Hand-Tufted Rug",
+    "title": "Signature Hand-Tufted Rug",
+    "categorySlug": "custom",
+    "productTypeSlug": "rugs",
+    "price": 31200,
+    "compareAtPrice": null,
+    "shortDescription": "Submit artwork or choose from patterns—custom size, color palette, and pile height in 100% New Zealand wool.",
+    "description": "Submit artwork or choose from patterns—custom size, color palette, and pile height in 100% New Zealand wool.",
+    "images": [
+      {
+        "url": "/assets/img/products/custom-rug.png",
+        "alt": "Signature Hand-Tufted Rug",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/custom-rug.png",
+    "tags": [
+      "rug",
+      "hand tufted",
+      "custom design"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Signature Hand-Tufted Rug | Crafting Corner",
+      "description": "Buy Signature Hand-Tufted Rug from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 606,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_cascade_bar_stool",
+    "slug": "cascade-bar-stool",
+    "name": "Cascade Adjustable Bar Stool",
+    "title": "Cascade Adjustable Bar Stool",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "chairs",
+    "price": 4950,
+    "compareAtPrice": null,
+    "shortDescription": "Swivel bar stool with gas-lift height adjust, PU-leather seat, and chrome footrest.",
+    "description": "Swivel bar stool with gas-lift height adjust, PU-leather seat, and chrome footrest.",
+    "images": [
+      {
+        "url": "/assets/img/products/cascade-stool.png",
+        "alt": "Cascade Adjustable Bar Stool",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/cascade-stool.png",
+    "tags": [
+      "bar stool",
+      "adjustable",
+      "swivel"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": true,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Cascade Adjustable Bar Stool | Crafting Corner",
+      "description": "Buy Cascade Adjustable Bar Stool from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 701,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_granite_mortar_pestle",
+    "slug": "granite-mortar-pestle",
+    "name": "Granite Mortar & Pestle 6″",
+    "title": "Granite Mortar & Pestle 6″",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "coffee-side-table",
+    "price": 1890,
+    "compareAtPrice": null,
+    "shortDescription": "Heavyweight granite mortar for crushing whole spices and herbs—naturally non-porous.",
+    "description": "Heavyweight granite mortar for crushing whole spices and herbs—naturally non-porous.",
+    "images": [
+      {
+        "url": "/assets/img/products/granite-mortar.png",
+        "alt": "Granite Mortar & Pestle 6″",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/granite-mortar.png",
+    "tags": [
+      "mortar",
+      "pestle",
+      "granite"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Granite Mortar & Pestle 6″ | Crafting Corner",
+      "description": "Buy Granite Mortar & Pestle 6″ from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 702,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_artisan_acacia_board",
+    "slug": "artisan-acacia-board",
+    "name": "Artisan Acacia Cutting Board",
+    "title": "Artisan Acacia Cutting Board",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "coffee-side-table",
+    "price": 2250,
+    "compareAtPrice": null,
+    "shortDescription": "End-grain acacia board with juice groove—reversible and knife-friendly.",
+    "description": "End-grain acacia board with juice groove—reversible and knife-friendly.",
+    "images": [
+      {
+        "url": "/assets/img/products/artisan-board.png",
+        "alt": "Artisan Acacia Cutting Board",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/artisan-board.png",
+    "tags": [
+      "cutting board",
+      "acacia",
+      "end grain"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": true
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Artisan Acacia Cutting Board | Crafting Corner",
+      "description": "Buy Artisan Acacia Cutting Board from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 703,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_riviera_bar_cabinet",
+    "slug": "riviera-bar-cabinet",
+    "name": "Riviera Bar Cabinet",
+    "title": "Riviera Bar Cabinet",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "console",
+    "price": 41900,
+    "compareAtPrice": null,
+    "shortDescription": "Walnut veneer cabinet with pull-out shelves, built-in stemware rack, and mirrored backsplash.",
+    "description": "Walnut veneer cabinet with pull-out shelves, built-in stemware rack, and mirrored backsplash.",
+    "images": [
+      {
+        "url": "/assets/img/products/riviera-bar-1.png",
+        "alt": "Riviera Bar Cabinet",
+        "isPrimary": true
+      }
+    ],
+    "img": [
+      "/assets/img/products/riviera-bar-1.png"
+    ],
+    "tags": [
+      "bar cabinet",
+      "storage",
+      "walnut"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Riviera Bar Cabinet | Crafting Corner",
+      "description": "Buy Riviera Bar Cabinet from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 704,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_terra_ceramic_bowls",
+    "slug": "terra-ceramic-bowls",
+    "name": "Terra Ceramic Mixing Bowl Set",
+    "title": "Terra Ceramic Mixing Bowl Set",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "coffee-side-table",
+    "price": 3190,
+    "compareAtPrice": null,
+    "shortDescription": "Nested set of three hand-glazed ceramic bowls—oven and microwave safe up to 220 °C.",
+    "description": "Nested set of three hand-glazed ceramic bowls—oven and microwave safe up to 220 °C.",
+    "images": [
+      {
+        "url": "/assets/img/products/terra-bowls.png",
+        "alt": "Terra Ceramic Mixing Bowl Set",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/terra-bowls.png",
+    "tags": [
+      "mixing bowls",
+      "ceramic",
+      "oven safe"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Terra Ceramic Mixing Bowl Set | Crafting Corner",
+      "description": "Buy Terra Ceramic Mixing Bowl Set from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 705,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  },
+  {
+    "id": "prod_kitchen_bar_ember_cast_iron_12",
+    "slug": "ember-cast-iron-12",
+    "name": "Ember Cast-Iron Skillet 12″",
+    "title": "Ember Cast-Iron Skillet 12″",
+    "categorySlug": "kitchen-bar",
+    "productTypeSlug": "coffee-side-table",
+    "price": 3790,
+    "compareAtPrice": null,
+    "shortDescription": "Pre-seasoned cast-iron skillet with helper handle—induction, grill, and campfire compatible.",
+    "description": "Pre-seasoned cast-iron skillet with helper handle—induction, grill, and campfire compatible.",
+    "images": [
+      {
+        "url": "/assets/img/products/ember-skillet.png",
+        "alt": "Ember Cast-Iron Skillet 12″",
+        "isPrimary": true
+      }
+    ],
+    "img": "/assets/img/products/ember-skillet.png",
+    "tags": [
+      "cast iron",
+      "skillet",
+      "pre-seasoned"
+    ],
+    "sections": {
+      "bestSeller": false,
+      "featured": false,
+      "topPick": false,
+      "recommended": false
+    },
+    "visibility": "published",
+    "stockStatus": "available",
+    "material": "",
+    "dimensions": "",
+    "finish": "",
+    "careInstructions": "",
+    "seo": {
+      "title": "Ember Cast-Iron Skillet 12″ | Crafting Corner",
+      "description": "Buy Ember Cast-Iron Skillet 12″ from Crafting Corner. Premium hand-crafted furniture made to last generations."
+    },
+    "sortOrder": 706,
+    "createdAt": "2026-05-14T00:00:00.000Z",
+    "updatedAt": "2026-05-14T00:00:00.000Z"
+  }
+]

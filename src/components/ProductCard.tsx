@@ -31,8 +31,8 @@ export default function ProductCard({
   description,
   tags,
 }: ProductCardProps) {
-  const gallery = Array.isArray(img) ? img : [img];
-  const imgSrc = gallery[0];
+  const gallery = (Array.isArray(img) ? img : [img]).filter(Boolean) as string[];
+  const imgSrc = gallery[0] || '/assets/img/products/bestseller_1.png';
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const detailHref = `/products/${slug}`;

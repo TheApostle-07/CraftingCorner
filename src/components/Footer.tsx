@@ -11,16 +11,12 @@
    import { motion } from 'framer-motion';
    import Link from 'next/link';
    import { Instagram, Facebook, Linkedin } from 'lucide-react';
-   
-   const nav = [
-     { href: '/', label: 'Home' },
-     { href: '/products', label: 'Products' },
-     { href: '/about', label: 'About Us' },
-     { href: '/contact', label: 'Contact' },
-   ];
+   import footerData from '@/data/footer.json';
+   import siteData from '@/data/site.json';
    
    export default function Footer() {
      const year = new Date().getFullYear();
+     const nav = footerData.nav || [];
    
      return (
        <motion.footer
@@ -32,14 +28,16 @@
       >
          {/* --- top grid --------------------------------------------------- */}
          <div className="mx-auto grid max-w-7xl gap-y-12 gap-x-8 px-4 py-16 sm:grid-cols-2 lg:grid-cols-3">
-           {/* 1 / Brand column */}
+          {/* 1 / Brand column */}
           <div className="text-center sm:text-left">
-            <h2 className="font-display text-2xl text-[#6E4B34]">Crafting&nbsp;Corner</h2>
+            <h2 className="font-display text-2xl text-[#6E4B34]">
+              {footerData.brandName || siteData.brandName}
+            </h2>
             <p className="mt-4 max-w-xs text-sm leading-6 text-[#42576b]">
-              Hand-crafted furniture made to last generations.
+              {footerData.tagline}
             </p>
             <p className="mt-2 max-w-xs text-sm leading-6 text-[#42576b]">
-              Crafting Corner curates artisanal furniture pieces, blending traditional craftsmanship with modern design to bring you timeless and enduring home decor.
+              {footerData.description}
             </p>
           </div>
    
@@ -65,35 +63,35 @@
               <input
                 type="email"
                 required
-                placeholder="Your email"
+                placeholder={footerData.newsletterPlaceholder || 'Your email'}
                 className="flex-1 bg-transparent px-3 py-2 text-sm text-[#243648] outline-none placeholder:text-[#617487]"
               />
               <button
                 type="submit"
                 className="bg-clay px-4 py-2 text-sm text-ivory transition hover:bg-clay/90"
                >
-                 Join
+                 {footerData.newsletterButtonLabel || 'Join'}
                </button>
              </form>
    
              {/* socials */}
              <div className="mt-6 flex justify-center gap-4 sm:justify-start">
               <Link
-                href="https://www.instagram.com/craftingcornermohali/"
+                href={siteData.social.instagram || '#'}
                 aria-label="Instagram"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
                 <Instagram className="h-5 w-5" />
               </Link>
               <Link
-                href=" https://www.facebook.com/profile.php?id=61574155822550"
+                href={siteData.social.facebook || '#'}
                 aria-label="Facebook"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
                 <Facebook className="h-5 w-5" />
               </Link>
               <Link
-                href="https://www.linkedin.com/company/crafting-corner-mohali/"
+                href={siteData.social.linkedin || '#'}
                 aria-label="LinkedIn"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
@@ -105,7 +103,7 @@
    
          {/* bottom bar */}
         <div className="border-t border-[#ccb39a]/70 px-4 py-6 text-center text-sm text-[#536779]">
-          © {year} Crafting Corner · All rights reserved.
+          © {year} {footerData.copyright}
         </div>
       </motion.footer>
     );

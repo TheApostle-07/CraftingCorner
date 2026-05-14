@@ -1,54 +1,82 @@
-import bedroomProducts from '../data/products/bedroom.json';
-import categories from '../data/categories.json';
-import customProducts from '../data/products/custom.json';
-import diningRoomProducts from '../data/products/dining-room.json';
-import kidsRoomProducts from '../data/products/kids-room.json';
-import kitchenBarProducts from '../data/products/kitchen-bar.json';
-import livingRoomProducts from '../data/products/living-room.json';
-import officeProducts from '../data/products/office.json';
-import outdoorProducts from '../data/products/outdoor.json';
-import type { Category, Product } from './types';
+import categoriesData from '../data/categories.json';
+import productsData from '../data/products.json';
+import type { Category, Product, ProductImage } from './types';
 
-export const allCategories = categories as Category[];
+function normalizeCategory(category: Category, index: number): Category {
+  const title = category.title || category.name || '';
+
+  return {
+    ...category,
+    id: category.id || `cat_${category.slug.replace(/[^a-z0-9]+/gi, '_')}`,
+    name: category.name || title,
+    title,
+    subtitle:
+      category.subtitle ||
+      `Explore handcrafted ${title.toLowerCase()} designed for Indian homes.`,
+    alt: category.alt || `${title} category image`,
+    visibility: category.visibility || 'published',
+    sortOrder: category.sortOrder || index + 1,
+  };
+}
+
+function normalizeImages(product: Product): ProductImage[] {
+  if (Array.isArray(product.images) && product.images.length > 0) {
+    return product.images;
+  }
+
+  const imageUrls = Array.isArray(product.img) ? product.img : [product.img].filter(Boolean);
+
+  return imageUrls.map((url, index) => ({
+    url: url || '',
+    alt: index === 0 ? product.title || product.name || 'Product image' : `${product.title || product.name} view ${index + 1}`,
+    isPrimary: index === 0,
+  }));
+}
+
+function normalizeProduct(product: Product): Product {
+  const title = product.title || product.name || '';
+  const category = product.categorySlug || product.category || '';
+  const images = normalizeImages({ ...product, title });
+  const img = images.length > 1 ? images.map((image) => image.url) : images[0]?.url || '';
+
+  return {
+    ...product,
+    name: product.name || title,
+    title,
+    category,
+    categorySlug: category,
+    images,
+    img,
+    shortDescription: product.shortDescription || product.description || '',
+    description: product.description || product.shortDescription || '',
+    tags: product.tags || [],
+    sections: product.sections || {},
+    visibility: product.visibility || 'published',
+    sortOrder: product.sortOrder || 0,
+  };
+}
+
+function flattenProducts(raw: unknown): Product[] {
+  if (Array.isArray(raw)) {
+    return raw as Product[];
+  }
+
+  return Object.values(raw as Record<string, Product[]>).flat();
+}
+
+export const allCategories = (categoriesData as Category[])
+  .map(normalizeCategory)
+  .filter((category) => category.visibility !== 'draft')
+  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
+const allProducts = flattenProducts(productsData)
+  .map(normalizeProduct)
+  .filter((product) => product.visibility !== 'draft')
+  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 
 export const getCategory = (slug: string) =>
   allCategories.find((category) => category.slug === slug);
 
-const categoryProductMap: Record<string, Product[]> = {
-  bedroom: (bedroomProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'bedroom',
-  })),
-  custom: (customProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'custom',
-  })),
-  'dining-room': (diningRoomProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'dining-room',
-  })),
-  'kids-room': (kidsRoomProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'kids-room',
-  })),
-  'kitchen-bar': (kitchenBarProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'kitchen-bar',
-  })),
-  'living-room': (livingRoomProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'living-room',
-  })),
-  office: (officeProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'office',
-  })),
-  outdoor: (outdoorProducts as Product[]).map((product) => ({
-    ...product,
-    category: product.category || 'outdoor',
-  })),
-};
-
 export async function loadProducts(catSlug: string): Promise<Product[]> {
-  return categoryProductMap[catSlug] || [];
+  return allProducts.filter((product) => product.categorySlug === catSlug);
 }

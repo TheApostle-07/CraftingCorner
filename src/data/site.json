@@ -1,0 +1,22 @@
+{
+  "brandName": "Crafting Corner",
+  "logoText": "Crafting Corner",
+  "logoImage": "/assets/img/logo.png",
+  "whatsapp": {
+    "number": "+919056888917",
+    "enabled": true,
+    "defaultMessage": "Hi! I'm interested in your furniture.",
+    "productMessageTemplate": "Hi Crafting Corner, I am interested in {{productName}} priced at {{price}}. Product link: {{productUrl}} Please share details."
+  },
+  "contact": {
+    "email": "hello@craftingcorner.in",
+    "phone": "+919056888917",
+    "address": "Mohali, Punjab, India"
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/craftingcornermohali/",
+    "facebook": "https://www.facebook.com/profile.php?id=61574155822550",
+    "linkedin": "https://www.linkedin.com/company/crafting-corner-mohali/"
+  },
+  "updatedAt": "2026-05-14T00:00:00.000Z"
+}

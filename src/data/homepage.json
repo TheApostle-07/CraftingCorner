@@ -1,0 +1,82 @@
+{
+  "hero": {
+    "title": "Timeless Hand-Crafted Furniture",
+    "subtitle": "Made to transcend trends, built to last generations.",
+    "backgroundImage": "/assets/img/CC_Hero_1.png",
+    "logoImage": "/assets/img/logo.png",
+    "ctaText": "Explore Collections",
+    "scrollLabel": "Scroll"
+  },
+  "sections": {
+    "browseCategories": {
+      "visible": true,
+      "heading": "Browse by Category",
+      "categoryOrder": [
+        "living-room",
+        "bedroom",
+        "dining-room",
+        "office",
+        "outdoor",
+        "kids-room",
+        "custom",
+        "kitchen-bar"
+      ]
+    },
+    "browseProducts": {
+      "visible": true,
+      "heading": "Browse by Products",
+      "productTypeOrder": [
+        "dining-table-set",
+        "sofa-set",
+        "rugs",
+        "centre-tables",
+        "console",
+        "chairs",
+        "beds",
+        "coffee-side-table"
+      ]
+    },
+    "bestSellers": {
+      "visible": true,
+      "heading": "Best Sellers",
+      "productSlugs": [
+        "sirohi-king-platform-bed",
+        "nimbus-sectional-sofa",
+        "solaire-dining-table"
+      ]
+    },
+    "featured": {
+      "visible": true,
+      "heading": "Featured Products",
+      "productSlugs": [
+        "aranya-teak-tv-console",
+        "kashmir-walnut-coffee-table",
+        "indigo-velvet-accent-chair"
+      ]
+    },
+    "topPicks": {
+      "visible": true,
+      "heading": "Top Picks",
+      "productSlugs": [
+        "zenith-walnut-bookshelf",
+        "cascade-bar-stool",
+        "sutra-rattan-side-table"
+      ]
+    },
+    "recommended": {
+      "visible": true,
+      "heading": "Recommended for You",
+      "productSlugs": [
+        "ergoflex-mesh-chair",
+        "convertible-playhouse-bed",
+        "artisan-acacia-board"
+      ]
+    },
+    "testimonials": {
+      "visible": true,
+      "heading": "Client Perspectives",
+      "subheading": "A grounded snapshot of the feedback design-led buyers care about most: fit, finish, communication, and how the furniture finally sits in the room."
+    }
+  },
+  "updatedAt": "2026-05-14T00:00:00.000Z"
+}

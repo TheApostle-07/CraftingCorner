@@ -1,0 +1,26 @@
+{
+  "brandName": "Crafting Corner",
+  "tagline": "Hand-crafted furniture made to last generations.",
+  "description": "Crafting Corner curates artisanal furniture pieces, blending traditional craftsmanship with modern design to bring you timeless and enduring home decor.",
+  "newsletterPlaceholder": "Your email",
+  "newsletterButtonLabel": "Join",
+  "copyright": "Crafting Corner · All rights reserved.",
+  "nav": [
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "Products",
+      "href": "/products"
+    },
+    {
+      "label": "About Us",
+      "href": "/about"
+    },
+    {
+      "label": "Contact",
+      "href": "/contact"
+    }
+  ]
+}
