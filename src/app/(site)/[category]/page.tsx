@@ -9,7 +9,6 @@ import { notFound } from "next/navigation";
 
 import ProductCard from "@/components/ProductCard";
 import {
-  allCategories,
   getCategory,
   loadProducts,
 } from "@/lib/loaders.server";
@@ -21,10 +20,8 @@ import {
 /**
  * Pre-generate a page for every category in `/src/data/categories.json`.
  */
-export const dynamicParams = false; // guarantees SSG
-export async function generateStaticParams() {
-  return allCategories.map((c) => ({ category: c.slug }));
-}
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 /**
  * Set <title> and social meta for each category page.
@@ -34,7 +31,7 @@ export async function generateMetadata({
 }: {
   params: { category: string };
 }): Promise<Metadata> {
-  const cat = getCategory(params.category);
+  const cat = await getCategory(params.category);
   if (!cat) return {};
 
   return {
@@ -56,7 +53,7 @@ export default async function CategoryPage({
 }: {
   params: { category: string };
 }) {
-  const cat = getCategory(params.category);
+  const cat = await getCategory(params.category);
   if (!cat) notFound();
 
   const products = await loadProducts(cat.slug);

@@ -1,7 +1,6 @@
 // src/app/products/page.tsx
 import ProductCard from '@/components/ProductCard';
-import productTypes from '@/data/productTypes.json';
-import { loadAllProducts } from '@/lib/loaders.server';
+import { loadAllProducts, loadProductTypes } from '@/lib/loaders.server';
 import type { Product, ProductType } from '@/lib/types';
 
 export const dynamic = 'force-dynamic'; 
@@ -14,12 +13,11 @@ export default async function ProductsPage({
   searchParams?: { type?: string };
 }) {
   const products = await loadAllProducts();
+  const productTypes = await loadProductTypes();
   const browseType = searchParams?.type?.toLowerCase();
   let filtered: Product[] = products;
   const productTypeSlugs = new Set(
-    (productTypes as ProductType[])
-      .filter((type) => type.visibility !== 'draft')
-      .map((type) => type.slug),
+    productTypes.map((type: ProductType) => type.slug),
   );
 
   if (browseType) {

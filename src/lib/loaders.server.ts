@@ -1,6 +1,5 @@
-import categoriesData from '../data/categories.json';
-import productsData from '../data/products.json';
-import type { Category, Product, ProductImage } from './types';
+import { readPublicContent } from './adminContent.server';
+import type { Category, Product, ProductImage, ProductType, SiteData } from './types';
 
 function normalizeImages(product: Product): ProductImage[] {
   if (Array.isArray(product.images) && product.images.length > 0) {
@@ -11,7 +10,10 @@ function normalizeImages(product: Product): ProductImage[] {
 
   return imageUrls.map((url, index) => ({
     url: url || '',
-    alt: index === 0 ? product.title || product.name || 'Product image' : `${product.title || product.name} view ${index + 1}`,
+    alt:
+      index === 0
+        ? product.title || product.name || 'Product image'
+        : `${product.title || product.name} view ${index + 1}`,
     isPrimary: index === 0,
   }));
 }
@@ -56,41 +58,50 @@ function normalizeCategory(category: Category, index: number): Category {
   };
 }
 
-function flattenProducts(raw: unknown): Product[] {
-  if (Array.isArray(raw)) {
-    return raw as Product[];
-  }
+export async function loadCategories(): Promise<Category[]> {
+  const content = await readPublicContent();
 
-  return Object.values(raw as Record<string, Product[]>).flat();
+  return content.categories
+    .map(normalizeCategory)
+    .filter((category) => category.visibility !== 'draft')
+    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
 }
 
-function publishedProduct(product: Product) {
-  return product.visibility !== 'draft';
-}
-
-function publishedCategory(category: Category) {
-  return category.visibility !== 'draft';
-}
-
-export const allCategories = (categoriesData as Category[])
-  .map(normalizeCategory)
-  .filter(publishedCategory)
-  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-const allProducts = flattenProducts(productsData)
-  .map(normalizeProduct)
-  .filter(publishedProduct)
-  .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
-
-export const getCategory = (slug: string) =>
-  allCategories.find((category) => category.slug === slug);
-
-export async function loadProducts(catSlug: string): Promise<Product[]> {
-  return allProducts.filter((product) => product.categorySlug === catSlug);
+export async function getCategory(slug: string) {
+  const categories = await loadCategories();
+  return categories.find((category) => category.slug === slug);
 }
 
 export async function loadAllProducts(): Promise<Product[]> {
-  return allProducts;
+  const content = await readPublicContent();
+
+  return content.products
+    .map(normalizeProduct)
+    .filter((product) => product.visibility !== 'draft')
+    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+}
+
+export async function loadProducts(catSlug: string): Promise<Product[]> {
+  const products = await loadAllProducts();
+  return products.filter((product) => product.categorySlug === catSlug);
+}
+
+export async function loadProductTypes(): Promise<ProductType[]> {
+  const content = await readPublicContent();
+
+  return content.productTypes
+    .filter((type) => type.visibility !== 'draft')
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+export async function loadSiteData(): Promise<SiteData> {
+  const content = await readPublicContent();
+  return content.site;
+}
+
+export async function loadFooterData() {
+  const content = await readPublicContent();
+  return content.footer;
 }
 
 export type { Product };

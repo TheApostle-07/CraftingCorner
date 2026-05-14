@@ -1,4 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
+import { randomUUID } from 'node:crypto';
 import path from 'node:path';
 
 import {
@@ -6,6 +7,7 @@ import {
   type AdminContent,
   validateAdminContent,
 } from './adminContent';
+import { getCmsDatabaseClient, hasCmsDatabaseConnection } from './database';
 
 type GithubConfig = {
   token: string;
@@ -20,7 +22,7 @@ export type AdminContentResponse = {
   health: ReturnType<typeof validateAdminContent>;
   baseSha: string;
   storage: {
-    mode: 'github' | 'local';
+    mode: 'database' | 'github' | 'local';
     canUpdate: boolean;
     branch: string;
     note: string;
@@ -60,6 +62,26 @@ function contentToFiles(content: AdminContent) {
   };
 }
 
+const DOCUMENT_TO_CONTENT_KEY: Record<string, keyof AdminContent> = {
+  'site.json': 'site',
+  'homepage.json': 'homepage',
+  'categories.json': 'categories',
+  'productTypes.json': 'productTypes',
+  'products.json': 'products',
+  'testimonials.json': 'testimonials',
+  'seo.json': 'seo',
+  'footer.json': 'footer',
+  'navigation.json': 'navigation',
+};
+
+const CONTENT_KEY_TO_DOCUMENT = Object.entries(DOCUMENT_TO_CONTENT_KEY).reduce(
+  (acc, [documentKey, contentKey]) => {
+    acc[contentKey] = documentKey;
+    return acc;
+  },
+  {} as Record<keyof AdminContent, string>,
+);
+
 async function readLocalJson<T>(file: string): Promise<T> {
   return JSON.parse(await readFile(dataPath(file), 'utf8')) as T;
 }
@@ -75,6 +97,103 @@ async function readLocalContent(): Promise<AdminContent> {
     seo: await readLocalJson('seo.json'),
     footer: await readLocalJson('footer.json'),
     navigation: await readLocalJson('navigation.json'),
+  };
+}
+
+function usesDatabaseContent() {
+  return hasCmsDatabaseConnection() && process.env.CMS_CONTENT_STORAGE !== 'github';
+}
+
+async function ensureCmsTables() {
+  const sql = getCmsDatabaseClient();
+
+  await sql`
+    create table if not exists cms_documents (
+      key text primary key,
+      data jsonb not null,
+      version integer not null default 1,
+      updated_at timestamptz not null default now(),
+      updated_by text not null default 'system'
+    )
+  `;
+
+  await sql`
+    create table if not exists cms_revisions (
+      id text primary key,
+      key text not null,
+      data jsonb not null,
+      version integer not null,
+      created_at timestamptz not null default now(),
+      created_by text not null default 'admin'
+    )
+  `;
+}
+
+function buildDatabaseBaseSha(rows: { key: string; version: number }[]) {
+  return rows
+    .slice()
+    .sort((a, b) => a.key.localeCompare(b.key))
+    .map((row) => `${row.key}:${row.version}`)
+    .join('|');
+}
+
+async function readDatabaseRows() {
+  const sql = getCmsDatabaseClient();
+  return sql<{ key: string; data: unknown; version: number }[]>`
+    select key, data, version
+    from cms_documents
+    where key = any(${ADMIN_DATA_FILES as unknown as string[]})
+  `;
+}
+
+async function seedMissingDatabaseDocuments(localContent: AdminContent) {
+  const sql = getCmsDatabaseClient();
+  const rows = await readDatabaseRows();
+  const existingKeys = new Set(rows.map((row) => row.key));
+  const files = contentToFiles(localContent);
+
+  for (const [file, data] of Object.entries(files)) {
+    if (existingKeys.has(file)) continue;
+
+    await sql`
+      insert into cms_documents (key, data, version, updated_at, updated_by)
+      values (${file}, ${sql.json(data)}, 1, now(), 'seed')
+      on conflict (key) do nothing
+    `;
+  }
+}
+
+async function readDatabaseContent(localContent?: AdminContent) {
+  await ensureCmsTables();
+  let fallbackContent = localContent;
+  let rows = await readDatabaseRows();
+
+  if (rows.length < ADMIN_DATA_FILES.length) {
+    fallbackContent ||= await readLocalContent();
+    await seedMissingDatabaseDocuments(fallbackContent);
+    rows = await readDatabaseRows();
+  }
+
+  const byKey = new Map(rows.map((row) => [row.key, row]));
+  const merged = {} as AdminContent;
+
+  (Object.keys(CONTENT_KEY_TO_DOCUMENT) as (keyof AdminContent)[]).forEach(
+    (contentKey) => {
+      const documentKey = CONTENT_KEY_TO_DOCUMENT[contentKey];
+      const rowData = byKey.get(documentKey)?.data;
+
+      if (!rowData && !fallbackContent) {
+        throw new Error(`CMS document ${documentKey} is missing from Neon.`);
+      }
+
+      (merged as Record<string, unknown>)[contentKey] =
+        rowData || fallbackContent?.[contentKey];
+    },
+  );
+
+  return {
+    content: merged,
+    baseSha: buildDatabaseBaseSha(rows),
   };
 }
 
@@ -112,8 +231,27 @@ async function getGithubHeadSha(config: GithubConfig) {
 }
 
 export async function readAdminContent(): Promise<AdminContentResponse> {
+  const localContent = await readLocalContent();
+
+  if (usesDatabaseContent()) {
+    const databaseContent = await readDatabaseContent(localContent);
+    const health = validateAdminContent(databaseContent.content);
+
+    return {
+      content: databaseContent.content,
+      health,
+      baseSha: databaseContent.baseSha,
+      storage: {
+        mode: 'database',
+        canUpdate: true,
+        branch: 'neon',
+        note: 'Reads and writes Crafting Corner content in Neon Postgres. Public pages update without a GitHub content commit.',
+      },
+    };
+  }
+
   const config = getGithubConfig();
-  const content = await readLocalContent();
+  const content = localContent;
   const health = validateAdminContent(content);
 
   if (!config) {
@@ -160,6 +298,51 @@ async function writeLocalContent(content: AdminContent) {
       writeFile(dataPath(file), `${JSON.stringify(value, null, 2)}\n`, 'utf8'),
     ),
   );
+}
+
+async function writeDatabaseContent(
+  content: AdminContent,
+  baseSha: string,
+  updatedBy = 'admin',
+) {
+  await ensureCmsTables();
+  const sql = getCmsDatabaseClient();
+  const currentRows = await readDatabaseRows();
+  const currentBaseSha = buildDatabaseBaseSha(currentRows);
+
+  if (baseSha && baseSha !== currentBaseSha) {
+    throw new Error(
+      'Database content changed after this admin session loaded. Refresh before saving to avoid overwriting newer edits.',
+    );
+  }
+
+  const files = contentToFiles(content);
+
+  await sql.begin(async (tx) => {
+    for (const [file, data] of Object.entries(files)) {
+      const current = currentRows.find((row) => row.key === file);
+
+      if (current) {
+        await tx`
+          insert into cms_revisions (id, key, data, version, created_at, created_by)
+          values (${randomUUID()}, ${file}, ${tx.json(current.data)}, ${current.version}, now(), ${updatedBy})
+        `;
+      }
+
+      await tx`
+        insert into cms_documents (key, data, version, updated_at, updated_by)
+        values (${file}, ${tx.json(data)}, 1, now(), ${updatedBy})
+        on conflict (key) do update set
+          data = excluded.data,
+          version = cms_documents.version + 1,
+          updated_at = now(),
+          updated_by = excluded.updated_by
+      `;
+    }
+  });
+
+  const nextRows = await readDatabaseRows();
+  return buildDatabaseBaseSha(nextRows);
 }
 
 async function writeGithubContent(
@@ -265,6 +448,16 @@ export async function saveAdminContent(
   const commitMessage =
     options.message || `Update Crafting Corner content (${new Date().toISOString()})`;
 
+  if (usesDatabaseContent()) {
+    const nextBaseSha = await writeDatabaseContent(content, options.baseSha);
+    return {
+      ok: true,
+      health,
+      message: 'Content saved to Neon. Public pages now read the updated database content.',
+      commitSha: nextBaseSha,
+    };
+  }
+
   if (config) {
     const commitSha = await writeGithubContent(
       content,
@@ -290,4 +483,12 @@ export async function saveAdminContent(
     message: 'Content saved to local JSON files.',
     commitSha: 'local',
   };
+}
+
+export async function readPublicContent(): Promise<AdminContent> {
+  if (usesDatabaseContent()) {
+    return (await readDatabaseContent()).content;
+  }
+
+  return readLocalContent();
 }

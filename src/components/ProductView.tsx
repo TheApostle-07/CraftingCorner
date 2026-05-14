@@ -10,23 +10,27 @@ import Link from 'next/link';
 import { MessageCircle } from 'lucide-react';
 import ProductCard from './ProductCard';
 
-import siteData from '@/data/site.json';
+import type { SiteData } from '@/lib/types';
 import type { Product } from '../lib/loaders.server';
 
 type Props = {
   product: Product;
   related: Product[];
+  site: SiteData;
 };
 
-export default function ProductView({ product, related }: Props) {
+export default function ProductView({ product, related, site }: Props) {
   // make gallery always an array
-  const gallery = Array.isArray(product.img) ? product.img : [product.img];
+  const gallery = (Array.isArray(product.img) ? product.img : [product.img]).filter(
+    Boolean,
+  ) as string[];
+  const mainImage = gallery[0] || '/assets/img/products/bestseller_1.png';
   const productUrl = `https://craftingcorner.in/products/${product.slug}`;
-  const enquiryMessage = siteData.whatsapp.productMessageTemplate
+  const enquiryMessage = site.whatsapp.productMessageTemplate
     .replace('{{productName}}', product.title)
     .replace('{{price}}', `₹${product.price.toLocaleString('en-IN')}`)
     .replace('{{productUrl}}', productUrl);
-  const whatsappHref = `https://wa.me/${siteData.whatsapp.number.replace(/\D/g, '')}?text=${encodeURIComponent(enquiryMessage)}`;
+  const whatsappHref = `https://wa.me/${site.whatsapp.number.replace(/\D/g, '')}?text=${encodeURIComponent(enquiryMessage)}`;
 
   return (
     <MotionConfig transition={{ duration: 0.5, ease: 'easeOut' }}>
@@ -43,7 +47,7 @@ export default function ProductView({ product, related }: Props) {
             className="overflow-hidden rounded-2xl bg-walnut/5"
           >
             <Image
-              src={gallery[0]}
+              src={mainImage}
               alt={product.title}
               width={900}
               height={700}
@@ -85,7 +89,7 @@ export default function ProductView({ product, related }: Props) {
               </ul>
             )}
 
-            {siteData.whatsapp.enabled ? (
+            {site.whatsapp.enabled ? (
               <Link
                 href={whatsappHref}
                 target="_blank"

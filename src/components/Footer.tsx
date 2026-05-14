@@ -11,12 +11,27 @@
    import { motion } from 'framer-motion';
    import Link from 'next/link';
    import { Instagram, Facebook, Linkedin } from 'lucide-react';
-   import footerData from '@/data/footer.json';
-   import siteData from '@/data/site.json';
+   import type { SiteData } from '@/lib/types';
    
-   export default function Footer() {
+   type FooterData = {
+     brandName?: string;
+     tagline?: string;
+     description?: string;
+     newsletterPlaceholder?: string;
+     newsletterButtonLabel?: string;
+     copyright?: string;
+     nav?: { href: string; label: string }[];
+   };
+
+   export default function Footer({
+     footer,
+     site,
+   }: {
+     footer: FooterData;
+     site: SiteData;
+   }) {
      const year = new Date().getFullYear();
-     const nav = footerData.nav || [];
+     const nav = footer.nav || [];
    
      return (
        <motion.footer
@@ -31,13 +46,13 @@
           {/* 1 / Brand column */}
           <div className="text-center sm:text-left">
             <h2 className="font-display text-2xl text-[#6E4B34]">
-              {footerData.brandName || siteData.brandName}
+              {footer.brandName || site.brandName}
             </h2>
             <p className="mt-4 max-w-xs text-sm leading-6 text-[#42576b]">
-              {footerData.tagline}
+              {footer.tagline}
             </p>
             <p className="mt-2 max-w-xs text-sm leading-6 text-[#42576b]">
-              {footerData.description}
+              {footer.description}
             </p>
           </div>
    
@@ -63,35 +78,35 @@
               <input
                 type="email"
                 required
-                placeholder={footerData.newsletterPlaceholder || 'Your email'}
+                placeholder={footer.newsletterPlaceholder || 'Your email'}
                 className="flex-1 bg-transparent px-3 py-2 text-sm text-[#243648] outline-none placeholder:text-[#617487]"
               />
               <button
                 type="submit"
                 className="bg-clay px-4 py-2 text-sm text-ivory transition hover:bg-clay/90"
                >
-                 {footerData.newsletterButtonLabel || 'Join'}
+                 {footer.newsletterButtonLabel || 'Join'}
                </button>
              </form>
    
              {/* socials */}
              <div className="mt-6 flex justify-center gap-4 sm:justify-start">
               <Link
-                href={siteData.social.instagram || '#'}
+                href={site.social.instagram || '#'}
                 aria-label="Instagram"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
                 <Instagram className="h-5 w-5" />
               </Link>
               <Link
-                href={siteData.social.facebook || '#'}
+                href={site.social.facebook || '#'}
                 aria-label="Facebook"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
                 <Facebook className="h-5 w-5" />
               </Link>
               <Link
-                href={siteData.social.linkedin || '#'}
+                href={site.social.linkedin || '#'}
                 aria-label="LinkedIn"
                 className="rounded-full p-2 text-[#33485c] transition hover:bg-[#6E4B34]/10 hover:text-[#6E4B34]"
               >
@@ -103,7 +118,7 @@
    
          {/* bottom bar */}
         <div className="border-t border-[#ccb39a]/70 px-4 py-6 text-center text-sm text-[#536779]">
-          © {year} {footerData.copyright}
+          © {year} {footer.copyright}
         </div>
       </motion.footer>
     );

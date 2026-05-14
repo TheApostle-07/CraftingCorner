@@ -6,29 +6,15 @@ import { notFound } from 'next/navigation';
 
 import ProductView from '@/components/ProductView';
 import {
-  allCategories,
   loadProducts,
   loadAllProducts,
+  loadSiteData,
   type Product,
 } from '@/lib/loaders.server';
 
 /* ---------- static-site helpers ---------- */
-export const dynamicParams = false;
-
-export async function generateStaticParams() {
-  const params: { slug: string }[] = [];
-
-  for (const cat of allCategories) {
-    const products = await loadProducts(cat.slug);
-    products.forEach((product) => {
-      if (!params.some((item) => item.slug === product.slug)) {
-        params.push({ slug: product.slug });
-      }
-    });
-  }
-
-  return params;
-}
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 export async function generateMetadata({
   params,
@@ -38,7 +24,9 @@ export async function generateMetadata({
   const product = await findProduct(params.slug);
   if (!product) return {};
 
-  const mainImg = Array.isArray(product.img) ? product.img[0] : product.img;
+  const mainImg =
+    (Array.isArray(product.img) ? product.img[0] : product.img) ||
+    '/assets/img/products/bestseller_1.png';
 
   return {
     title: `${product.title} | Crafting Corner`,
@@ -76,6 +64,7 @@ export default async function ProductPage({
   }
 
   related = related.slice(0, 3);
+  const site = await loadSiteData();
 
-  return <ProductView product={product} related={related} />;
+  return <ProductView product={product} related={related} site={site} />;
 }

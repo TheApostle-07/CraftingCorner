@@ -58,7 +58,9 @@ export async function POST(request: Request) {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : 'Unable to save admin content.';
-    const isConflict = message.includes('branch changed');
+    const isConflict =
+      message.includes('branch changed') ||
+      message.includes('Database content changed');
 
     return NextResponse.json(
       { message },

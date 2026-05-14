@@ -50,7 +50,7 @@ type ApiPayload = {
   health?: ContentHealth;
   baseSha?: string;
   storage?: {
-    mode: 'github' | 'local';
+    mode: 'database' | 'github' | 'local';
     canUpdate: boolean;
     branch: string;
     note: string;
@@ -82,6 +82,30 @@ const tabs: { id: TabId; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'settings', label: 'Settings', icon: Settings },
   { id: 'deployments', label: 'Deployments', icon: UploadCloud },
 ];
+
+function storageLabel(storage?: ApiPayload['storage']) {
+  if (storage?.mode === 'database') return 'Neon database';
+  if (storage?.mode === 'github') return `GitHub ${storage.branch}`;
+  return 'Local JSON';
+}
+
+function saveActionLabel(storage?: ApiPayload['storage']) {
+  if (storage?.mode === 'database') return 'Save to Neon';
+  if (storage?.mode === 'github') return 'Save to GitHub';
+  return 'Save locally';
+}
+
+function savePublishCopy(storage?: ApiPayload['storage']) {
+  if (storage?.mode === 'database') {
+    return 'This removes the item from the Neon-backed content draft. Save to publish the deletion immediately.';
+  }
+
+  if (storage?.mode === 'github') {
+    return 'This removes the item from the JSON content draft. Save to GitHub to publish the deletion.';
+  }
+
+  return 'This removes the item from the local content draft. Save locally to keep the deletion.';
+}
 
 const emptyImage: ProductImage = {
   url: '',
@@ -526,7 +550,7 @@ export default function AdminConsole({
             </p>
             <h1 className="mt-2 font-display text-3xl font-semibold">Admin</h1>
             <p className="mt-3 text-sm leading-6 text-white/64">
-              GitHub-backed catalogue and content controls.
+              Persistent catalogue and content controls.
             </p>
           </div>
 
@@ -558,7 +582,7 @@ export default function AdminConsole({
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7A6A58]">
-                  {storage?.mode === 'github' ? `GitHub ${storage.branch}` : 'Local JSON'}
+                  {storageLabel(storage)}
                 </p>
                 <h2 className="mt-1 font-display text-3xl font-semibold text-[#2B1A12]">
                   {tabs.find((tab) => tab.id === activeTab)?.label}
@@ -582,7 +606,7 @@ export default function AdminConsole({
                   className="inline-flex items-center gap-2 rounded-xl bg-[#5A3825] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2B1A12] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                  Save to GitHub
+                  {saveActionLabel(storage)}
                 </button>
                 <button
                   type="button"
@@ -754,7 +778,7 @@ export default function AdminConsole({
       {deleteTarget ? (
         <ConfirmDialog
           title={`Delete ${deleteTarget.label}?`}
-          body="This removes the item from the JSON content draft. Save to GitHub to publish the deletion."
+          body={savePublishCopy(storage)}
           onCancel={() => setDeleteTarget(null)}
           onConfirm={confirmDelete}
         />
@@ -883,7 +907,7 @@ function DashboardView({
   );
 }
 
-function HealthLine({ label, value }: { label: string; value: number }) {
+function HealthLine({ label, value }: { label: string; value: number | string }) {
   return (
     <div className="flex items-center justify-between rounded-xl bg-[#F8F3EA] px-4 py-3">
       <span className="text-sm text-[#7A6A58]">{label}</span>
@@ -1438,17 +1462,24 @@ function SettingsView({ content, updateContent }: any) {
 }
 
 function DeploymentsView({ storage, baseSha, health }: { storage: ApiPayload['storage']; baseSha: string; health: ContentHealth | null }) {
+  const workflow =
+    storage?.mode === 'database'
+      ? 'Content is saved to Neon and public pages read the updated database content on request. No rebuild is required for catalogue edits.'
+      : storage?.mode === 'github'
+        ? 'Content is committed to GitHub. Vercel or Hostinger should rebuild from the updated branch.'
+        : 'Local development writes JSON files directly. Production should use Neon or GitHub storage.';
+
   return (
     <Panel title="Deployment / Save Status">
       <div className="grid gap-4 md:grid-cols-3">
-        <HealthLine label="Storage mode" value={storage?.mode === 'github' ? 1 : 0} />
+        <HealthLine label="Storage mode" value={storageLabel(storage)} />
         <HealthLine label="Validation errors" value={health?.errors || 0} />
         <HealthLine label="Validation warnings" value={health?.warnings || 0} />
       </div>
       <div className="mt-6 rounded-xl bg-[#F8F3EA] p-4 text-sm leading-6 text-[#5A3825]">
         <p>{storage?.note}</p>
         <p className="mt-2 font-mono text-xs">Base SHA: {baseSha || 'not available'}</p>
-        <p className="mt-2">After GitHub save, Vercel or Hostinger should rebuild from the updated branch.</p>
+        <p className="mt-2">{workflow}</p>
       </div>
     </Panel>
   );

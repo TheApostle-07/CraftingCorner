@@ -6,7 +6,6 @@ import Image from 'next/image';
 import ProductCard from '@/components/ProductCard'; // for related items
 
 import {
-  allCategories,
   getCategory,
   loadProducts,
 } from '@/lib/loaders.server';
@@ -15,20 +14,8 @@ import {
 // Static-site helpers
 // ───────────────────────────────────────────────────────────────────────────────
 
-// Generate a page for *every* product in every category.
-export const dynamicParams = false;
-export async function generateStaticParams() {
-  const params: { category: string; slug: string }[] = [];
-
-  for (const cat of allCategories) {
-    const products = await loadProducts(cat.slug);
-    for (const p of products) {
-      params.push({ category: cat.slug, slug: p.slug });
-    }
-  }
-
-  return params;
-}
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 // Per-page <title>, description, OG image, etc.
 export async function generateMetadata({
@@ -36,7 +23,7 @@ export async function generateMetadata({
 }: {
   params: { category: string; slug: string };
 }): Promise<Metadata> {
-  const cat = getCategory(params.category);
+  const cat = await getCategory(params.category);
   if (!cat) return {};
 
   const product = (await loadProducts(cat.slug)).find(
@@ -45,7 +32,8 @@ export async function generateMetadata({
   if (!product) return {};
 
   const mainImg =
-    typeof product.img === 'string' ? product.img : product.img[0];
+    (typeof product.img === 'string' ? product.img : product.img[0]) ||
+    '/assets/img/products/bestseller_1.png';
 
   return {
     title: `${product.title} | Crafting Corner`,
@@ -64,7 +52,7 @@ export default async function ProductPage({
 }: {
   params: { category: string; slug: string };
 }) {
-  const cat = getCategory(params.category);
+  const cat = await getCategory(params.category);
   if (!cat) notFound();
 
   const products = await loadProducts(cat.slug);
@@ -72,7 +60,10 @@ export default async function ProductPage({
   if (!product) notFound();
 
   // Make img always an array for convenience
-  const gallery = Array.isArray(product.img) ? product.img : [product.img];
+  const gallery = (Array.isArray(product.img) ? product.img : [product.img]).filter(
+    Boolean,
+  ) as string[];
+  const mainImage = gallery[0] || '/assets/img/products/bestseller_1.png';
 
   // Pick three “related” products (just the first three others in that category).
   const related = products.filter((p) => p.slug !== product.slug).slice(0, 3);
@@ -85,7 +76,7 @@ export default async function ProductPage({
           {/* Main Image */}
           <div className="overflow-hidden rounded-2xl bg-walnut/5">
             <Image
-              src={gallery[0]}
+              src={mainImage}
               alt={product.title}
               width={900}
               height={700}

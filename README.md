@@ -1,13 +1,17 @@
 ## Crafting Corner
 
-Next.js catalogue site with a GitHub-backed admin CMS. No database is required
-for content management.
+Next.js catalogue site with an admin CMS. Production can use Neon Postgres for
+instant persistent content edits, with GitHub JSON storage still available as a
+fallback.
 
 ## Admin CMS
 
-Open `/admin`, sign in, edit content, then save. In production, the admin API
-commits JSON changes to GitHub. Vercel or Hostinger can then rebuild from the
-updated branch.
+Open `/admin`, sign in, edit content, then save. When `DATABASE_URL` is set,
+the admin API stores content in Neon Postgres and public pages read the updated
+database content on request. No redeploy is needed for catalogue edits.
+
+If `CMS_CONTENT_STORAGE=github` is set, the same admin commits JSON changes to
+GitHub instead. Vercel or Hostinger can then rebuild from the updated branch.
 
 Editable files live in `src/data`:
 
@@ -27,6 +31,13 @@ Required production environment variables:
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD_HASH=sha256:<sha256-password-hash>
 ADMIN_SESSION_SECRET=<long-random-secret>
+DATABASE_URL=<neon-postgres-connection-string>
+CMS_CONTENT_STORAGE=database
+```
+
+Optional GitHub fallback:
+
+```env
 GITHUB_TOKEN=<fine-grained-token-with-contents-read-write>
 GITHUB_OWNER=TheApostle-07
 GITHUB_REPO=CraftingCorner
@@ -41,7 +52,14 @@ GITHUB_CONTENT_PATH=src/data
 node -e "console.log('sha256:' + require('node:crypto').createHash('sha256').update('your-password').digest('hex'))"
 ```
 
-The GitHub token must stay server-side. Do not expose it to browser code.
+Database tables are created automatically:
+
+- `cms_documents`
+- `cms_revisions`
+
+The Neon connection string and GitHub token must stay server-side. Do not expose
+either value to browser code. If a database URL has been shared in chat or logs,
+rotate that password in Neon before deploying.
 
 ## Local Development
 
@@ -50,8 +68,10 @@ pnpm install
 pnpm dev
 ```
 
-In local development without GitHub env vars, admin saves write directly to the
-JSON files in `src/data`. In production, GitHub env vars are required for saves.
+In local development without `DATABASE_URL` or GitHub env vars, admin saves write
+directly to the JSON files in `src/data`. In production, use Neon
+`DATABASE_URL` for persistent admin saves, or force GitHub mode with
+`CMS_CONTENT_STORAGE=github`.
 
 ## Validation
 

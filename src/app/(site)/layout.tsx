@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import FloatingWhatsapp from '@/components/FloatingWhatsapp';
 import Header from '@/components/Header';
 import PaymentPendingExperience from '@/components/PaymentPendingExperience';
-import siteData from '@/data/site.json';
+import { loadFooterData, loadSiteData } from '@/lib/loaders.server';
 import { getSiteStatus } from '@/lib/siteStatus';
 
 export const dynamic = 'force-dynamic';
@@ -15,6 +15,8 @@ export default async function SiteLayout({
   children: ReactNode;
 }) {
   const status = await getSiteStatus();
+  const siteData = await loadSiteData();
+  const footerData = await loadFooterData();
 
   if (!status.active) {
     return <PaymentPendingExperience />;
@@ -24,7 +26,7 @@ export default async function SiteLayout({
     <>
       <Header />
       <main className="min-h-screen pt-20">{children}</main>
-      <Footer />
+      <Footer footer={footerData} site={siteData} />
       {siteData.whatsapp.enabled ? (
         <FloatingWhatsapp
           phone={siteData.whatsapp.number}
