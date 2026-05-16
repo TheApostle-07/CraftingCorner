@@ -2,30 +2,44 @@
 
 import { startTransition, useEffect, useMemo, useState } from 'react';
 import {
+  Activity,
   AlertTriangle,
+  Armchair,
+  ArrowRight,
   Boxes,
-  CheckCircle2,
+  Clock3,
   Copy,
+  Database,
+  ExternalLink,
   Eye,
+  FileClock,
   FileText,
   GalleryHorizontal,
+  Grid3X3,
   Home,
   Image as ImageIcon,
+  KeyRound,
+  Layers3,
   LayoutDashboard,
   LoaderCircle,
   LogOut,
+  LockKeyhole,
   MessageCircle,
   Package,
   Plus,
+  Radio,
+  Rocket,
   Save,
   Search,
+  SearchCheck,
   Settings,
   ShieldAlert,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
-  Tags,
   Trash2,
   UploadCloud,
+  UserRound,
   X,
 } from 'lucide-react';
 
@@ -72,16 +86,33 @@ type TabId =
 
 const tabs: { id: TabId; label: string; icon: typeof LayoutDashboard }[] = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { id: 'products', label: 'Products', icon: Package },
-  { id: 'categories', label: 'Categories', icon: Boxes },
-  { id: 'types', label: 'Product Types', icon: Tags },
+  { id: 'products', label: 'Products', icon: Armchair },
+  { id: 'categories', label: 'Categories', icon: Grid3X3 },
+  { id: 'types', label: 'Product Types', icon: Layers3 },
   { id: 'homepage', label: 'Homepage', icon: Home },
   { id: 'testimonials', label: 'Testimonials', icon: MessageCircle },
   { id: 'media', label: 'Media', icon: ImageIcon },
-  { id: 'seo', label: 'SEO', icon: FileText },
+  { id: 'seo', label: 'SEO', icon: SearchCheck },
   { id: 'settings', label: 'Settings', icon: Settings },
-  { id: 'deployments', label: 'Deployments', icon: UploadCloud },
+  { id: 'deployments', label: 'Deployments', icon: Rocket },
 ];
+
+const homepageSectionLabels: Record<string, string> = {
+  browseCategories: 'Browse by Category',
+  browseProducts: 'Browse by Products',
+  bestSellers: 'Best Sellers',
+  featured: 'Featured Products',
+  topPicks: 'Top Picks',
+  recommended: 'Recommended',
+  testimonials: 'Client Perspectives',
+};
+
+const productSectionLabels: Record<string, string> = {
+  bestSeller: 'Best Seller',
+  featured: 'Featured',
+  topPick: 'Top Pick',
+  recommended: 'Recommended',
+};
 
 function storageLabel(storage?: ApiPayload['storage']) {
   if (storage?.mode === 'database') return 'Neon database';
@@ -125,10 +156,42 @@ function productTitle(product: Product) {
   return product.name || product.title || 'Untitled product';
 }
 
-function statusBadge(visibility?: string) {
-  return visibility === 'draft'
-    ? 'border-slate-200 bg-slate-50 text-slate-600'
-    : 'border-emerald-200 bg-emerald-50 text-emerald-700';
+function formatDateTime(value?: string) {
+  if (!value) return 'Not available';
+
+  try {
+    return new Intl.DateTimeFormat('en-IN', {
+      dateStyle: 'medium',
+      timeStyle: 'short',
+    }).format(new Date(value));
+  } catch {
+    return value;
+  }
+}
+
+function getStatusTone(visibility?: string) {
+  return visibility === 'draft' ? 'draft' : 'live';
+}
+
+function getHealthTone(score = 0) {
+  if (score >= 90) return 'success';
+  if (score >= 70) return 'warning';
+  return 'danger';
+}
+
+function storageIcon(storage?: ApiPayload['storage']) {
+  if (storage?.mode === 'database') return Database;
+  if (storage?.mode === 'github') return UploadCloud;
+  return FileText;
+}
+
+function messageTone(message: string): 'success' | 'warning' {
+  const value = message.toLowerCase();
+  return /unable|failed|failure|error|fix|invalid|missing|denied|not found|enotfound|econn|timeout|getaddrinfo/.test(
+    value,
+  )
+    ? 'warning'
+    : 'success';
 }
 
 function imageText(images?: ProductImage[]) {
@@ -469,12 +532,67 @@ export default function AdminConsole({
     const published = content.products.filter((product) => product.visibility !== 'draft');
     const draft = content.products.length - published.length;
     const issues = health?.issues || [];
+    const homepageSections = Object.entries(content.homepage.sections).map(([key, section]) => {
+      const data = section as {
+        visible: boolean;
+        heading?: string;
+        productSlugs?: string[];
+        categoryOrder?: string[];
+        productTypeOrder?: string[];
+      };
+      const linkedCount =
+        data.productSlugs?.length || data.categoryOrder?.length || data.productTypeOrder?.length || 0;
+
+      return {
+        key,
+        label: homepageSectionLabels[key] || key,
+        heading: data.heading || homepageSectionLabels[key] || key,
+        visible: data.visible,
+        linkedCount,
+      };
+    });
+    const productMix = (['bestSellers', 'featured', 'topPicks', 'recommended'] as const).map(
+      (key) => ({
+        key,
+        label: homepageSectionLabels[key],
+        visible: content.homepage.sections[key].visible,
+        count: content.homepage.sections[key].productSlugs.length,
+      }),
+    );
+    const recentUpdates = [
+      {
+        label: 'Homepage content',
+        area: 'Homepage',
+        at: content.homepage.updatedAt,
+      },
+      {
+        label: 'Site settings',
+        area: 'Settings',
+        at: content.site.updatedAt,
+      },
+      ...content.products.map((product) => ({
+        label: productTitle(product),
+        area: 'Product',
+        at: product.updatedAt || product.createdAt,
+      })),
+      ...content.categories.map((category) => ({
+        label: category.name || category.title,
+        area: 'Category',
+        at: category.seo?.title ? content.homepage.updatedAt : undefined,
+      })),
+    ]
+      .filter((item) => item.at)
+      .sort((a, b) => new Date(b.at || '').getTime() - new Date(a.at || '').getTime())
+      .slice(0, 5);
+    const lastUpdated =
+      recentUpdates[0]?.at || content.site.updatedAt || content.homepage.updatedAt || '';
 
     return {
       totalProducts: content.products.length,
       publishedProducts: published.length,
       draftProducts: draft,
       categories: content.categories.length,
+      productTypes: content.productTypes.length,
       activeHomepageSections: Object.values(content.homepage.sections).filter(
         (section) => section.visible,
       ).length,
@@ -485,55 +603,147 @@ export default function AdminConsole({
         (product) => !product.seo?.title || !product.seo?.description,
       ).length,
       issues,
-      lastUpdated: content.site.updatedAt || content.homepage.updatedAt || '',
+      homepageSections,
+      productMix,
+      recentUpdates,
+      lastUpdated,
     };
   }, [content, health]);
 
   if (!authenticated) {
     return (
-      <main className="min-h-screen bg-[#F8F3EA] px-4 py-10 text-[#241B14]">
-        <section className="mx-auto flex min-h-[calc(100vh-5rem)] max-w-md items-center">
-          <div className="w-full rounded-[2rem] border border-[#E8DCCB] bg-white p-8 shadow-[0_24px_70px_rgba(90,56,37,0.12)]">
-            <div className="inline-flex items-center gap-2 rounded-full bg-[#F8F3EA] px-4 py-2 text-xs font-semibold uppercase tracking-[0.22em] text-[#7A6A58]">
-              <ShieldAlert className="h-4 w-4 text-[#C89B5A]" />
-              Crafting Corner Admin
+      <main className="admin-shell relative min-h-screen overflow-hidden bg-[#F8F3EA] px-4 py-6 text-[#241B14] sm:px-6 lg:px-8">
+        <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(200,155,90,0.26),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(37,99,235,0.08),transparent_24%),radial-gradient(circle_at_80%_88%,rgba(90,56,37,0.12),transparent_28%),linear-gradient(135deg,#FFFDF8_0%,#F8F3EA_46%,#F3EBDD_100%)]" />
+        <div className="pointer-events-none fixed inset-x-6 top-6 h-28 rounded-full bg-white/35 blur-3xl" />
+
+        <section className="relative mx-auto grid min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center gap-6 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="overflow-hidden rounded-[2.2rem] border border-[#E8DCCB] bg-[#FFFDF8]/78 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.14)] backdrop-blur md:p-8 lg:min-h-[680px]">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#2B1A12] text-[#E7C98B] shadow-[0_18px_42px_rgba(43,26,18,0.22)]">
+                  <Armchair className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-extrabold tracking-tight text-[#2B1A12]">
+                    Crafting Corner
+                  </p>
+                  <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
+                    Admin Studio
+                  </p>
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-[#BBF7D0] bg-[#DCFCE7] px-3 py-1.5 text-xs font-bold text-[#15803D]">
+                <span className="live-dot h-2 w-2" />
+                Live
+              </span>
             </div>
-            <h1 className="mt-6 font-display text-4xl font-semibold text-[#2B1A12]">
-              Content management
-            </h1>
-            <p className="mt-3 text-sm leading-6 text-[#7A6A58]">{adminNote}</p>
 
-            <form className="mt-8 space-y-5" onSubmit={handleLogin}>
-              <Field label="Username">
-                <input
-                  value={username}
-                  onChange={(event) => setUsername(event.target.value)}
-                  autoComplete="username"
-                  disabled={isBusy || !adminConfigured}
-                  className="admin-input"
-                />
-              </Field>
-              <Field label="Password">
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(event) => setPassword(event.target.value)}
-                  autoComplete="current-password"
-                  disabled={isBusy || !adminConfigured}
-                  className="admin-input"
-                />
-              </Field>
-              <button
-                type="submit"
-                disabled={isBusy || !adminConfigured}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#5A3825] px-5 py-3 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(90,56,37,0.22)] transition hover:bg-[#2B1A12] disabled:cursor-not-allowed disabled:opacity-60"
-              >
-                {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
-                Sign in
-              </button>
-            </form>
+            <div className="mt-16 max-w-xl">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#E8DCCB] bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
+                <Sparkles className="h-4 w-4 text-[#C89B5A]" />
+                Premium catalogue control
+              </div>
+              <h1 className="mt-6 text-5xl font-extrabold tracking-[-0.045em] text-[#2B1A12] md:text-6xl">
+                Furniture content, managed beautifully.
+              </h1>
+              <p className="mt-5 max-w-lg text-base leading-8 text-[#5F4B3A]">
+                Sign in to manage products, homepage sections, SEO, testimonials, and live catalogue visibility from one focused control room.
+              </p>
+            </div>
 
-            {message ? <Toast message={message} tone="warning" /> : null}
+            <div className="mt-12 grid gap-3 sm:grid-cols-3">
+              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
+                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
+                  <Database className="h-4 w-4" />
+                </div>
+                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Neon CMS</p>
+                <p className="mt-1 text-xs leading-5 text-[#8A7866]">Instant content source.</p>
+              </div>
+              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
+                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
+                  <ShieldCheck className="h-4 w-4" />
+                </div>
+                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Secure Session</p>
+                <p className="mt-1 text-xs leading-5 text-[#8A7866]">HTTP-only admin access.</p>
+              </div>
+              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
+                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
+                  <Radio className="h-4 w-4" />
+                </div>
+                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Live Control</p>
+                <p className="mt-1 text-xs leading-5 text-[#8A7866]">Publish/draft visibility.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-[2.4rem] bg-[linear-gradient(135deg,rgba(200,155,90,0.22),rgba(255,255,255,0),rgba(90,56,37,0.14))] blur-2xl" />
+            <div className="relative rounded-[2.2rem] border border-[#E8DCCB] bg-white/86 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.16)] backdrop-blur md:p-8">
+              <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-[#E8DCCB] bg-[#FFFDF8] text-[#C89B5A] shadow-[0_18px_45px_rgba(90,56,37,0.12)]">
+                <LockKeyhole className="h-7 w-7" />
+              </div>
+              <div className="mt-6 text-center">
+                <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#8A7866]">
+                  Secure entry
+                </p>
+                <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[#2B1A12]">
+                  Welcome back
+                </h2>
+                <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#7A6A58]">{adminNote}</p>
+              </div>
+
+              <form className="mt-8 space-y-5" onSubmit={handleLogin}>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-extrabold text-[#5A3825]">Username</span>
+                  <div className="relative">
+                    <UserRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C89B5A]" />
+                    <input
+                      value={username}
+                      onChange={(event) => setUsername(event.target.value)}
+                      autoComplete="username"
+                      disabled={isBusy || !adminConfigured}
+                      className="admin-input pl-11"
+                      placeholder="Admin username"
+                    />
+                  </div>
+                </label>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-extrabold text-[#5A3825]">Password</span>
+                  <div className="relative">
+                    <KeyRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#C89B5A]" />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(event) => setPassword(event.target.value)}
+                      autoComplete="current-password"
+                      disabled={isBusy || !adminConfigured}
+                      className="admin-input pl-11"
+                      placeholder="Enter admin password"
+                    />
+                  </div>
+                </label>
+                <button
+                  type="submit"
+                  disabled={isBusy || !adminConfigured}
+                  className="admin-button-primary group w-full justify-center py-4"
+                >
+                  {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
+                  Enter Admin Studio
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                </button>
+              </form>
+
+              {message ? <Toast message={message} tone={messageTone(message)} /> : null}
+
+              <div className="mt-6 rounded-[1.35rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
+                <div className="flex items-start gap-3">
+                  <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C89B5A]" />
+                  <p className="text-xs leading-5 text-[#7A6A58]">
+                    Protected content operations stay server-side. Passwords are never stored in the browser and authenticated access uses a secure cookie session.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -541,20 +751,32 @@ export default function AdminConsole({
   }
 
   return (
-    <main className="min-h-screen bg-[#F8F3EA] text-[#241B14]">
+    <main className="admin-shell min-h-screen bg-[#F8F3EA] text-[#241B14]">
       <div className="grid min-h-screen lg:grid-cols-[280px_1fr]">
-        <aside className="border-r border-[#E8DCCB] bg-[#2B1A12] p-5 text-white lg:sticky lg:top-0 lg:h-screen">
-          <div className="rounded-2xl border border-white/10 bg-white/6 p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#C89B5A]">
-              Crafting Corner
-            </p>
-            <h1 className="mt-2 font-display text-3xl font-semibold">Admin</h1>
-            <p className="mt-3 text-sm leading-6 text-white/64">
-              Persistent catalogue and content controls.
-            </p>
+        <aside className="border-r border-[#E8DCCB] bg-[linear-gradient(180deg,#FFFDF8_0%,#F8F3EA_48%,#F3EBDD_100%)] p-4 text-[#241B14] shadow-[12px_0_60px_rgba(90,56,37,0.08)] lg:sticky lg:top-0 lg:h-screen">
+          <div className="rounded-[1.7rem] border border-[#E8DCCB] bg-white/78 p-5 shadow-[0_18px_45px_rgba(90,56,37,0.08)]">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#2B1A12] text-[#E7C98B] shadow-[0_16px_36px_rgba(43,26,18,0.18)]">
+                <Armchair className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-sm font-bold tracking-tight text-[#2B1A12]">
+                  Crafting Corner
+                </p>
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+                  Admin Studio
+                </p>
+              </div>
+            </div>
+            <div className="mt-5 flex items-center justify-between rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] px-4 py-3">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#5F4B3A]">
+                Website
+              </span>
+              <LiveStatusBadge label="Live" />
+            </div>
           </div>
 
-          <nav className="mt-6 grid gap-1">
+          <nav className="mt-6 grid gap-1.5">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;
@@ -563,47 +785,83 @@ export default function AdminConsole({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-medium transition ${
+                  className={`group relative flex items-center gap-3 rounded-2xl px-4 py-3 text-left text-sm font-semibold transition-all duration-200 ${
                     active
-                      ? 'bg-[#C89B5A] text-[#241B14]'
-                      : 'text-white/72 hover:bg-white/8 hover:text-white'
+                      ? 'bg-[#EFE3D1] text-[#2B1A12] shadow-[0_10px_24px_rgba(90,56,37,0.1)]'
+                      : 'text-[#5F4B3A] hover:bg-[#F3EBDD] hover:text-[#2B1A12]'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  {active ? (
+                    <span className="absolute left-2 top-1/2 h-6 w-1 -translate-y-1/2 rounded-full bg-[#C89B5A]" />
+                  ) : null}
+                  <Icon className={`h-4 w-4 transition-transform duration-200 ${active ? 'text-[#C89B5A]' : 'text-[#8A7866] group-hover:translate-x-0.5 group-hover:text-[#C89B5A]'}`} />
                   {tab.label}
                 </button>
               );
             })}
           </nav>
+
+          <div className="mt-6 rounded-[1.5rem] border border-[#E8DCCB] bg-white/70 p-3">
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-between rounded-2xl px-3 py-3 text-sm font-semibold text-[#5A3825] transition hover:bg-[#F3EBDD]"
+            >
+              Preview Website
+              <ExternalLink className="h-4 w-4" />
+            </a>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="group mt-1 flex w-full items-center justify-between rounded-2xl px-3 py-3 text-sm font-semibold text-[#8A3A3A] transition-all duration-200 hover:border-[#FCA5A5] hover:bg-[#FEE2E2] hover:text-[#B91C1C]"
+            >
+              Logout
+              <LogOut className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </button>
+          </div>
         </aside>
 
         <section className="min-w-0">
           <header className="sticky top-0 z-30 border-b border-[#E8DCCB] bg-[#F8F3EA]/92 px-4 py-4 backdrop-blur md:px-8">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#7A6A58]">
+                <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-[#8A7866]">
+                  {(() => {
+                    const Icon = storageIcon(storage);
+                    return <Icon className="h-4 w-4 text-[#C89B5A]" />;
+                  })()}
                   {storageLabel(storage)}
                 </p>
-                <h2 className="mt-1 font-display text-3xl font-semibold text-[#2B1A12]">
+                <h2 className="mt-1 text-3xl font-bold tracking-tight text-[#2B1A12]">
                   {tabs.find((tab) => tab.id === activeTab)?.label}
                 </h2>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
                 {dirty ? (
-                  <span className="rounded-full border border-[#D97706]/25 bg-[#D97706]/10 px-3 py-1 text-xs font-semibold text-[#A15A17]">
+                  <span className="rounded-full border border-[#D97706]/25 bg-[#D97706]/10 px-3 py-1.5 text-xs font-bold text-[#A15A17]">
                     Unsaved changes
                   </span>
                 ) : (
-                  <span className="rounded-full border border-[#16A34A]/20 bg-[#16A34A]/10 px-3 py-1 text-xs font-semibold text-[#15803D]">
+                  <span className="rounded-full border border-[#16A34A]/20 bg-[#16A34A]/10 px-3 py-1.5 text-xs font-bold text-[#15803D]">
                     Saved
                   </span>
                 )}
+                <a
+                  href="/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="admin-button-secondary"
+                >
+                  <Eye className="h-4 w-4" />
+                  Preview
+                </a>
                 <button
                   type="button"
                   onClick={handleSave}
                   disabled={isBusy || !content || !dirty || storage?.canUpdate === false}
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#5A3825] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#2B1A12] disabled:cursor-not-allowed disabled:opacity-50"
+                  className="admin-button-primary disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                   {saveActionLabel(storage)}
@@ -611,25 +869,49 @@ export default function AdminConsole({
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#E8DCCB] bg-white px-4 py-2.5 text-sm font-semibold text-[#5A3825] transition hover:border-[#C89B5A]"
+                  className="group inline-flex items-center gap-2 rounded-xl border border-transparent bg-transparent px-4 py-2.5 text-sm font-bold text-[#8A3A3A] transition-all duration-200 hover:border-[#FCA5A5] hover:bg-[#FEE2E2] hover:text-[#B91C1C]"
                 >
-                  <LogOut className="h-4 w-4" />
+                  <LogOut className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
                   Sign out
                 </button>
               </div>
             </div>
-            {message ? <Toast message={message} tone={message.includes('Unable') || message.includes('Fix') ? 'warning' : 'success'} /> : null}
+            {message ? <Toast message={message} tone={messageTone(message)} /> : null}
           </header>
 
           <div className="px-4 py-6 md:px-8">
             {!content || !dashboard ? (
               <div className="flex min-h-[50vh] items-center justify-center">
-                <LoaderCircle className="h-8 w-8 animate-spin text-[#5A3825]" />
+                {isBusy ? (
+                  <LoaderCircle className="h-8 w-8 animate-spin text-[#5A3825]" />
+                ) : (
+                  <div className="max-w-lg rounded-[1.7rem] border border-[#FDE68A] bg-[#FFFBEB] p-6 text-center shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+                    <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-[#FDE68A] bg-[#FEF3C7] text-[#D97706]">
+                      <AlertTriangle className="h-6 w-6" />
+                    </div>
+                    <h3 className="mt-5 text-2xl font-bold text-[#2B1A12]">
+                      Content source unavailable
+                    </h3>
+                    <p className="mt-3 text-sm leading-6 text-[#7A6A58]">
+                      The admin shell is ready, but the CMS content could not be loaded. Check the Neon connection or environment variables, then retry.
+                    </p>
+                    <button type="button" onClick={loadContent} className="admin-button-primary mx-auto mt-5">
+                      <LoaderCircle className="h-4 w-4" />
+                      Retry content load
+                    </button>
+                  </div>
+                )}
               </div>
             ) : (
               <>
                 {activeTab === 'dashboard' ? (
-                  <DashboardView dashboard={dashboard} health={health} storage={storage} />
+                  <DashboardView
+                    dashboard={dashboard}
+                    health={health}
+                    storage={storage}
+                    onOpenTab={setActiveTab}
+                    onAddProduct={addProduct}
+                  />
                 ) : null}
                 {activeTab === 'products' ? (
                   <ProductsView
@@ -785,19 +1067,88 @@ export default function AdminConsole({
       ) : null}
 
       <style jsx global>{`
+        .admin-shell {
+          font-family: var(--font-admin), var(--font-sans), Poppins, Montserrat, system-ui, sans-serif;
+        }
         .admin-input {
           width: 100%;
-          border-radius: 0.85rem;
+          border-radius: 1rem;
           border: 1px solid #e8dccb;
-          background: #fff;
-          padding: 0.75rem 0.9rem;
+          background: #fffdf8;
+          padding: 0.78rem 0.95rem;
           color: #241b14;
           outline: none;
-          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+          font-size: 0.9rem;
+          font-weight: 600;
+          transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease,
+            transform 0.2s ease;
+        }
+        .admin-input:hover {
+          border-color: rgba(200, 155, 90, 0.55);
+          background: #ffffff;
         }
         .admin-input:focus {
           border-color: #c89b5a;
           box-shadow: 0 0 0 3px rgba(200, 155, 90, 0.18);
+          background: #ffffff;
+        }
+        .admin-button-primary,
+        .admin-button-secondary {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          border-radius: 0.9rem;
+          padding: 0.72rem 1rem;
+          font-size: 0.875rem;
+          font-weight: 800;
+          transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease,
+            border-color 0.2s ease,
+            color 0.2s ease;
+        }
+        .admin-button-primary {
+          border: 1px solid #2b1a12;
+          background: linear-gradient(135deg, #5a3825, #2b1a12);
+          color: #ffffff;
+          box-shadow: 0 14px 30px rgba(90, 56, 37, 0.22);
+        }
+        .admin-button-primary:hover:not(:disabled) {
+          transform: translateY(-1px);
+          box-shadow: 0 20px 44px rgba(90, 56, 37, 0.28);
+        }
+        .admin-button-secondary {
+          border: 1px solid #e8dccb;
+          background: #ffffff;
+          color: #5a3825;
+        }
+        .admin-button-secondary:hover {
+          transform: translateY(-1px);
+          border-color: rgba(200, 155, 90, 0.75);
+          color: #2b1a12;
+          box-shadow: 0 14px 30px rgba(90, 56, 37, 0.1);
+        }
+        .live-dot {
+          display: inline-block;
+          border-radius: 9999px;
+          background: #22c55e;
+          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
+          animation: pulseLive 1.8s infinite;
+        }
+        @keyframes pulseLive {
+          0% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.32);
+          }
+          70% {
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+          }
         }
       `}</style>
     </main>
@@ -816,14 +1167,48 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 function Toast({ message, tone }: { message: string; tone: 'success' | 'warning' }) {
   return (
     <div
-      className={`mt-4 rounded-xl border px-4 py-3 text-sm ${
+      className={`mt-4 rounded-2xl border px-4 py-3 text-sm font-semibold leading-6 shadow-[0_12px_30px_rgba(90,56,37,0.08)] ${
         tone === 'success'
-          ? 'border-emerald-200 bg-emerald-50 text-emerald-700'
-          : 'border-amber-200 bg-amber-50 text-amber-800'
+          ? 'border-[#BBF7D0] bg-[#DCFCE7] text-[#15803D]'
+          : 'border-[#FDE68A] bg-[#FFFBEB] text-[#A15A17]'
       }`}
     >
       {message}
     </div>
+  );
+}
+
+type DashboardTone = 'default' | 'success' | 'warning' | 'danger' | 'draft';
+
+function StatusBadge({
+  visibility,
+  label,
+}: {
+  visibility?: string;
+  label?: string;
+}) {
+  const tone = getStatusTone(visibility);
+
+  return (
+    <span
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold ${
+        tone === 'live'
+          ? 'border-[#BBF7D0] bg-[#DCFCE7] text-[#15803D]'
+          : 'border-[#E2E8F0] bg-[#F1F5F9] text-[#64748B]'
+      }`}
+    >
+      <span className={tone === 'live' ? 'live-dot h-2 w-2' : 'h-2 w-2 rounded-full bg-[#94A3B8]'} />
+      {label || (tone === 'live' ? 'Live' : 'Draft')}
+    </span>
+  );
+}
+
+function LiveStatusBadge({ label = 'Live' }: { label?: string }) {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full border border-[#BBF7D0] bg-[#DCFCE7] px-3 py-1 text-xs font-bold text-[#15803D]">
+      <span className="live-dot h-2 w-2" />
+      {label}
+    </span>
   );
 }
 
@@ -832,28 +1217,42 @@ function StatCard({
   value,
   icon: Icon,
   tone = 'default',
+  helper,
+  status,
 }: {
   label: string;
   value: string | number;
   icon: typeof Package;
-  tone?: 'default' | 'success' | 'warning';
+  tone?: DashboardTone;
+  helper: string;
+  status?: string;
 }) {
   const color =
     tone === 'success'
-      ? 'text-[#16A34A] bg-[#16A34A]/10'
+      ? 'text-[#16A34A] bg-[#DCFCE7] border-[#BBF7D0]'
       : tone === 'warning'
-        ? 'text-[#D97706] bg-[#D97706]/10'
-        : 'text-[#5A3825] bg-[#F8F3EA]';
+        ? 'text-[#D97706] bg-[#FEF3C7] border-[#FDE68A]'
+        : tone === 'danger'
+          ? 'text-[#DC2626] bg-[#FEE2E2] border-[#FECACA]'
+          : tone === 'draft'
+            ? 'text-[#64748B] bg-[#F1F5F9] border-[#E2E8F0]'
+            : 'text-[#5A3825] bg-[#F8F3EA] border-[#E8DCCB]';
 
   return (
-    <div className="rounded-2xl border border-[#E8DCCB] bg-white p-5 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
-      <div className={`inline-flex h-10 w-10 items-center justify-center rounded-xl ${color}`}>
-        <Icon className="h-5 w-5" />
+    <div className="group rounded-[1.45rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 shadow-[0_14px_40px_rgba(90,56,37,0.07)] transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/60 hover:shadow-[0_24px_55px_rgba(90,56,37,0.13)]">
+      <div className="flex items-start justify-between gap-4">
+        <div className={`inline-flex h-11 w-11 items-center justify-center rounded-2xl border ${color}`}>
+          <Icon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
+        </div>
+        {status ? (
+          <span className="rounded-full bg-[#F8F3EA] px-2.5 py-1 text-[11px] font-bold text-[#8A7866]">
+            {status}
+          </span>
+        ) : null}
       </div>
-      <p className="mt-5 text-sm font-medium text-[#7A6A58]">{label}</p>
-      <p className="mt-1 font-display text-3xl font-semibold text-[#2B1A12]">
-        {value}
-      </p>
+      <p className="mt-5 text-sm font-semibold text-[#7A6A58]">{label}</p>
+      <p className="mt-1 text-3xl font-bold tracking-tight text-[#2B1A12]">{value}</p>
+      <p className="mt-2 text-xs leading-5 text-[#8A7866]">{helper}</p>
     </div>
   );
 }
@@ -862,56 +1261,327 @@ function DashboardView({
   dashboard,
   health,
   storage,
+  onOpenTab,
+  onAddProduct,
 }: {
   dashboard: any;
   health: ContentHealth | null;
   storage: ApiPayload['storage'];
+  onOpenTab: (tab: TabId) => void;
+  onAddProduct: () => void;
 }) {
+  const score = health?.score || 0;
+  const healthTone = getHealthTone(score);
+
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total Products" value={dashboard.totalProducts} icon={Package} />
-        <StatCard label="Published" value={dashboard.publishedProducts} icon={CheckCircle2} tone="success" />
-        <StatCard label="Draft Products" value={dashboard.draftProducts} icon={Eye} />
-        <StatCard label="Content Health" value={`${health?.score || 0}%`} icon={Sparkles} tone={(health?.errors || 0) > 0 ? 'warning' : 'success'} />
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-[#E8DCCB] bg-white p-6 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
-          <h3 className="font-display text-2xl font-semibold text-[#2B1A12]">
-            Catalogue Health
-          </h3>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <HealthLine label="Products missing images" value={dashboard.missingImages} />
-            <HealthLine label="Products missing price" value={dashboard.missingPrice} />
-            <HealthLine label="Products missing category" value={dashboard.missingCategory} />
-            <HealthLine label="Products missing SEO" value={dashboard.missingSeo} />
-            <HealthLine label="Categories" value={dashboard.categories} />
-            <HealthLine label="Homepage sections active" value={dashboard.activeHomepageSections} />
+      <section className="overflow-hidden rounded-[2rem] border border-[#E8DCCB] bg-[linear-gradient(135deg,#FFFDF8_0%,#F8F3EA_48%,#EFE3D1_100%)] p-6 shadow-[0_24px_70px_rgba(90,56,37,0.11)] md:p-8">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E8DCCB] bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
+              <Sparkles className="h-4 w-4 text-[#C89B5A]" />
+              Premium control room
+            </div>
+            <h1 className="mt-5 max-w-3xl text-4xl font-bold tracking-tight text-[#2B1A12] md:text-5xl">
+              Crafting Corner Admin
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-[#5F4B3A] md:text-base">
+              Manage products, homepage sections, categories, SEO, and catalogue health from one elegant control room.
+            </p>
+          </div>
+          <div className="grid gap-3 rounded-[1.5rem] border border-[#E8DCCB] bg-white/80 p-4 shadow-[0_18px_45px_rgba(90,56,37,0.08)] sm:min-w-[280px]">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#8A7866]">
+                Public website
+              </span>
+              <LiveStatusBadge />
+            </div>
+            <p className="text-sm text-[#5F4B3A]">
+              Last content update: <span className="font-bold text-[#2B1A12]">{formatDateTime(dashboard.lastUpdated)}</span>
+            </p>
+            <a
+              href="/"
+              target="_blank"
+              rel="noreferrer"
+              className="admin-button-secondary justify-center"
+            >
+              <Eye className="h-4 w-4" />
+              Preview website
+            </a>
           </div>
         </div>
+      </section>
 
-        <div className="rounded-2xl border border-[#E8DCCB] bg-white p-6 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
-          <h3 className="font-display text-2xl font-semibold text-[#2B1A12]">
-            Save Status
-          </h3>
-          <p className="mt-3 text-sm leading-6 text-[#7A6A58]">{storage?.note}</p>
-          <div className="mt-5 rounded-xl bg-[#F8F3EA] p-4 text-sm text-[#5A3825]">
-            Last content timestamp: {dashboard.lastUpdated || 'Not available'}
-          </div>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <StatCard label="Total Products" value={dashboard.totalProducts} icon={Package} helper="Across the complete catalogue" />
+        <StatCard label="Published Products" value={dashboard.publishedProducts} icon={Radio} tone="success" helper="Visible on the live website" status="Live" />
+        <StatCard label="Draft Products" value={dashboard.draftProducts} icon={FileClock} tone="draft" helper="Hidden from public pages" />
+        <StatCard label="Categories" value={dashboard.categories} icon={Grid3X3} helper="Public browsing structure" />
+        <StatCard label="Product Types" value={dashboard.productTypes} icon={Layers3} helper="Furniture grouping taxonomy" />
+        <StatCard label="Homepage Active" value={dashboard.activeHomepageSections} icon={Home} helper="Visible homepage sections" />
+        <StatCard label="Missing Images" value={dashboard.missingImages} icon={ImageIcon} tone={dashboard.missingImages > 0 ? 'warning' : 'success'} helper="Products without gallery media" />
+        <StatCard label="Content Health" value={`${score}%`} icon={Activity} tone={healthTone} helper={`${health?.errors || 0} errors and ${health?.warnings || 0} warnings`} />
       </div>
 
-      <IssueList health={health} />
+      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr_0.8fr]">
+        <HealthScoreCard score={score} dashboard={dashboard} tone={healthTone} />
+        <LiveStatusCard storage={storage} lastUpdated={dashboard.lastUpdated} />
+        <QuickActionsCard onOpenTab={onOpenTab} onAddProduct={onAddProduct} />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[1.15fr_0.85fr]">
+        <HomepageOverview sections={dashboard.homepageSections} />
+        <IssueList health={health} />
+      </div>
+
+      <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
+        <RecentUpdatesCard updates={dashboard.recentUpdates} />
+        <ProductMixCard items={dashboard.productMix} />
+      </div>
     </div>
+  );
+}
+
+function HealthScoreCard({
+  score,
+  dashboard,
+  tone,
+}: {
+  score: number;
+  dashboard: any;
+  tone: DashboardTone;
+}) {
+  const toneColor =
+    tone === 'success' ? '#16A34A' : tone === 'warning' ? '#D97706' : '#DC2626';
+
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+            Catalogue health
+          </p>
+          <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">
+            {score >= 90 ? 'Strong structure' : score >= 70 ? 'Needs refinement' : 'Needs attention'}
+          </h3>
+        </div>
+        <div className="relative grid h-24 w-24 place-items-center rounded-full bg-[#F8F3EA]">
+          <div
+            className="absolute inset-0 rounded-full"
+            style={{
+              background: `conic-gradient(${toneColor} ${score * 3.6}deg, #E8DCCB 0deg)`,
+            }}
+          />
+          <div className="relative grid h-[74px] w-[74px] place-items-center rounded-full bg-[#FFFDF8] text-2xl font-bold text-[#2B1A12]">
+            {score}%
+          </div>
+        </div>
+      </div>
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <HealthLine label="Missing images" value={dashboard.missingImages} />
+        <HealthLine label="Missing price" value={dashboard.missingPrice} />
+        <HealthLine label="Missing category" value={dashboard.missingCategory} />
+        <HealthLine label="Missing SEO" value={dashboard.missingSeo} />
+      </div>
+    </section>
+  );
+}
+
+function LiveStatusCard({
+  storage,
+  lastUpdated,
+}: {
+  storage: ApiPayload['storage'];
+  lastUpdated: string;
+}) {
+  const Icon = storageIcon(storage);
+
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <div className="flex items-center justify-between">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#BBF7D0] bg-[#DCFCE7] text-[#15803D]">
+          <Radio className="h-5 w-5" />
+        </div>
+        <LiveStatusBadge />
+      </div>
+      <h3 className="mt-5 text-2xl font-bold text-[#2B1A12]">Website Status</h3>
+      <p className="mt-2 text-sm leading-6 text-[#5F4B3A]">
+        Content source is connected and the public site reads the current catalogue state.
+      </p>
+      <div className="mt-5 space-y-3">
+        <HealthLine label="Storage" value={storageLabel(storage)} />
+        <HealthLine label="Branch" value={storage?.branch || 'main'} />
+        <HealthLine label="Last update" value={formatDateTime(lastUpdated)} />
+      </div>
+      <div className="mt-5 flex items-start gap-3 rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] p-4">
+        <Icon className="mt-0.5 h-4 w-4 shrink-0 text-[#C89B5A]" />
+        <p className="text-xs leading-5 text-[#7A6A58]">{storage?.note || 'Content operations are available from this admin session.'}</p>
+      </div>
+    </section>
+  );
+}
+
+function QuickActionsCard({
+  onOpenTab,
+  onAddProduct,
+}: {
+  onOpenTab: (tab: TabId) => void;
+  onAddProduct: () => void;
+}) {
+  const actions: { label: string; icon: typeof Package; onClick: () => void }[] = [
+    { label: 'Add Product', icon: Plus, onClick: onAddProduct },
+    { label: 'Manage Homepage', icon: Home, onClick: () => onOpenTab('homepage') },
+    { label: 'Edit Categories', icon: Grid3X3, onClick: () => onOpenTab('categories') },
+    { label: 'Review SEO', icon: SearchCheck, onClick: () => onOpenTab('seo') },
+  ];
+
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+        Quick actions
+      </p>
+      <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">Move faster</h3>
+      <div className="mt-5 grid gap-3">
+        {actions.map((action) => {
+          const Icon = action.icon;
+          return (
+            <button
+              key={action.label}
+              type="button"
+              onClick={action.onClick}
+              className="group flex items-center justify-between rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] px-4 py-3 text-sm font-bold text-[#5A3825] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#C89B5A]/70 hover:bg-white hover:text-[#2B1A12] hover:shadow-[0_14px_35px_rgba(90,56,37,0.1)]"
+            >
+              <span className="inline-flex items-center gap-3">
+                <Icon className="h-4 w-4 text-[#C89B5A] transition-transform duration-200 group-hover:scale-110" />
+                {action.label}
+              </span>
+              <ExternalLink className="h-4 w-4 text-[#8A7866] transition-transform duration-200 group-hover:translate-x-0.5" />
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function HomepageOverview({
+  sections,
+}: {
+  sections: { key: string; label: string; heading: string; visible: boolean; linkedCount: number }[];
+}) {
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+            Homepage controls
+          </p>
+          <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">
+            Section overview
+          </h3>
+        </div>
+        <span className="rounded-full border border-[#E8DCCB] bg-[#F8F3EA] px-3 py-1 text-xs font-bold text-[#7A6A58]">
+          {sections.filter((section) => section.visible).length} active
+        </span>
+      </div>
+      <div className="mt-5 grid gap-3 md:grid-cols-2">
+        {sections.map((section) => (
+          <div
+            key={section.key}
+            className="group rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#C89B5A]/70 hover:bg-white"
+          >
+            <div className="flex items-center justify-between gap-3">
+              <p className="font-bold text-[#2B1A12]">{section.label}</p>
+              {section.visible ? <LiveStatusBadge label="Visible" /> : <StatusBadge visibility="draft" label="Hidden" />}
+            </div>
+            <p className="mt-2 truncate text-sm text-[#7A6A58]">{section.heading}</p>
+            <p className="mt-3 text-xs font-bold uppercase tracking-[0.16em] text-[#8A7866]">
+              {section.linkedCount} linked item{section.linkedCount === 1 ? '' : 's'}
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProductMixCard({
+  items,
+}: {
+  items: { key: string; label: string; count: number; visible: boolean }[];
+}) {
+  const max = Math.max(...items.map((item) => item.count), 1);
+
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+        Homepage product mix
+      </p>
+      <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">Featured distribution</h3>
+      <div className="mt-6 space-y-4">
+        {items.map((item) => (
+          <div key={item.key}>
+            <div className="mb-2 flex items-center justify-between text-sm">
+              <span className="font-bold text-[#5A3825]">{item.label}</span>
+              <span className="text-[#7A6A58]">{item.count} products</span>
+            </div>
+            <div className="h-3 overflow-hidden rounded-full bg-[#F3EBDD]">
+              <div
+                className="h-full rounded-full bg-[linear-gradient(90deg,#C89B5A,#E7C98B)] shadow-[0_0_18px_rgba(200,155,90,0.28)]"
+                style={{ width: `${Math.max((item.count / max) * 100, item.count ? 12 : 0)}%` }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function RecentUpdatesCard({
+  updates,
+}: {
+  updates: { label: string; area: string; at?: string }[];
+}) {
+  return (
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+        Recent updates
+      </p>
+      <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">Content activity</h3>
+      <div className="mt-5 space-y-3">
+        {updates.length === 0 ? (
+          <div className="rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] p-4 text-sm text-[#7A6A58]">
+            Updates will appear here after content is edited and saved.
+          </div>
+        ) : (
+          updates.map((update, index) => (
+            <div
+              key={`${update.label}-${index}`}
+              className="flex items-start gap-3 rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] p-4"
+            >
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white text-[#C89B5A]">
+                <Clock3 className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <p className="truncate font-bold text-[#2B1A12]">{update.label}</p>
+                <p className="mt-1 text-xs text-[#8A7866]">
+                  {update.area} · {formatDateTime(update.at)}
+                </p>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </section>
   );
 }
 
 function HealthLine({ label, value }: { label: string; value: number | string }) {
   return (
-    <div className="flex items-center justify-between rounded-xl bg-[#F8F3EA] px-4 py-3">
-      <span className="text-sm text-[#7A6A58]">{label}</span>
-      <span className="font-semibold text-[#2B1A12]">{value}</span>
+    <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#E8DCCB] bg-[#F8F3EA] px-4 py-3">
+      <span className="text-sm font-medium text-[#7A6A58]">{label}</span>
+      <span className="text-right text-sm font-bold text-[#2B1A12]">{value}</span>
     </div>
   );
 }
@@ -919,25 +1589,30 @@ function HealthLine({ label, value }: { label: string; value: number | string })
 function IssueList({ health }: { health: ContentHealth | null }) {
   const issues = health?.issues || [];
   return (
-    <div className="rounded-2xl border border-[#E8DCCB] bg-white p-6 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
-      <div className="flex items-center justify-between gap-4">
-        <h3 className="font-display text-2xl font-semibold text-[#2B1A12]">
-          Validation Issues
-        </h3>
-        <span className="rounded-full bg-[#F8F3EA] px-3 py-1 text-xs font-semibold text-[#7A6A58]">
+    <section className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-6 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+            Needs attention
+          </p>
+          <h3 className="mt-2 text-2xl font-bold text-[#2B1A12]">
+            Catalogue issues
+          </h3>
+        </div>
+        <span className="rounded-full bg-[#F8F3EA] px-3 py-1 text-xs font-bold text-[#7A6A58]">
           {health?.errors || 0} errors · {health?.warnings || 0} warnings
         </span>
       </div>
       <div className="mt-5 space-y-3">
         {issues.length === 0 ? (
-          <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
-            No content issues detected.
+          <div className="rounded-2xl border border-[#BBF7D0] bg-[#DCFCE7] px-4 py-4 text-sm font-semibold text-[#15803D]">
+            Everything looks clean. Your catalogue structure is ready.
           </div>
         ) : (
           issues.slice(0, 12).map((issue) => (
             <div
               key={issue.id}
-              className={`flex gap-3 rounded-xl border px-4 py-3 text-sm ${
+              className={`flex gap-3 rounded-2xl border px-4 py-3 text-sm ${
                 issue.severity === 'error'
                   ? 'border-red-200 bg-red-50 text-red-700'
                   : 'border-amber-200 bg-amber-50 text-amber-800'
@@ -945,14 +1620,14 @@ function IssueList({ health }: { health: ContentHealth | null }) {
             >
               <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
               <div>
-                <p className="font-semibold">{issue.area}</p>
-                <p className="mt-1">{issue.message}</p>
+                <p className="font-bold">{issue.area}</p>
+                <p className="mt-1 leading-5">{issue.message}</p>
               </div>
             </div>
           ))
         )}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -980,18 +1655,41 @@ function ProductsView(props: {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[1fr_420px]">
-      <div className="rounded-2xl border border-[#E8DCCB] bg-white p-5 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7A6A58]" />
-            <input
-              value={props.productSearch}
-              onChange={(event) => props.setProductSearch(event.target.value)}
-              placeholder="Search products"
-              className="admin-input pl-10"
-            />
+      <div className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 shadow-[0_18px_50px_rgba(90,56,37,0.08)]">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#E8DCCB] bg-[#F8F3EA] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8A7866]">
+              <Boxes className="h-4 w-4 text-[#C89B5A]" />
+              Catalogue
+            </div>
+            <h3 className="mt-3 text-3xl font-bold tracking-tight text-[#2B1A12]">
+              Products
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-[#7A6A58]">
+              Manage Crafting Corner’s furniture catalogue, visibility, homepage placement, SEO, and media.
+            </p>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3 lg:w-[520px]">
+          <button type="button" onClick={props.addProduct} className="admin-button-primary justify-center">
+            <Plus className="h-4 w-4" />
+            Add product
+          </button>
+        </div>
+
+        <div className="mt-6 rounded-[1.4rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
+          <div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-[#8A7866]">
+            <SlidersHorizontal className="h-4 w-4 text-[#C89B5A]" />
+            Smart filters
+          </div>
+          <div className="grid gap-3 xl:grid-cols-[1.3fr_0.9fr_0.8fr_0.8fr]">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7A6A58]" />
+              <input
+                value={props.productSearch}
+                onChange={(event) => props.setProductSearch(event.target.value)}
+                placeholder="Search products or slug"
+                className="admin-input pl-10"
+              />
+            </div>
             <select value={props.categoryFilter} onChange={(event) => props.setCategoryFilter(event.target.value)} className="admin-input">
               <option value="all">All categories</option>
               {props.content.categories.map((category) => (
@@ -1011,69 +1709,106 @@ function ProductsView(props: {
               <option value="recommended">Recommended</option>
             </select>
           </div>
-          <button onClick={props.addProduct} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#5A3825] px-4 py-3 text-sm font-semibold text-white">
-            <Plus className="h-4 w-4" />
-            Add product
-          </button>
         </div>
 
         <div className="mt-5 overflow-x-auto">
-          <table className="w-full min-w-[900px] border-separate border-spacing-y-2 text-left text-sm">
-            <thead className="text-xs uppercase tracking-[0.16em] text-[#7A6A58]">
-              <tr>
-                <th className="px-3 py-2">Product</th>
-                <th className="px-3 py-2">Category</th>
-                <th className="px-3 py-2">Price</th>
-                <th className="px-3 py-2">Sections</th>
-                <th className="px-3 py-2">Visibility</th>
-                <th className="px-3 py-2">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {props.products.map((product) => (
-                <tr key={product.id || product.slug} className="bg-[#FBF8F2]">
-                  <td className="rounded-l-xl px-3 py-3">
-                    <div className="flex items-center gap-3">
-                      <div className="h-14 w-14 overflow-hidden rounded-lg bg-[#E8DCCB]">
-                        {product.images?.[0]?.url ? (
-                          <img src={product.images[0].url} alt={product.images[0].alt} className="h-full w-full object-cover" />
-                        ) : null}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-[#2B1A12]">{productTitle(product)}</p>
-                        <p className="mt-1 text-xs text-[#7A6A58]">{product.slug}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-3 py-3 text-[#5A3825]">{product.categorySlug || 'Missing'}</td>
-                  <td className="px-3 py-3 font-semibold">{formatPrice(product.price)}</td>
-                  <td className="px-3 py-3">
-                    <div className="flex flex-wrap gap-1">
-                      {Object.entries(product.sections || {}).filter(([, value]) => value).map(([key]) => (
-                        <span key={key} className="rounded-full bg-[#E8DCCB] px-2 py-1 text-xs text-[#5A3825]">{key}</span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-3 py-3">
-                    <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusBadge(product.visibility)}`}>
-                      {product.visibility || 'published'}
-                    </span>
-                  </td>
-                  <td className="rounded-r-xl px-3 py-3">
-                    <div className="flex gap-2">
-                      <button onClick={() => props.setEditingProductId(product.id || product.slug)} className="rounded-lg border border-[#E8DCCB] bg-white p-2 text-[#5A3825]"><Eye className="h-4 w-4" /></button>
-                      <button onClick={() => props.duplicateProduct(product)} className="rounded-lg border border-[#E8DCCB] bg-white p-2 text-[#5A3825]"><Copy className="h-4 w-4" /></button>
-                      <button onClick={() => props.setDeleteTarget({ type: 'product', id: product.id || product.slug, label: productTitle(product) })} className="rounded-lg border border-red-200 bg-white p-2 text-red-600"><Trash2 className="h-4 w-4" /></button>
-                    </div>
-                  </td>
+          {props.products.length === 0 ? (
+            <EmptyState
+              title="No matching products"
+              body="Adjust the filters or add a new handcrafted piece to the catalogue."
+            />
+          ) : (
+            <table className="w-full min-w-[920px] border-separate border-spacing-y-2 text-left text-sm">
+              <thead className="text-xs uppercase tracking-[0.16em] text-[#7A6A58]">
+                <tr>
+                  <th className="px-3 py-2">Product</th>
+                  <th className="px-3 py-2">Category</th>
+                  <th className="px-3 py-2">Price</th>
+                  <th className="px-3 py-2">Sections</th>
+                  <th className="px-3 py-2">Status</th>
+                  <th className="px-3 py-2">Updated</th>
+                  <th className="px-3 py-2">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {props.products.map((product) => {
+                  const category = props.content.categories.find(
+                    (item) => item.slug === product.categorySlug,
+                  );
+                  const activeSections = Object.entries(product.sections || {}).filter(
+                    ([, value]) => value,
+                  );
+
+                  return (
+                    <tr
+                      key={product.id || product.slug}
+                      className="group bg-[#FBF8F2] transition-all duration-200 hover:-translate-y-0.5 hover:bg-white hover:shadow-[0_16px_35px_rgba(90,56,37,0.09)]"
+                    >
+                      <td className="rounded-l-2xl px-3 py-3">
+                        <div className="flex items-center gap-3">
+                          <div className="h-16 w-16 overflow-hidden rounded-2xl border border-[#E8DCCB] bg-[#E8DCCB]">
+                            {product.images?.[0]?.url ? (
+                              <img src={product.images[0].url} alt={product.images[0].alt} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            ) : (
+                              <div className="grid h-full w-full place-items-center text-[#C89B5A]">
+                                <ImageIcon className="h-5 w-5" />
+                              </div>
+                            )}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="truncate font-bold text-[#2B1A12]">{productTitle(product)}</p>
+                            <p className="mt-1 truncate text-xs text-[#7A6A58]">{product.slug}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-3 py-3 text-[#5A3825]">
+                        {category?.name || category?.title || product.categorySlug || 'Missing'}
+                      </td>
+                      <td className="px-3 py-3 font-bold text-[#2B1A12]">{formatPrice(product.price)}</td>
+                      <td className="px-3 py-3">
+                        <div className="flex max-w-[240px] flex-wrap gap-1.5">
+                          {activeSections.length === 0 ? (
+                            <span className="rounded-full border border-[#E8DCCB] bg-white px-2.5 py-1 text-xs font-semibold text-[#8A7866]">
+                              None
+                            </span>
+                          ) : (
+                            activeSections.map(([key]) => (
+                              <span key={key} className="rounded-full border border-[#E8DCCB] bg-[#EFE3D1] px-2.5 py-1 text-xs font-bold text-[#5A3825]">
+                                {productSectionLabels[key] || key}
+                              </span>
+                            ))
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-3 py-3">
+                        <StatusBadge visibility={product.visibility} />
+                      </td>
+                      <td className="px-3 py-3 text-xs font-semibold text-[#7A6A58]">
+                        {formatDateTime(product.updatedAt || product.createdAt)}
+                      </td>
+                      <td className="rounded-r-2xl px-3 py-3">
+                        <div className="flex gap-2">
+                          <button type="button" aria-label="Edit product" onClick={() => props.setEditingProductId(product.id || product.slug)} className="rounded-xl border border-[#E8DCCB] bg-white p-2 text-[#5A3825] transition hover:-translate-y-0.5 hover:border-[#C89B5A] hover:text-[#2B1A12]">
+                            <Eye className="h-4 w-4" />
+                          </button>
+                          <button type="button" aria-label="Duplicate product" onClick={() => props.duplicateProduct(product)} className="rounded-xl border border-[#E8DCCB] bg-white p-2 text-[#5A3825] transition hover:-translate-y-0.5 hover:border-[#C89B5A] hover:text-[#2B1A12]">
+                            <Copy className="h-4 w-4" />
+                          </button>
+                          <button type="button" aria-label="Delete product" onClick={() => props.setDeleteTarget({ type: 'product', id: product.id || product.slug, label: productTitle(product) })} className="rounded-xl border border-red-200 bg-white p-2 text-red-600 transition hover:-translate-y-0.5 hover:border-red-600 hover:bg-red-600 hover:text-white">
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
 
-      <div className="rounded-2xl border border-[#E8DCCB] bg-white p-5 shadow-[0_14px_40px_rgba(90,56,37,0.07)]">
+      <div className="rounded-[1.7rem] border border-[#E8DCCB] bg-[#FFFDF8] p-5 shadow-[0_18px_50px_rgba(90,56,37,0.08)] xl:sticky xl:top-28 xl:self-start">
         {editingProduct ? (
           <ProductEditor
             product={editingProduct}
@@ -1102,13 +1837,32 @@ function ProductEditor({
 }) {
   return (
     <div className="space-y-5">
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#7A6A58]">
-          Product Editor
-        </p>
-        <h3 className="mt-1 font-display text-2xl font-semibold text-[#2B1A12]">
-          {productTitle(product)}
-        </h3>
+      <div className="rounded-[1.4rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
+        <div className="flex items-start gap-4">
+          <div className="h-16 w-16 overflow-hidden rounded-2xl border border-[#E8DCCB] bg-white">
+            {product.images?.[0]?.url ? (
+              <img src={product.images[0].url} alt={product.images[0].alt || productTitle(product)} className="h-full w-full object-cover" />
+            ) : (
+              <div className="grid h-full w-full place-items-center text-[#C89B5A]">
+                <ImageIcon className="h-5 w-5" />
+              </div>
+            )}
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#7A6A58]">
+                Product Editor
+              </p>
+              <StatusBadge visibility={product.visibility} />
+            </div>
+            <h3 className="mt-2 truncate text-2xl font-bold text-[#2B1A12]">
+              {productTitle(product)}
+            </h3>
+            <p className="mt-1 text-xs font-semibold text-[#8A7866]">
+              {formatPrice(product.price)} · {product.categorySlug || 'Missing category'}
+            </p>
+          </div>
+        </div>
       </div>
       <Field label="Product name">
         <input value={productTitle(product)} onChange={(event) => onChange({ name: event.target.value, title: event.target.value, slug: createSlug(event.target.value) })} className="admin-input" />
@@ -1165,12 +1919,17 @@ function ProductEditor({
       </Field>
       <div className="grid gap-3 sm:grid-cols-2">
         {(['bestSeller', 'featured', 'topPick', 'recommended'] as const).map((key) => (
-          <label key={key} className="flex items-center justify-between rounded-xl border border-[#E8DCCB] px-4 py-3 text-sm font-semibold text-[#5A3825]">
-            {key}
+          <label key={key} className="flex items-center justify-between rounded-xl border border-[#E8DCCB] bg-[#F8F3EA] px-4 py-3 text-sm font-bold text-[#5A3825] transition hover:border-[#C89B5A]/70 hover:bg-white">
+            {productSectionLabels[key]}
             <input type="checkbox" checked={Boolean(product.sections?.[key])} onChange={(event) => onChange({ sections: { ...product.sections, [key]: event.target.checked } })} />
           </label>
         ))}
       </div>
+      {product.visibility === 'draft' && Object.values(product.sections || {}).some(Boolean) ? (
+        <div className="rounded-2xl border border-[#FDE68A] bg-[#FEF3C7] px-4 py-3 text-sm font-semibold leading-6 text-[#A15A17]">
+          This product is selected for homepage placement, but draft products remain hidden on the public website.
+        </div>
+      ) : null}
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="SEO title">
           <input value={product.seo?.title || ''} onChange={(event) => onChange({ seo: { ...(product.seo || { description: '' }), title: event.target.value } })} className="admin-input" />
@@ -1233,7 +1992,7 @@ function SimpleCollectionView({
                 <p className="mt-1 truncate text-sm text-[#7A6A58]">{renderSummary(item)}</p>
               </button>
               <div className="flex items-center gap-2">
-                <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusBadge(item.visibility)}`}>{item.visibility || 'published'}</span>
+                <StatusBadge visibility={item.visibility} />
                 <button onClick={() => onDelete(item)} className="rounded-lg border border-red-200 bg-white p-2 text-red-600"><Trash2 className="h-4 w-4" /></button>
               </div>
             </div>
