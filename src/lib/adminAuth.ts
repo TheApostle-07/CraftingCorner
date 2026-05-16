@@ -92,13 +92,16 @@ export function verifyAdminCredentials(username: string, password: string) {
     return false;
   }
 
+  const configuredPassword = getAdminPassword();
   const configuredHash = getAdminPasswordHash().replace(/^sha256:/, '');
-  const passwordOk = configuredHash
+  const passwordOk = configuredPassword
+    ? safeCompare(password, configuredPassword)
+    : configuredHash
     ? safeCompare(
         createHash('sha256').update(password).digest('hex'),
         configuredHash,
       )
-    : safeCompare(password, getAdminPassword());
+    : false;
 
   return (
     safeCompare(username, getAdminUsername()) &&
