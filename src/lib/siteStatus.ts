@@ -47,7 +47,13 @@ function isHostedDeployment() {
 }
 
 function useDatabaseStatus() {
-  return process.env.SITE_STATUS_STORAGE === 'database' && hasDatabaseConnection();
+  const requestedStorage = process.env.SITE_STATUS_STORAGE;
+
+  if (requestedStorage === 'github' || requestedStorage === 'local-file') {
+    return false;
+  }
+
+  return hasDatabaseConnection();
 }
 
 async function ensureDatabaseStatusTable() {
@@ -79,6 +85,17 @@ function normalizeStatus(
     updatedBy: raw.updatedBy || 'system',
     storageMode,
   };
+}
+
+function defaultSiteStatus(storageMode: SiteStorageMode): SiteStatus {
+  return normalizeStatus(
+    {
+      active: true,
+      updatedAt: new Date().toISOString(),
+      updatedBy: 'system',
+    },
+    storageMode,
+  );
 }
 
 function getGitHubConfig(): GitHubConfig | null {
@@ -119,14 +136,11 @@ async function readLocalStatus() {
       throw error;
     }
 
-    const fallback = normalizeStatus(
-      {
-        active: true,
-        updatedAt: new Date().toISOString(),
-        updatedBy: 'system',
-      },
-      'local-file',
-    );
+    const fallback = defaultSiteStatus('local-file');
+
+    if (isHostedDeployment()) {
+      return fallback;
+    }
 
     await writeLocalStatus(fallback);
     return fallback;
@@ -285,7 +299,7 @@ export function getSiteStorageInfo(): SiteStorageInfo {
     return {
       mode: 'database',
       canUpdate: true,
-      note: 'Persists the public site status in PostgreSQL because SITE_STATUS_STORAGE=database is explicitly set.',
+      note: 'Persists the public site status in PostgreSQL using the configured Neon database connection.',
     };
   }
 
@@ -305,7 +319,7 @@ export function getSiteStorageInfo(): SiteStorageInfo {
     return {
       mode: 'local-file',
       canUpdate: false,
-      note: 'Hosted deployments must use GitHub-backed status storage for a real persistent toggle. Add SITE_STATUS_GITHUB_TOKEN and the repo settings in the server environment.',
+      note: 'Hosted deployments cannot write local status files. Configure SITE_STATUS_STORAGE=database with DATABASE_URL, or use GitHub-backed status storage for a persistent toggle.',
     };
   }
 
@@ -320,7 +334,15 @@ export async function getSiteStatus() {
   noStore();
 
   if (useDatabaseStatus()) {
-    return readDatabaseStatus();
+    try {
+      return await readDatabaseStatus();
+    } catch (error) {
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('Falling back to default site status:', error);
+      }
+
+      return defaultSiteStatus('database');
+    }
   }
 
   const gitHubConfig = getGitHubConfig();
@@ -333,6 +355,10 @@ export async function getSiteStatus() {
         console.warn('Falling back to local site status:', error);
       }
     }
+  }
+
+  if (isHostedDeployment()) {
+    return defaultSiteStatus('local-file');
   }
 
   return readLocalStatus();
