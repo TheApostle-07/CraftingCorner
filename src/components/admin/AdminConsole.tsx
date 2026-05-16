@@ -33,7 +33,6 @@ import {
   Search,
   SearchCheck,
   Settings,
-  ShieldAlert,
   ShieldCheck,
   SlidersHorizontal,
   Sparkles,
@@ -616,83 +615,48 @@ export default function AdminConsole({
         <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(200,155,90,0.26),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(37,99,235,0.08),transparent_24%),radial-gradient(circle_at_80%_88%,rgba(90,56,37,0.12),transparent_28%),linear-gradient(135deg,#FFFDF8_0%,#F8F3EA_46%,#F3EBDD_100%)]" />
         <div className="pointer-events-none fixed inset-x-6 top-6 h-28 rounded-full bg-white/35 blur-3xl" />
 
-        <section className="relative mx-auto grid min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center gap-6 lg:grid-cols-[1fr_500px]">
-          <div className="order-2 overflow-hidden rounded-[2.2rem] border border-[#E8DCCB] bg-[#FFFDF8]/78 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.14)] backdrop-blur md:p-8 lg:order-1 lg:min-h-[640px]">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#2B1A12] text-[#E7C98B] shadow-[0_18px_42px_rgba(43,26,18,0.22)]">
-                  <Armchair className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-sm font-extrabold tracking-tight text-[#2B1A12]">
-                    Crafting Corner
-                  </p>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
-                    Admin Studio
-                  </p>
-                </div>
-              </div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-[#BBF7D0] bg-[#DCFCE7] px-3 py-1.5 text-xs font-bold text-[#15803D]">
-                <span className="live-dot h-2 w-2" />
-                Live
-              </span>
-            </div>
-
-            <div className="mt-16 max-w-xl">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#E8DCCB] bg-white/80 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
-                <Sparkles className="h-4 w-4 text-[#C89B5A]" />
-                Premium catalogue control
-              </div>
-              <h1 className="mt-6 text-4xl font-extrabold tracking-[-0.045em] text-[#2B1A12] sm:text-5xl md:text-6xl">
-                Furniture content, managed beautifully.
-              </h1>
-              <p className="mt-5 max-w-lg text-base leading-8 text-[#5F4B3A]">
-                Sign in to manage products, homepage sections, SEO, testimonials, and live catalogue visibility from one focused control room.
-              </p>
-            </div>
-
-            <div className="mt-12 grid gap-3 sm:grid-cols-3">
-              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
-                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
-                  <Database className="h-4 w-4" />
-                </div>
-                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Neon CMS</p>
-                <p className="mt-1 text-xs leading-5 text-[#8A7866]">Instant content source.</p>
-              </div>
-              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
-                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
-                  <ShieldCheck className="h-4 w-4" />
-                </div>
-                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Secure Session</p>
-                <p className="mt-1 text-xs leading-5 text-[#8A7866]">HTTP-only admin access.</p>
-              </div>
-              <div className="group rounded-[1.35rem] border border-[#E8DCCB] bg-white/72 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-[#C89B5A]/70 hover:bg-white hover:shadow-[0_18px_40px_rgba(90,56,37,0.1)]">
-                <div className="grid h-10 w-10 place-items-center rounded-2xl bg-[#F8F3EA] text-[#C89B5A] transition-transform duration-300 group-hover:scale-110">
-                  <Radio className="h-4 w-4" />
-                </div>
-                <p className="mt-4 text-sm font-extrabold text-[#2B1A12]">Live Control</p>
-                <p className="mt-1 text-xs leading-5 text-[#8A7866]">Publish/draft visibility.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="relative order-1 w-full max-w-[500px] justify-self-center lg:order-2">
+        <section className="relative mx-auto flex min-h-[calc(100vh-3rem)] w-full max-w-xl items-center justify-center">
+          <div className="relative w-full max-w-[520px]">
             <div className="absolute -inset-4 rounded-[2.4rem] bg-[linear-gradient(135deg,rgba(200,155,90,0.22),rgba(255,255,255,0),rgba(90,56,37,0.14))] blur-2xl" />
-            <div className="relative rounded-[2.2rem] border border-[#E8DCCB] bg-white/88 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.16)] backdrop-blur md:p-8">
-              <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-[#E8DCCB] bg-[#FFFDF8] text-[#C89B5A] shadow-[0_18px_45px_rgba(90,56,37,0.12)]">
-                <LockKeyhole className="h-7 w-7" />
+            <div className="relative overflow-hidden rounded-[2.2rem] border border-[#E8DCCB] bg-white/90 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.16)] backdrop-blur md:p-8">
+              <div className="pointer-events-none absolute inset-x-8 top-0 h-24 rounded-full bg-[#E7C98B]/20 blur-2xl" />
+
+              <div className="relative flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#2B1A12] text-[#E7C98B] shadow-[0_18px_42px_rgba(43,26,18,0.22)]">
+                    <Armchair className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-extrabold tracking-tight text-[#2B1A12]">
+                      Crafting Corner
+                    </p>
+                    <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#8A7866]">
+                      Admin Studio
+                    </p>
+                  </div>
+                </div>
+                <span className="inline-flex items-center gap-2 rounded-full border border-[#BBF7D0] bg-[#DCFCE7] px-3 py-1.5 text-xs font-bold text-[#15803D]">
+                  <span className="live-dot h-2 w-2" />
+                  Live
+                </span>
               </div>
-              <div className="mt-6 text-center">
-                <p className="text-xs font-bold uppercase tracking-[0.28em] text-[#8A7866]">
-                  Secure entry
+
+              <div className="relative mt-10 text-center">
+                <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-[#E8DCCB] bg-[#FFFDF8] text-[#C89B5A] shadow-[0_18px_45px_rgba(90,56,37,0.12)]">
+                  <LockKeyhole className="h-7 w-7" />
+                </div>
+                <p className="mt-6 text-xs font-bold uppercase tracking-[0.28em] text-[#8A7866]">
+                  Owner access
                 </p>
                 <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-[#2B1A12]">
                   Welcome back
                 </h2>
-                <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#7A6A58]">{adminNote}</p>
+                <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#7A6A58]">
+                  Sign in to refine the catalogue, update homepage highlights, and keep Crafting Corner polished.
+                </p>
               </div>
 
-              <form className="mx-auto mt-8 max-w-sm space-y-5" onSubmit={handleLogin}>
+              <form className="relative mx-auto mt-8 max-w-sm space-y-5" onSubmit={handleLogin}>
                 <label className="block">
                   <span className="mb-2 block text-sm font-extrabold text-[#5A3825]">Username</span>
                   <div className="relative">
@@ -728,23 +692,15 @@ export default function AdminConsole({
                   className="admin-button-primary group w-full justify-center py-4"
                 >
                   {isBusy ? <LoaderCircle className="h-4 w-4 animate-spin" /> : <ShieldCheck className="h-4 w-4" />}
-                  Enter Admin Studio
+                  Open Admin Studio
                   <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
               </form>
 
-              <div className="mx-auto max-w-sm">
+              <div className="relative mx-auto max-w-sm">
                 {message ? <Toast message={message} tone={messageTone(message)} /> : null}
               </div>
 
-              <div className="mx-auto mt-6 max-w-sm rounded-[1.35rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
-                <div className="flex items-start gap-3">
-                  <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C89B5A]" />
-                  <p className="text-xs leading-5 text-[#7A6A58]">
-                    Protected content operations stay server-side. Passwords are never stored in the browser and authenticated access uses a secure cookie session.
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </section>
