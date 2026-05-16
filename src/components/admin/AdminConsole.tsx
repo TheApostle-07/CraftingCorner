@@ -616,8 +616,8 @@ export default function AdminConsole({
         <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_15%_15%,rgba(200,155,90,0.26),transparent_30%),radial-gradient(circle_at_84%_18%,rgba(37,99,235,0.08),transparent_24%),radial-gradient(circle_at_80%_88%,rgba(90,56,37,0.12),transparent_28%),linear-gradient(135deg,#FFFDF8_0%,#F8F3EA_46%,#F3EBDD_100%)]" />
         <div className="pointer-events-none fixed inset-x-6 top-6 h-28 rounded-full bg-white/35 blur-3xl" />
 
-        <section className="relative mx-auto grid min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center gap-6 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="overflow-hidden rounded-[2.2rem] border border-[#E8DCCB] bg-[#FFFDF8]/78 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.14)] backdrop-blur md:p-8 lg:min-h-[680px]">
+        <section className="relative mx-auto grid min-h-[calc(100vh-3rem)] w-full max-w-6xl items-center gap-6 lg:grid-cols-[1fr_500px]">
+          <div className="order-2 overflow-hidden rounded-[2.2rem] border border-[#E8DCCB] bg-[#FFFDF8]/78 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.14)] backdrop-blur md:p-8 lg:order-1 lg:min-h-[640px]">
             <div className="flex items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl bg-[#2B1A12] text-[#E7C98B] shadow-[0_18px_42px_rgba(43,26,18,0.22)]">
@@ -643,7 +643,7 @@ export default function AdminConsole({
                 <Sparkles className="h-4 w-4 text-[#C89B5A]" />
                 Premium catalogue control
               </div>
-              <h1 className="mt-6 text-5xl font-extrabold tracking-[-0.045em] text-[#2B1A12] md:text-6xl">
+              <h1 className="mt-6 text-4xl font-extrabold tracking-[-0.045em] text-[#2B1A12] sm:text-5xl md:text-6xl">
                 Furniture content, managed beautifully.
               </h1>
               <p className="mt-5 max-w-lg text-base leading-8 text-[#5F4B3A]">
@@ -676,9 +676,9 @@ export default function AdminConsole({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative order-1 w-full max-w-[500px] justify-self-center lg:order-2">
             <div className="absolute -inset-4 rounded-[2.4rem] bg-[linear-gradient(135deg,rgba(200,155,90,0.22),rgba(255,255,255,0),rgba(90,56,37,0.14))] blur-2xl" />
-            <div className="relative rounded-[2.2rem] border border-[#E8DCCB] bg-white/86 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.16)] backdrop-blur md:p-8">
+            <div className="relative rounded-[2.2rem] border border-[#E8DCCB] bg-white/88 p-6 shadow-[0_30px_90px_rgba(43,26,18,0.16)] backdrop-blur md:p-8">
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-[#E8DCCB] bg-[#FFFDF8] text-[#C89B5A] shadow-[0_18px_45px_rgba(90,56,37,0.12)]">
                 <LockKeyhole className="h-7 w-7" />
               </div>
@@ -692,7 +692,7 @@ export default function AdminConsole({
                 <p className="mx-auto mt-3 max-w-sm text-sm leading-6 text-[#7A6A58]">{adminNote}</p>
               </div>
 
-              <form className="mt-8 space-y-5" onSubmit={handleLogin}>
+              <form className="mx-auto mt-8 max-w-sm space-y-5" onSubmit={handleLogin}>
                 <label className="block">
                   <span className="mb-2 block text-sm font-extrabold text-[#5A3825]">Username</span>
                   <div className="relative">
@@ -733,9 +733,11 @@ export default function AdminConsole({
                 </button>
               </form>
 
-              {message ? <Toast message={message} tone={messageTone(message)} /> : null}
+              <div className="mx-auto max-w-sm">
+                {message ? <Toast message={message} tone={messageTone(message)} /> : null}
+              </div>
 
-              <div className="mt-6 rounded-[1.35rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
+              <div className="mx-auto mt-6 max-w-sm rounded-[1.35rem] border border-[#E8DCCB] bg-[#F8F3EA] p-4">
                 <div className="flex items-start gap-3">
                   <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-[#C89B5A]" />
                   <p className="text-xs leading-5 text-[#7A6A58]">
@@ -1066,91 +1068,6 @@ export default function AdminConsole({
         />
       ) : null}
 
-      <style jsx global>{`
-        .admin-shell {
-          font-family: var(--font-admin), var(--font-sans), Poppins, Montserrat, system-ui, sans-serif;
-        }
-        .admin-input {
-          width: 100%;
-          border-radius: 1rem;
-          border: 1px solid #e8dccb;
-          background: #fffdf8;
-          padding: 0.78rem 0.95rem;
-          color: #241b14;
-          outline: none;
-          font-size: 0.9rem;
-          font-weight: 600;
-          transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease,
-            transform 0.2s ease;
-        }
-        .admin-input:hover {
-          border-color: rgba(200, 155, 90, 0.55);
-          background: #ffffff;
-        }
-        .admin-input:focus {
-          border-color: #c89b5a;
-          box-shadow: 0 0 0 3px rgba(200, 155, 90, 0.18);
-          background: #ffffff;
-        }
-        .admin-button-primary,
-        .admin-button-secondary {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.5rem;
-          border-radius: 0.9rem;
-          padding: 0.72rem 1rem;
-          font-size: 0.875rem;
-          font-weight: 800;
-          transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease,
-            background 0.2s ease,
-            border-color 0.2s ease,
-            color 0.2s ease;
-        }
-        .admin-button-primary {
-          border: 1px solid #2b1a12;
-          background: linear-gradient(135deg, #5a3825, #2b1a12);
-          color: #ffffff;
-          box-shadow: 0 14px 30px rgba(90, 56, 37, 0.22);
-        }
-        .admin-button-primary:hover:not(:disabled) {
-          transform: translateY(-1px);
-          box-shadow: 0 20px 44px rgba(90, 56, 37, 0.28);
-        }
-        .admin-button-secondary {
-          border: 1px solid #e8dccb;
-          background: #ffffff;
-          color: #5a3825;
-        }
-        .admin-button-secondary:hover {
-          transform: translateY(-1px);
-          border-color: rgba(200, 155, 90, 0.75);
-          color: #2b1a12;
-          box-shadow: 0 14px 30px rgba(90, 56, 37, 0.1);
-        }
-        .live-dot {
-          display: inline-block;
-          border-radius: 9999px;
-          background: #22c55e;
-          box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.12);
-          animation: pulseLive 1.8s infinite;
-        }
-        @keyframes pulseLive {
-          0% {
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.32);
-          }
-          70% {
-            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-          }
-        }
-      `}</style>
     </main>
   );
 }
