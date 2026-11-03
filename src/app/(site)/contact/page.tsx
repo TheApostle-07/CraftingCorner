@@ -1,248 +1,91 @@
-/* --------------------------------------------------------------------------
-   src/app/contact/page.tsx – v2
-   "Contact Us" – Crafting Corner (polished edition)
-   ▸ App-Router client component
-   ▸ Framer-motion variants + stagger
-   ▸ Accessible, mobile-first form with inline validation
-   ▸ Decorative SVG waves + subtle glass-effect cards
---------------------------------------------------------------------------- */
-'use client';
-
-import { useState, useId, FormEvent } from 'react';
-import { motion, Variants } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Home, Phone, Mail, MapPin, Send as SendIcon } from 'lucide-react';
-import { sendLead } from '@/lib/sendLead';
-
-/* ─────────────────────────────── Animations ──────────────────────────────── */
-const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 40 },
-  show:   (i: number = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: 'easeOut', delay: i * 0.05 },
-  }),
+import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
+import Photo from '@/components/Photo';
+import ContactForm from '@/components/ContactForm';
+import { loadSiteData } from '@/lib/loaders.server';
+export const metadata = {
+  title: 'Visit & Connect | Crafting Corner',
+  description:
+    'Speak with Crafting Corner about your space, final pricing, finishes and availability. Visit our Mohali showroom.',
 };
-
-/* ─────────────────────────────── Form logic ─────────────────────────────── */
-const initialState = { name: '', email: '', phone: '', message: '' } as const;
-
-type State = typeof initialState & { sent: boolean };
-
-function useContactForm() {
-  const [state, set] = useState<State>({ ...initialState, sent: false });
-
-  const update = (k: keyof State, v: string) => set((s) => ({ ...s, [k]: v }));
-  const reset  = () => set({ ...initialState, sent: false });
-
-  const submit = async () => {
-  const ok = await sendLead(
-    state.name.trim(),
-    state.email.trim(),
-    state.phone.trim(),
-    state.message.trim()        // pass the message too
-  );
-
-  if (ok) {
-    set(s => ({ ...s, sent: true }));
-  } else {
-    alert('Sorry, something went wrong. Please try again.');
-  }
-};
-
-  return { state, update, submit, reset };
-}
-
-/* ────────────────────────────── Main page ──────────────────────────────── */
-export default function ContactPage() {
-  const { state, update, submit, reset } = useContactForm();
-  const id = useId();
-
+export default async function ContactPage() {
+  const site = await loadSiteData();
+  const whatsappNumber = site.whatsapp.number.replace(/\D/g, '');
   return (
-    <motion.main
-      initial="hidden"
-      animate="show"
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.15 } } }}
-      className="space-y-24 pb-24"
-    >
-      {/* ── Hero banner ───────────────────────────────────────────── */}
-      <motion.section variants={fadeUp} className="relative isolate overflow-hidden bg-[#7b593b]/10">
-        <Image
-          src="/assets/img/contact/contactus.png"
-          alt="Woodworker sanding furniture"
-          fill priority
-          className="object-cover object-center"
+    <div className="site-container pb-20 pt-10 sm:pt-14">
+      <section className="grid items-center gap-10 md:grid-cols-2 lg:gap-20">
+        <div>
+          <p className="eyebrow">Visit & connect</p>
+          <h1 className="mt-5 font-display text-5xl font-normal leading-[1.05] sm:text-6xl">
+            Your space.
+            <br />
+            Let’s talk about it.
+          </h1>
+          <p className="mt-6 max-w-md text-sm leading-8 text-[#746354]">
+            Have a piece in mind or a room to bring together? Speak with us
+            about the details, explore your options and arrange a showroom
+            visit.
+          </p>
+          <div className="mt-8 space-y-5 text-sm leading-7 text-[#66513e]">
+            <p className="flex items-start gap-3">
+              <MapPin size={19} className="mt-1 shrink-0" />
+              {site.contact.address}
+            </p>
+            <a
+              href={`tel:${site.contact.phone}`}
+              className="flex items-center gap-3"
+            >
+              <Phone size={19} />
+              {site.contact.phone}
+            </a>
+            <a
+              href={`mailto:${site.contact.email}`}
+              className="flex items-center gap-3 break-all"
+            >
+              <Mail size={19} />
+              {site.contact.email}
+            </a>
+          </div>
+          {site.whatsapp.enabled && /^[1-9]\d{9,14}$/.test(whatsappNumber) ? (
+            <a
+              href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(site.whatsapp.defaultMessage)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="site-button mt-6"
+            >
+              <MessageCircle size={17} />
+              Enquire on WhatsApp
+            </a>
+          ) : null}
+          <Link
+            href="/products"
+            className="mt-5 flex w-fit min-h-11 items-center border-b border-[#bda78f] text-sm text-walnut"
+          >
+            Explore the collection first
+          </Link>
+        </div>
+        <Photo
+          src="/images/real/large/DSC00391.webp"
+          alt="Classic seating in the Crafting Corner Mohali showroom"
+          className="aspect-[2/3] rounded-t-[7rem] rounded-b-2xl"
+          priority
         />
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
-        <div className="relative mx-auto max-w-3xl px-6 py-28 text-center text-ivory">
-          <h1 className="font-display text-4xl font-semibold sm:text-5xl text-white drop-shadow-lg">We’d love to hear from you</h1>
-          <p className="mx-auto mt-4 max-w-md text-lg text-white/90 drop-shadow">
-            Questions, custom orders or just a hello – drop us a line and our consultants reply within 24 h.
+      </section>
+      <section className="section-space grid gap-10 rounded-2xl border border-[#ded3c5] bg-white/50 p-6 sm:p-10 md:grid-cols-[0.7fr_1fr]">
+        <div>
+          <p className="eyebrow">Start a conversation</p>
+          <h2 className="mt-4 font-display text-4xl font-normal">
+            Tell us what you
+            <br />
+            have in mind.
+          </h2>
+          <p className="mt-5 text-sm leading-7 text-[#746354]">
+            Share the piece you like, your room measurements or a few details
+            about your project.
           </p>
         </div>
-      </motion.section>
-
-       {/* ── Info cards + map ─────────────────────────────────────── */}
-<section className="mx-auto max-w-6xl px-6">
-  <div className="grid gap-8 lg:grid-cols-3">
-    {/* Address */}
-    <InfoCard title="Showroom & Studio" icon={<MapPin className="h-6 w-6" />} i={0}>
-      <address className="not-italic leading-relaxed">
-        Crafting Corner<br />
-        Plot 522, Sector 82 (JLPL Industrial Area)<br />
-        Mohali 140306 (PB)
-      </address>
-    </InfoCard>
-
-    {/* Phone / WhatsApp */}
-    <InfoCard title="Call / WhatsApp" icon={<Phone className="h-6 w-6" />} i={1}>
-      <Link href="tel:+919056888917" className="block hover:underline">
-        +91 90568 88917
-      </Link>
-
-      <Link
-        href="https://wa.me/919056888917?text=Hi%20Crafting%20Corner!"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="mt-2 inline-flex items-center gap-2 rounded-full bg-green-500 px-4 py-1.5 text-ivory shadow hover:bg-green-600"
-      >
-        <WhatsAppIcon className="h-4 w-4" /> Enquire
-      </Link>
-    </InfoCard>
-
-    {/* Email */}
-    <InfoCard title="Email Us" icon={<Mail className="h-6 w-6" />} i={2}>
-      <Link
-        href="mailto:hello@craftingcorner.in"
-        className="rounded bg-walnut/90 px-4 py-1.5 text-ivory shadow hover:bg-walnut"
-      >
-        support@craftingcorner.in
-      </Link>
-    </InfoCard>
-  </div>
-
-  {/* Map */}
-  <motion.div
-    variants={fadeUp}
-    custom={3}
-    className="mt-14 overflow-hidden rounded-2xl shadow-lg"
-  >
-    {/* Responsive 16:9 container */}
-    <div className="relative w-full pt-[56.25%]">
-      <iframe
-        title="Crafting Corner – Mohali showroom"
-        src="https://maps.google.com/maps?q=30.654184,76.733288&z=15&output=embed"
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        allowFullScreen
-        className="absolute inset-0 h-full w-full border-0"
-      />
-    </div>
-  </motion.div>
-</section>
-      {/* ── Contact form ─────────────────────────────────────────── */}
-      <section className="mx-auto max-w-4xl px-6">
-        <motion.h2 variants={fadeUp} className="mb-10 font-display text-3xl font-semibold text-[#7b593b]">
-          Send us a message
-        </motion.h2>
-
-        {state.sent ? (
-          <motion.div variants={fadeUp} className="rounded-lg bg-green-100 p-6 text-center text-green-800 shadow">
-            <p className="text-lg font-medium">Thank you!</p>
-            <p className="mt-1 text-sm">Your message is in our workshop – we’ll reply shortly. 😊</p>
-            <button onClick={reset} className="mt-4 rounded bg-[#fff] px-5 py-2 text-ivory shadow hover:bg-[#B2BEB5]">
-              Send another message
-            </button>
-          </motion.div>
-        ) : (
-          <motion.form
-            variants={fadeUp}
-            onSubmit={(e: FormEvent) => { e.preventDefault(); submit(); }}
-            className="grid gap-6 sm:grid-cols-2"
-          >
-            <Input label="Name"   value={state.name}   onChange={(v) => update('name', v)} required id={`${id}-name`} full />
-            <Input label="Email"  value={state.email}  onChange={(v) => update('email', v)} type="email" required id={`${id}-email`} />
-            <Input label="Phone (optional)" value={state.phone} onChange={(v) => update('phone', v)} type="tel" id={`${id}-phone`} />
-            <Textarea label="Message" value={state.message} onChange={(v) => update('message', v)} required id={`${id}-msg`} full rows={4} />
-            <button
-              type="submit"
-              className="sm:col-span-2 flex w-full items-center justify-center gap-2 rounded-full bg-[#7b593b] px-6 py-3 font-medium text-white shadow transition hover:bg-[#684a32]"
-            >
-              <SendIcon className="h-4 w-4" />
-              Send&nbsp;Message
-            </button>
-          </motion.form>
-        )}
+        <ContactForm />
       </section>
-    </motion.main>
-  );
-}
-
-/* ───────────────────────────── helper components ────────────────────────── */
-function InfoCard({
-  title,
-  icon,
-  i,
-  children,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  i: number;
-  children: React.ReactNode;
-}) {
-  return (
-    <motion.article
-      variants={fadeUp}
-      custom={i}
-      className="relative flex h-full flex-col justify-between overflow-hidden rounded-2xl bg-ivory/80 p-8 shadow-lg backdrop-blur-lg ring-1 ring-walnut/10 transition-shadow hover:shadow-xl"
-    >
-      <div className="absolute right-4 top-4 text-walnut/30">{icon}</div>
-      <h3 className="font-display text-xl font-medium text-walnut">{title}</h3>
-      <div className="mt-3 space-y-1 text-charcoal/90">{children}</div>
-    </motion.article>
-  );
-}
-
-function Input({ label, id, value, onChange, type = 'text', required = false, full = false }: {
-  label: string; id: string; value: string; onChange: (v: string) => void; type?: string; required?: boolean; full?: boolean;
-}) {
-  return (
-    <div className={full ? 'sm:col-span-2' : ''}>
-      <label htmlFor={id} className="mb-1 block text-sm font-medium text-walnut/90">{label}{required && ' *'}</label>
-      <input
-        id={id}
-        type={type}
-        required={required}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded border border-charcoal/20 p-3 shadow-inner focus:outline-none focus:ring-2 focus:ring-walnut/50"
-      />
     </div>
   );
 }
-
-function Textarea({ label, id, value, onChange, rows = 4, required = false, full = false }: {
-  label: string; id: string; value: string; onChange: (v: string) => void; rows?: number; required?: boolean; full?: boolean;
-}) {
-  return (
-    <div className={full ? 'sm:col-span-2' : ''}>
-      <label htmlFor={id} className="mb-1 block text-sm font-medium text-walnut/90">{label}{required && ' *'}</label>
-      <textarea
-        id={id}
-        rows={rows}
-        required={required}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded border border-charcoal/20 p-3 shadow-inner focus:outline-none focus:ring-2 focus:ring-walnut/50"
-      />
-    </div>
-  );
-}
-
-const WhatsAppIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.672.15-.197.297-.768.967-.94 1.164-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.15-.173.198-.298.298-.497.099-.198.05-.372-.025-.521-.074-.148-.672-1.612-.921-2.206-.242-.579-.487-.5-.672-.51-.173-.01-.372-.01-.571-.01-.198 0-.521.075-.795.372-.273.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.262.488 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.414.248-.694.248-1.288.173-1.414-.074-.124-.272-.198-.57-.347z"/>
-    <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.48 2 2 6.48 2 12c0 1.989.584 3.839 1.593 5.395L2 22l4.744-1.562A9.952 9.952 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8a7.95 7.95 0 01-4.065-1.133l-.289-.174-.312.103L4 20l1.225-3.259-.211-.329A7.948 7.948 0 014 12z"/>
-  </svg>
-);

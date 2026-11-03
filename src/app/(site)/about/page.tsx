@@ -1,188 +1,90 @@
-/* --------------------------------------------------------------------------
-   /src/app/about/page.tsx
-   Fully-responsive, animated “About Us” page for Crafting Corner
---------------------------------------------------------------------------- */
-'use client';
-
-import { motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Leaf, Handshake, Infinity } from 'lucide-react';
-
-/* ──────────────────────────────────────────────────────────
-     About Page
-───────────────────────────────────────────────────────── */
+import Photo from '@/components/Photo';
+export const metadata = {
+  title: 'Our Story | Crafting Corner',
+  description:
+    'Explore the Crafting Corner showroom in Mohali and discover furniture through its forms, finishes and details.',
+};
 export default function About() {
   return (
-    <>
-      {/* ——— Hero ——— */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-        className="relative isolate flex min-h-[50vh] items-center justify-center overflow-hidden rounded-b-3xl bg-walnut/5"
-      >
-        <Image
-          src="/assets/img/about/aboutus_2.png"
-          alt="Crafting Corner workshop"
-          fill
-          priority
-          className="object-cover object-center"
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="relative z-10 mx-auto max-w-3xl px-6 py-24 text-center">
-          <h1 className="font-display text-5xl font-semibold text-white drop-shadow-lg">
-            About&nbsp;Us
+    <div className="site-container pb-16 pt-10">
+      <section className="grid items-center gap-10 md:grid-cols-2 md:gap-20">
+        <div>
+          <p className="eyebrow">Our story</p>
+          <h1 className="mt-5 font-display text-5xl font-normal leading-[1.05] sm:text-6xl">
+            Furniture with character.
+            <br />
+            Spaces with a story.
           </h1>
-          <p className="mx-auto mt-4 max-w-lg text-lg text-white/90">
-            Furniture that reflects your story.
+          <p className="mt-6 text-sm leading-8 text-[#746354]">
+            Crafting Corner brings together furniture and decorative pieces for
+            spaces that feel personal. From sculptural accents to classic
+            silhouettes, our Mohali showroom is a place to explore, look closely
+            and find your own point of view.
           </p>
-        </div>
-      </motion.section>
-
-      {/* ——— Narrative ——— */}
-      <section className="mx-auto my-20 max-w-4xl space-y-10 px-6 leading-relaxed text-charcoal/90">
-        {[
-          'At Crafting Corner, we create more than just furniture — we craft spaces that feel deeply personal, functional, and timeless. Based in Mohali, Punjab, we are a luxury furniture and décor studio known for bespoke pieces that blend global craftsmanship with Indian artistry.',
-          'Each design starts with a conversation and ends with a handcrafted piece made just for you. Whether you’re furnishing a cozy corner, styling your living room, or building your dream office, we’re here to help you bring your vision to life — thoughtfully and beautifully.',
-          'We work with materials sourced from Italy, China, and Turkey, and combine them with hand-finished work by Indian artisans. The result? Furniture that’s not just stylish, but meaningful.',
-        ].map((paragraph, i) => (
-          <motion.p
-            key={i}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: (i + 1) * 0.1 }}
-            viewport={{ once: true }}
-          >
-            {paragraph}
-          </motion.p>
-        ))}
-      </section>
-
-      {/* ——— Founders ——— */}
-      <section className="mx-auto my-20 max-w-6xl px-6 lg:flex lg:items-center lg:gap-12">
-        <motion.div
-          className="flex-1 space-y-6"
-          initial={{ opacity: 0, x: -40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <h2 className="font-display text-3xl font-semibold text-walnut">
-            From the&nbsp;Founders’ Desk
-          </h2>
-          <p>
-            Our search for furniture that truly resonated with our vision of
-            luxury led us to a realization: the market often presented either
-            mass-produced items or pieces that didn’t quite capture an
-            individual style. This spark birthed Crafting Corner.
+          <p className="mt-4 text-sm leading-8 text-[#746354]">
+            See the pieces in their setting, consider the details, and speak
+            with our team about what works for your room.
           </p>
-          <p>
-            We manufacture and customise luxury bespoke furniture and décor,
-            blending materials and techniques sourced from Italy, China, and
-            Turkey with skilled Indian artistry.
-          </p>
-          <p>
-            Whether it’s a specific size, fabric, or finish, we’re here to
-            transform your ideas into tangible pieces. Thank you for letting us
-            craft not just furniture, but the backdrop to your stories.
-          </p>
-          <p className="font-semibold text-walnut">
-            — Sushant&nbsp;&amp;&nbsp;Amish Garg
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="relative mt-10 h-72 w-full overflow-hidden rounded-2xl bg-ivory shadow-md lg:mt-0 lg:h-96 lg:w-1/2"
-          initial={{ opacity: 0, x: 40 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-        >
-          <Image
-            src="/assets/img/about/founders.jpg"
-            alt="Founders of Crafting Corner"
-            fill
-            className="object-cover object-center"
-          />
-        </motion.div>
-      </section>
-
-      {/* ——— Values ——— */}
-      <section className="mx-auto mb-24 max-w-6xl px-6">
-        <motion.h2
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="mb-10 text-center font-display text-3xl font-semibold text-walnut"
-        >
-          Our Values
-        </motion.h2>
-
-        <ul className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              title: 'Sustainability',
-              desc: 'We use FSC-certified timber and water-based finishes.',
-              Icon: Leaf,
-              color: 'text-emerald-600',
-            },
-            {
-              title: 'Fair Wages',
-              desc: 'Our artisans earn 20-30 % above industry standards.',
-              Icon: Handshake,
-              color: 'text-sky-600',
-            },
-            {
-              title: 'Lifetime Service',
-              desc: 'Repairs & re-polishing free for the first 5 years.',
-              Icon: Infinity,
-              color: 'text-amber-600',
-            },
-          ].map((v, i) => (
-            <motion.li
-              key={v.title}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <div className="flex flex-col items-start gap-3 rounded-2xl bg-ivory p-6 shadow-md transition hover:shadow-lg">
-                <v.Icon className={`h-7 w-7 ${v.color}`} />
-                <h3 className="font-medium text-walnut">{v.title}</h3>
-                <p className="text-sm text-charcoal/80">{v.desc}</p>
-              </div>
-            </motion.li>
-          ))}
-        </ul>
-      </section>
-
-      {/* ——— CTA ——— */}
-      <section className="relative overflow-hidden bg-walnut py-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
-          <h2 className="font-display text-3xl font-semibold text-ivory">
-            Visit Our Experience Studio
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-ivory/90">
-            Drop by for a cup of chai in Mohali and feel every texture for
-            yourself.
-          </p>
-
-          {/* Updated gradient-green button */}
-          <Link
-            href="/contact"
-            className="mt-8 inline-block rounded-full bg-gradient-to-r from-emerald-500 to-lime-500 px-8 py-3 font-medium text-white shadow-lg shadow-emerald-300/30 transition hover:brightness-110"
-          >
-            Book an Appointment
+          <Link href="/contact" className="site-button mt-7">
+            Plan a showroom visit
           </Link>
         </div>
-
-        <Image
-          src="/assets/img/hero/showroom.webp"
-          alt=""
-          fill
-          className="pointer-events-none absolute left-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 object-cover opacity-10"
+        <Photo
+          src="/images/real/large/DSC00391.webp"
+          alt="The Crafting Corner showroom with classic cream and gold-tone seating"
+          className="aspect-[2/3] rounded-t-[7rem] rounded-b-2xl"
+          priority
         />
       </section>
-    </>
+      <section className="section-space grid items-center gap-10 md:grid-cols-2 md:gap-20">
+        <Photo
+          src="/images/real/large/DSC00056.webp"
+          alt="Seating and tables arranged in the Crafting Corner showroom"
+          className="aspect-[2/3] rounded-2xl"
+        />
+        <div>
+          <p className="eyebrow">A personal approach</p>
+          <h2 className="mt-5 font-display text-4xl font-normal">
+            Start with your space.
+            <br />
+            Take time with the details.
+          </h2>
+          <p className="mt-5 text-sm leading-8 text-[#746354]">
+            Bring a few room photographs, measurements or an idea you have been
+            thinking about. Our team can help you explore the collection and
+            discuss the finish, proportions and availability of the pieces you
+            are considering.
+          </p>
+          <Link href="/products" className="site-button mt-7">
+            Explore the collection
+          </Link>
+        </div>
+      </section>
+      <section className="section-space">
+        <p className="eyebrow text-center">A closer look</p>
+        <h2 className="mb-9 mt-4 text-center font-display text-4xl font-normal">
+          Texture. Form. Finishing touches.
+        </h2>
+        <div className="grid grid-cols-3 gap-3 sm:gap-6">
+          {[
+            ['DSC00415', 'Carved detailing'],
+            ['DSC00431', 'Decorative finishing'],
+            ['DSC09420', 'Sculptural texture'],
+          ].map(([name, label]) => (
+            <figure key={name}>
+              <Photo
+                src={`/images/real/large/${name}.webp`}
+                alt={label}
+                className="aspect-[2/3] rounded-xl"
+              />
+              <figcaption className="mt-3 text-center text-xs text-[#746354]">
+                {label}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    </div>
   );
 }

@@ -15,17 +15,20 @@ export default async function SiteLayout({
   children: ReactNode;
 }) {
   const status = await getSiteStatus();
-  const siteData = await loadSiteData();
-  const footerData = await loadFooterData();
-
   if (!status.active) {
     return <PaymentPendingExperience />;
   }
+  const [siteData, footerData] = await Promise.all([
+    loadSiteData(),
+    loadFooterData(),
+  ]);
 
   return (
     <>
       <Header />
-      <main className="min-h-screen pt-20">{children}</main>
+      <main id="main-content" className="min-h-screen pt-20">
+        {children}
+      </main>
       <Footer footer={footerData} site={siteData} />
       {siteData.whatsapp.enabled ? (
         <FloatingWhatsapp

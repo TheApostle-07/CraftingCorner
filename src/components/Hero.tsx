@@ -1,110 +1,49 @@
-/* -------------------------------------------------------------
-   Ultra-polished hero section for Crafting Corner
-   – Responsive
-   – Framer-motion entrance + parallax flair
-   – Tailwind utility styling
-   ------------------------------------------------------------ */
-
-   'use client';
-
-   import { motion, useScroll, useTransform } from 'framer-motion';
-   import Image from 'next/image';
-
-   import { Great_Vibes } from 'next/font/google';
-   import type { HomepageData } from '@/lib/types';
-
-   // Elegant script for headline
-   const greatVibes = Great_Vibes({
-     subsets: ['latin'],
-     weight: '400',
-     display: 'swap',
-   });
-   
-   export default function Hero({ data }: { data?: HomepageData['hero'] }) {
-     /* Parallax bg offset */
-     const { scrollY } = useScroll();
-     const yBg = useTransform(scrollY, [0, 600], ['0%', '15%']);
-   
-     return (
-       <section className="relative isolate min-h-[100svh] lg:h-[100svh] overflow-hidden py-24 sm:py-32">
-         {/* Background */}
-         <motion.div style={{ y: yBg }} className="absolute inset-0 -z-10">
-           <Image
-             src={data?.backgroundImage || '/assets/img/CC_Hero_1.png'}
-             alt=""
-             fill
-             priority
-             sizes="100vw"
-             className="object-cover object-center"
-           />
-           <div className="absolute inset-0 bg-black/60" />
-         </motion.div>
-   
-         {/* Content */}
-         <div className="mx-auto flex h-full max-w-7xl flex-col items-center justify-center gap-4 sm:gap-6 px-4 sm:px-6 text-center text-white">
-          {/* Logo */}
-         <motion.div
-           initial={{ opacity: 0, scale: 0.7 }}
-           animate={{ opacity: 1, scale: 1 }}
-           transition={{ delay: 0.05, duration: 0.9 }}
-           className="relative mb-4 h-48 w-48 sm:h-64 sm:w-64"
-         >
-            <Image
-              src={data?.logoImage || '/assets/img/logo.png'}
-              alt="Crafting Corner logo"
-              width={512}
-              height={512}
-              priority
-              className="object-contain object-center w-full h-full"
-            />
-          </motion.div>
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className={`${greatVibes.className} mb-1 sm:mb-3 lg:mb-4 italic text-4xl leading-snug sm:text-6xl md:text-7xl lg:text-8xl drop-shadow-md`}
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import type { HomepageData } from '@/lib/types';
+import Photo from './Photo';
+export default function Hero({ data }: { data?: HomepageData['hero'] }) {
+  return (
+    <section className="site-container grid items-center gap-8 pb-12 pt-6 md:grid-cols-2 md:gap-14 md:pb-20 md:pt-10">
+      <div className="py-5 md:py-10">
+        <p className="eyebrow">Crafting Corner · Mohali</p>
+        <h1 className="mt-6 max-w-xl whitespace-pre-line font-display text-[clamp(2.8rem,5.5vw,5.5rem)] font-normal leading-[1.02] tracking-[-0.025em] text-[#38291f]">
+          {data?.title || 'Furniture with character.'}
+        </h1>
+        <p className="mt-6 max-w-md text-[15px] leading-7 text-[#746354] sm:text-base sm:leading-8">
+          {data?.subtitle}
+        </p>
+        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <Link href="/products" className="site-button">
+            Explore the collection <ArrowUpRight size={18} />
+          </Link>
+          <Link
+            href="/about"
+            className="inline-flex min-h-12 items-center border-b border-[#baa58d] text-sm text-walnut"
           >
-            {/* Responsive headline – each word stacks on xs and flows inline ≥sm */}
-            {data?.title || 'Timeless Hand-Crafted Furniture'}
-           </motion.h1>
-   
-           <motion.p
-             initial={{ opacity: 0, y: 30 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.3, duration: 0.8 }}
-             className="mb-16 sm:mb-20 max-w-xl text-base sm:text-lg md:text-xl"
-           >
-             {data?.subtitle || 'Made to transcend trends, built to last generations.'}
-           </motion.p>
-         </div>
-   
-         {/* Scroll cue */}
-         
-         <motion.button
-           type="button"
-           onClick={() =>
-             document
-               .getElementById('categories')
-               ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-           }
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 0.8 }}
-           transition={{ delay: 1.2, duration: 1 }}
-           className="hidden sm:block absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer text-white/80 hover:text-white focus:outline-none"
-         >
-           <svg
-             xmlns="http://www.w3.org/2000/svg"
-             className="mx-auto h-6 w-6 animate-bounce"
-             fill="none"
-             stroke="currentColor"
-             strokeWidth={2}
-           >
-             <path d="M12 5v14M19 12l-7 7-7-7" />
-           </svg>
-           <span className="mt-1 block text-xs uppercase tracking-widest">
-             {data?.scrollLabel || 'Scroll'}
-           </span>
-         </motion.button>
-       </section>
-     );
-   }
+            Our story
+          </Link>
+        </div>
+        <a
+          href="#categories"
+          className="mt-10 inline-flex items-center gap-3 text-xs tracking-wide text-[#756555] md:mt-16"
+        >
+          <ArrowDown size={16} /> A home, one considered piece at a time
+        </a>
+      </div>
+      <figure className="relative mx-auto w-full max-w-[480px]">
+        <Photo
+          src={data?.backgroundImage || '/images/real/large/DSC00397.webp'}
+          alt="Cream upholstered seating and ornate gold-tone furniture in the Crafting Corner showroom"
+          className="aspect-[2/3] w-full rounded-t-[8rem] rounded-b-2xl"
+          priority
+          sizes="(max-width: 767px) 100vw, 50vw"
+        />
+        <figcaption className="mt-4 flex items-center justify-between gap-4 text-[11px] tracking-wide text-[#756555]">
+          <span>The heritage collection</span>
+          <span>Photographed in our showroom</span>
+        </figcaption>
+      </figure>
+    </section>
+  );
+}

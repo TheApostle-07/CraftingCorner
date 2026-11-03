@@ -1,214 +1,125 @@
-/* ----------------------------------------------------------------------------
-   Header.tsx – Adaptive, accessible navigation bar for Crafting Corner
-   • Safe-area support & backdrop-saturate for iOS
-   • Shrinks on scroll, sticky with glass-morphism
-   • Escape-key & route-change close the mobile drawer
-   • Fully responsive: desktop links, mobile slide-in menu
-   • ARIA-friendly (aria-expanded, landmarks)
------------------------------------------------------------------------------*/
 'use client';
-
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  Menu as MenuIcon,
-  X as CloseIcon,
-  ShoppingCart,
-  Phone,
-} from 'lucide-react';
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Config – tweak navigation here
-// ─────────────────────────────────────────────────────────────────────────────
-const NAV_LINKS = [
-  { href: '/', label: 'Home' },
-  { href: '#categories', label: 'Categories' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+const links = [
+  { href: '/products', label: 'Collection' },
+  { href: '/#categories', label: 'Rooms' },
+  { href: '/about', label: 'Our story' },
+  { href: '/contact', label: 'Visit & connect' },
 ];
-
-// Smooth-scroll helper for internal #links
-function scrollToId(id: string) {
-  const el = document.getElementById(id.replace('#', ''));
-  if (el) {
-    const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
-}
-
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  // Close the drawer whenever the route changes
-  useEffect(() => setMobileOpen(false), [pathname]);
-
-  // Shrink & elevate on scroll
+  const drawer = useRef<HTMLDialogElement>(null);
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll();
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Lock body scroll when the menu is open & close on "Esc"
+    setOpen(false);
+  }, [pathname]);
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    const onKey = (e: KeyboardEvent) =>
-      e.key === 'Escape' && setMobileOpen(false);
-    window.addEventListener('keydown', onKey);
+    if (!open) return;
+    const el = drawer.current,
+      before = document.body.style.overflow;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    el?.showModal();
+    document.body.style.overflow = 'hidden';
     return () => {
-      window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
+      el?.close();
+      document.body.style.overflow = before;
+      previousFocus?.focus({ preventScroll: true });
     };
-  }, [mobileOpen]);
-
-  const headerClasses = `fixed inset-x-0 top-0 z-[60] min-h-14 transition-all duration-300
-    backdrop-blur-lg backdrop-saturate-150
-    ${scrolled ? 'bg-ivory/90 shadow-lg py-2' : 'bg-ivory/60 py-4'}`;
-
+  }, [open]);
   return (
     <>
-      <motion.header
-        initial={{ y: -96, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className={headerClasses}
+      <a
+        href="#main-content"
+        className="sr-only z-[100] rounded bg-white p-4 focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
       >
-        <div className="mx-auto flex max-w-7xl z-50 items-center justify-between px-4 md:px-6 lg:px-8">
-          {/* ——— Logo & Brand ——— */}
+        Skip to content
+      </a>
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#e1d7c9]/80 bg-[#faf7f1]/95 backdrop-blur-xl">
+        <div className="site-container flex h-20 items-center justify-between gap-5">
           <Link
             href="/"
             aria-label="Crafting Corner home"
-            className="flex items-center gap-2"
+            className="leading-none text-[#483424]"
           >
-            <Image
-              src="/assets/img/Furniture.png"
-              alt="Crafting Corner logo"
-              width={20}
-              height={20}
-              priority
-              className="h-10 w-auto md:h-12 transform scale-150 md:scale-[1.8]"
-              style={{ transformOrigin: 'left center' }}
-            />
-            {/* Word-mark (optional) */}
+            <span className="block font-display text-[1.7rem] font-medium tracking-tight sm:text-3xl">
+              Crafting Corner
+            </span>
+            <span className="mt-1.5 block text-[8px] uppercase tracking-[0.35em] text-[#8b735b]">
+              Furniture & living
+            </span>
           </Link>
-
-          {/* ——— Desktop nav ——— */}
-          <nav aria-label="Primary" className="hidden gap-6 lg:flex">
-            {NAV_LINKS.map((link) => (
-              <motion.a
+          <nav
+            aria-label="Primary"
+            className="hidden items-center gap-7 lg:flex"
+          >
+            {links.map((link) => (
+              <Link
                 key={link.href}
                 href={link.href}
-                onClick={(e) => {
-                  if (link.href.startsWith('#')) {
-                    e.preventDefault();
-                    scrollToId(link.href);
-                  }
-                }}
-                whileHover={{ y: -2 }}
-                className="text-charcoal/80 transition hover:text-walnut"
+                aria-current={pathname === link.href ? 'page' : undefined}
+                className="min-h-11 content-center text-[13px] font-normal text-[#66513e] transition hover:text-[#2e2117]"
               >
                 {link.label}
-              </motion.a>
+              </Link>
             ))}
           </nav>
-
-          {/* ——— Actions ——— */}
-          <div className="flex items-center gap-4">
-            {/* Cart placeholder */}
-           
-
-            {/* WhatsApp quick-dial */}
-            <Link
-              href="https://wa.me/919056888917"
-              target="_blank"
-              className="hidden rounded-full bg-[#7B5A3C] px-4 py-2 text-sm font-medium text-white shadow-lg transition hover:bg-[#694A2F] lg:inline-block"
-            >
-              <span className="flex items-center gap-2">
-                <Phone className="h-4 w-4" /> Enquire
-              </span>
-            </Link>
-
-            {/* Mobile – Hamburger */}
+          <Link
+            href="/contact"
+            className="hidden items-center gap-2 rounded-full border border-[#bca48b] px-5 py-2.5 text-xs text-[#523b2b] transition hover:bg-[#eee7dc] sm:inline-flex"
+          >
+            Let’s talk <ArrowUpRight size={15} />
+          </Link>
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            aria-haspopup="dialog"
+            aria-label="Open navigation"
+            className="grid h-11 w-11 place-items-center text-walnut lg:hidden"
+          >
+            <Menu size={22} />
+          </button>
+        </div>
+      </header>
+      {open ? (
+        <dialog
+          ref={drawer}
+          aria-label="Mobile navigation"
+          onCancel={() => setOpen(false)}
+          onClose={() => setOpen(false)}
+          className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-[#faf7f1] p-6 text-[#483424]"
+        >
+          <div className="flex items-center justify-between">
+            <span className="font-display text-2xl">Crafting Corner</span>
             <button
-              aria-label="Open navigation"
-              aria-expanded={mobileOpen}
-              onClick={() => setMobileOpen(true)}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-[#7B5A3C] text-white shadow-md transition hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7B5A3C] lg:hidden"
+              autoFocus
+              aria-label="Close navigation"
+              onClick={() => setOpen(false)}
+              className="grid h-12 w-12 place-items-center"
             >
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">Open menu</span>
+              <X size={24} />
             </button>
           </div>
-        </div>
-      </motion.header>
-
-      {/* ---------------------- Mobile drawer ------------------------------ */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <>
-            {/* ---- Dimmed backdrop --------------------------------------- */}
-            <motion.div
-              key="overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 0.45 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setMobileOpen(false)}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
-            />
-
-            {/* ---- Slide-in drawer --------------------------------------- */}
-            <motion.aside
-              key="drawer"
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', stiffness: 240, damping: 28 }}
-              className="fixed inset-y-0 right-0 z-[60] w-[85vw] max-w-sm overflow-y-auto bg-white px-6 pb-12 pt-[calc(env(safe-area-inset-top)+1rem)] shadow-2xl lg:hidden"
-            >
-              {/* Close btn */}
-              <button
-                aria-label="Close menu"
-                onClick={() => setMobileOpen(false)}
-                className="mb-6 self-end rounded-full p-2 text-walnut hover:bg-walnut/20 focus:outline-none focus:ring-2 focus:ring-walnut/50"
-              >
-                <CloseIcon className="h-6 w-6" />
-              </button>
-
-              {/* Nav links */}
-              <ul className="space-y-4">
-                {NAV_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="block rounded-lg px-3 py-2 text-lg font-medium text-charcoal/90 hover:bg-walnut/10 hover:text-walnut"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-
-              <hr className="my-6 border-charcoal/10" />
-
-              {/* WhatsApp CTA */}
+          <nav aria-label="Mobile" className="mt-14 flex flex-col gap-4">
+            {links.map((link) => (
               <Link
-                href="https://wa.me/919056888917"
-                target="_blank"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 font-medium text-white shadow-lg transition hover:bg-[#1DA851]"
+                key={link.href}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="flex min-h-16 items-center justify-between border-b border-[#ded3c5] font-display text-3xl"
               >
-                <Phone className="h-4 w-4" /> WhatsApp Enquiry
+                {link.label}
+                <ArrowUpRight size={20} />
               </Link>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
+            ))}
+          </nav>
+          <p className="mt-10 text-sm text-[#7c6852]">
+            Thoughtful furniture. Personal spaces.
+          </p>
+        </dialog>
+      ) : null}
     </>
   );
 }

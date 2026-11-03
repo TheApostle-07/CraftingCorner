@@ -59,7 +59,11 @@ export function createId(prefix: string, value: string) {
 }
 
 function isValidImageUrl(url: string) {
-  return url.startsWith('/') || url.startsWith('https://') || url.startsWith('http://');
+  return (
+    url.startsWith('/') ||
+    url.startsWith('https://') ||
+    url.startsWith('http://')
+  );
 }
 
 function duplicateValues(values: string[]) {
@@ -91,22 +95,45 @@ function addIssue(
 
 export function validateAdminContent(content: AdminContent): ContentHealth {
   const issues: ValidationIssue[] = [];
-  const categorySlugs = new Set(content.categories.map((category) => category.slug));
-  const productTypeSlugs = new Set(content.productTypes.map((type) => type.slug));
+  const categorySlugs = new Set(
+    content.categories.map((category) => category.slug),
+  );
+  const productTypeSlugs = new Set(
+    content.productTypes.map((type) => type.slug),
+  );
   const productSlugs = new Set(content.products.map((product) => product.slug));
 
-  duplicateValues(content.products.map((product) => product.slug)).forEach((slug) =>
-    addIssue(issues, 'error', 'Products', `Duplicate product slug "${slug}".`),
+  duplicateValues(content.products.map((product) => product.slug)).forEach(
+    (slug) =>
+      addIssue(
+        issues,
+        'error',
+        'Products',
+        `Duplicate product slug "${slug}".`,
+      ),
   );
-  duplicateValues(content.categories.map((category) => category.slug)).forEach((slug) =>
-    addIssue(issues, 'error', 'Categories', `Duplicate category slug "${slug}".`),
+  duplicateValues(content.categories.map((category) => category.slug)).forEach(
+    (slug) =>
+      addIssue(
+        issues,
+        'error',
+        'Categories',
+        `Duplicate category slug "${slug}".`,
+      ),
   );
-  duplicateValues(content.productTypes.map((type) => type.slug)).forEach((slug) =>
-    addIssue(issues, 'error', 'Product Types', `Duplicate product type slug "${slug}".`),
+  duplicateValues(content.productTypes.map((type) => type.slug)).forEach(
+    (slug) =>
+      addIssue(
+        issues,
+        'error',
+        'Product Types',
+        `Duplicate product type slug "${slug}".`,
+      ),
   );
 
   content.products.forEach((product) => {
-    const label = product.name || product.title || product.slug || 'Unnamed product';
+    const label =
+      product.name || product.title || product.slug || 'Unnamed product';
     const images = product.images || [];
 
     if (!product.name && !product.title) {
@@ -115,44 +142,111 @@ export function validateAdminContent(content: AdminContent): ContentHealth {
     if (!product.slug || product.slug !== createSlug(product.slug)) {
       addIssue(issues, 'error', 'Products', `${label} has an invalid slug.`);
     }
-    if (!Number.isFinite(Number(product.price)) || Number(product.price) <= 0) {
-      addIssue(issues, 'error', 'Products', `${label} is missing a valid price.`);
+    const displayPrice =
+      product.priceStatus === 'estimate'
+        ? product.approximatePrice
+        : product.price;
+    if (
+      product.priceStatus !== 'enquiry' &&
+      (!Number.isFinite(Number(displayPrice)) || Number(displayPrice) <= 0)
+    ) {
+      addIssue(
+        issues,
+        'error',
+        'Products',
+        `${label} is missing a valid price.`,
+      );
+    }
+    if (
+      product.priceStatus === 'estimate' &&
+      (product.checkoutEnabled || product.compareAtPrice)
+    ) {
+      addIssue(
+        issues,
+        'error',
+        'Products',
+        `${label}: estimates cannot enable checkout or compare-at pricing.`,
+      );
     }
     if (!product.categorySlug || !categorySlugs.has(product.categorySlug)) {
-      addIssue(issues, 'error', 'Products', `${label} is not assigned to a valid category.`);
+      addIssue(
+        issues,
+        'error',
+        'Products',
+        `${label} is not assigned to a valid category.`,
+      );
     }
-    if (product.productTypeSlug && !productTypeSlugs.has(product.productTypeSlug)) {
-      addIssue(issues, 'warning', 'Products', `${label} uses a deleted product type.`);
+    if (
+      product.productTypeSlug &&
+      !productTypeSlugs.has(product.productTypeSlug)
+    ) {
+      addIssue(
+        issues,
+        'warning',
+        'Products',
+        `${label} uses a deleted product type.`,
+      );
     }
     if (images.length === 0) {
       addIssue(issues, 'warning', 'Images', `${label} has no product image.`);
     }
     images.forEach((image) => {
       if (!image.alt?.trim()) {
-        addIssue(issues, 'warning', 'Images', `${label} has an image without alt text.`);
+        addIssue(
+          issues,
+          'warning',
+          'Images',
+          `${label} has an image without alt text.`,
+        );
       }
       if (image.url && !isValidImageUrl(image.url)) {
-        addIssue(issues, 'warning', 'Images', `${label} has an invalid image URL.`);
+        addIssue(
+          issues,
+          'warning',
+          'Images',
+          `${label} has an invalid image URL.`,
+        );
       }
     });
     if (!product.shortDescription && !product.description) {
-      addIssue(issues, 'warning', 'Products', `${label} is missing a description.`);
+      addIssue(
+        issues,
+        'warning',
+        'Products',
+        `${label} is missing a description.`,
+      );
     }
     if (!product.seo?.title || !product.seo?.description) {
-      addIssue(issues, 'warning', 'SEO', `${label} is missing SEO title or description.`);
+      addIssue(
+        issues,
+        'warning',
+        'SEO',
+        `${label} is missing SEO title or description.`,
+      );
     }
   });
 
   content.categories.forEach((category) => {
-    const label = category.name || category.title || category.slug || 'Unnamed category';
+    const label =
+      category.name || category.title || category.slug || 'Unnamed category';
     if (!category.slug || category.slug !== createSlug(category.slug)) {
       addIssue(issues, 'error', 'Categories', `${label} has an invalid slug.`);
     }
     if (!category.image) {
-      addIssue(issues, 'warning', 'Categories', `${label} is missing a category image.`);
+      addIssue(
+        issues,
+        'warning',
+        'Categories',
+        `${label} is missing a category image.`,
+      );
     }
     if (category.image && !isValidImageUrl(category.image)) {
-      addIssue(issues, 'warning', 'Categories', `${label} has an invalid image URL.`);
+      addIssue(
+        issues,
+        'warning',
+        'Categories',
+        `${label} has an invalid image URL.`,
+      );
     }
   });
 
@@ -165,7 +259,9 @@ export function validateAdminContent(content: AdminContent): ContentHealth {
 
   homepageSections.forEach((section) => {
     if (!section.visible) return;
-    const missing = section.productSlugs.filter((slug) => !productSlugs.has(slug));
+    const missing = section.productSlugs.filter(
+      (slug) => !productSlugs.has(slug),
+    );
     if (missing.length > 0) {
       addIssue(
         issues,
@@ -190,7 +286,9 @@ export function validateAdminContent(content: AdminContent): ContentHealth {
   }
 
   const errors = issues.filter((issue) => issue.severity === 'error').length;
-  const warnings = issues.filter((issue) => issue.severity === 'warning').length;
+  const warnings = issues.filter(
+    (issue) => issue.severity === 'warning',
+  ).length;
   const score = Math.max(0, Math.min(100, 100 - errors * 12 - warnings * 3));
 
   return {

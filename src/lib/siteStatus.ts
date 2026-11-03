@@ -46,7 +46,7 @@ function isHostedDeployment() {
   return process.env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
 }
 
-function useDatabaseStatus() {
+function shouldUseDatabaseStatus() {
   const requestedStorage = process.env.SITE_STATUS_STORAGE;
 
   if (requestedStorage === 'github' || requestedStorage === 'local-file') {
@@ -214,13 +214,12 @@ async function readGitHubStatus(config: GitHubConfig) {
   });
 
   if (!response.ok) {
-    throw new Error(`Unable to read site status from GitHub (${response.status}).`);
+    throw new Error(
+      `Unable to read site status from GitHub (${response.status}).`,
+    );
   }
 
-  return normalizeStatus(
-    (await response.json()) as RawSiteStatus,
-    'github',
-  );
+  return normalizeStatus((await response.json()) as RawSiteStatus, 'github');
 }
 
 async function writeGitHubStatus(
@@ -295,7 +294,7 @@ async function writeGitHubStatus(
 }
 
 export function getSiteStorageInfo(): SiteStorageInfo {
-  if (useDatabaseStatus()) {
+  if (shouldUseDatabaseStatus()) {
     return {
       mode: 'database',
       canUpdate: true,
@@ -333,7 +332,7 @@ export function getSiteStorageInfo(): SiteStorageInfo {
 export async function getSiteStatus() {
   noStore();
 
-  if (useDatabaseStatus()) {
+  if (shouldUseDatabaseStatus()) {
     try {
       return await readDatabaseStatus();
     } catch (error) {
@@ -373,7 +372,7 @@ export async function updateSiteStatus(active: boolean, updatedBy = 'admin') {
     updatedBy,
   };
 
-  if (useDatabaseStatus()) {
+  if (shouldUseDatabaseStatus()) {
     return writeDatabaseStatus(nextStatus);
   }
 

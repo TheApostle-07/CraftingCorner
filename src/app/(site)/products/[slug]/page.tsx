@@ -2,7 +2,8 @@
    Product details page (server component)
 --------------------------------------------------------------------------- */
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
+import { readPublicContent } from '@/lib/adminContent.server';
 
 import ProductView from '@/components/ProductView';
 import {
@@ -19,14 +20,15 @@ export const dynamicParams = true;
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const product = await findProduct(params.slug);
+  const { slug } = await params;
+  const product = await findProduct(slug);
   if (!product) return {};
 
   const mainImg =
     (Array.isArray(product.img) ? product.img[0] : product.img) ||
-    '/assets/img/products/bestseller_1.png';
+    '/images/real/large/DSC00397.webp';
 
   return {
     title: `${product.title} | Crafting Corner`,
@@ -47,17 +49,25 @@ async function findProduct(slug: string): Promise<Product | null> {
 export default async function ProductPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const product = await findProduct(params.slug);
-  if (!product) notFound();
+  const { slug } = await params;
+  const product = await findProduct(slug);
+  if (!product) {
+    const content = await readPublicContent();
+    const archived = content.products.find(
+      (p) => p.slug === slug && p.imageSource !== 'real',
+    );
+    if (archived) redirect('/products');
+    notFound();
+  }
 
   let related: Product[] = [];
 
   if (product.category) {
-    related = (
-      await loadProducts(product.category)
-    ).filter((p) => p.slug !== product.slug);
+    related = (await loadProducts(product.category)).filter(
+      (p) => p.slug !== product.slug,
+    );
   } else {
     const globalList = await loadAllProducts();
     related = globalList.filter((p) => p.slug !== product.slug);

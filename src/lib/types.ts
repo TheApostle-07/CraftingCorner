@@ -1,6 +1,10 @@
 export type Visibility = 'published' | 'draft';
 
-export type StockStatus = 'available' | 'made-to-order' | 'out-of-stock';
+export type StockStatus =
+  | 'available'
+  | 'made-to-order'
+  | 'out-of-stock'
+  | 'unconfirmed';
 
 export interface SeoFields {
   title: string;
@@ -50,6 +54,14 @@ export interface Product {
   categorySlug?: string;
   productTypeSlug?: string;
   price: number;
+  priceStatus?: 'confirmed' | 'estimate' | 'enquiry';
+  approximatePrice?: number;
+  priceUnit?: string;
+  checkoutEnabled?: boolean;
+  ownerApproved?: boolean;
+  imageSource?: 'real';
+  sourcePhotos?: string[];
+  ownerVerification?: string;
   compareAtPrice?: number | null;
   shortDescription?: string;
   description?: string;
@@ -139,6 +151,7 @@ export interface HomepageData {
 }
 
 export interface SiteData {
+  photographyVersion?: string;
   brandName: string;
   logoText?: string;
   logoImage?: string;

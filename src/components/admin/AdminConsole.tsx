@@ -1,6 +1,6 @@
 'use client';
 
-import { startTransition, useEffect, useMemo, useState } from 'react';
+import { startTransition, useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Activity,
   AlertTriangle,
@@ -49,6 +49,7 @@ import {
   type ContentHealth,
 } from '@/lib/adminContent';
 import type { Category, Product, ProductImage, ProductType, Testimonial } from '@/lib/types';
+import { productPrice } from '@/lib/productPresentation';
 
 type Props = {
   adminConfigured: boolean;
@@ -145,10 +146,6 @@ const emptyImage: ProductImage = {
 
 function nowIso() {
   return new Date().toISOString();
-}
-
-function formatPrice(value: number) {
-  return `₹${Number(value || 0).toLocaleString('en-IN')}`;
 }
 
 function productTitle(product: Product) {
@@ -254,7 +251,6 @@ function normaliseProduct(product: Product): Product {
 
 export default function AdminConsole({
   adminConfigured,
-  adminNote,
   initialAuthenticated,
 }: Props) {
   const [authenticated, setAuthenticated] = useState(initialAuthenticated);
@@ -286,32 +282,42 @@ export default function AdminConsole({
     return (await response.json()) as ApiPayload;
   }
 
-  async function loadContent() {
+  const loadContent = useCallback(async () => {
     setIsBusy(true);
     setMessage('');
-    const response = await fetch('/api/admin/content', { cache: 'no-store' });
-    const data = await readJson(response);
-
-    startTransition(() => {
-      if (response.ok && data.content) {
-        setContent(data.content);
-        setHealth(data.health || null);
-        setBaseSha(data.baseSha || '');
-        setStorage(data.storage);
-        setDirty(false);
-        setMessage('Content loaded.');
-      } else {
-        setMessage(data.message || 'Unable to load content.');
-      }
+    try {
+      const response = await fetch('/api/admin/content', {
+        cache: 'no-store',
+        signal: AbortSignal.timeout(20000),
+      });
+      const data = (await response.json()) as ApiPayload;
+      startTransition(() => {
+        if (response.ok && data.content) {
+          setContent(data.content);
+          setHealth(data.health || null);
+          setBaseSha(data.baseSha || '');
+          setStorage(data.storage);
+          setDirty(false);
+          setMessage('Content loaded.');
+        } else {
+          setMessage(data.message || 'Unable to load content.');
+        }
+      });
+      if (response.status === 401) setAuthenticated(false);
+    } catch {
+      setMessage(
+        'Unable to load content. Please check your connection and try again.',
+      );
+    } finally {
       setIsBusy(false);
-    });
-  }
+    }
+  }, []);
 
   useEffect(() => {
     if (authenticated) {
       loadContent();
     }
-  }, [authenticated]);
+  }, [authenticated, loadContent]);
 
   useEffect(() => {
     if (!content || !dirty) return;
@@ -1637,7 +1643,7 @@ function ProductsView(props: {
                       <td className="px-3 py-3 text-[#5A3825]">
                         {category?.name || category?.title || product.categorySlug || 'Missing'}
                       </td>
-                      <td className="px-3 py-3 font-bold text-[#2B1A12]">{formatPrice(product.price)}</td>
+                      <td className="px-3 py-3 font-bold text-[#2B1A12]">{productPrice(product)}</td>
                       <td className="px-3 py-3">
                         <div className="flex max-w-[240px] flex-wrap gap-1.5">
                           {activeSections.length === 0 ? (
@@ -1732,7 +1738,7 @@ function ProductEditor({
               {productTitle(product)}
             </h3>
             <p className="mt-1 text-xs font-semibold text-[#8A7866]">
-              {formatPrice(product.price)} · {product.categorySlug || 'Missing category'}
+              {productPrice(product)} · {product.categorySlug || 'Missing category'}
             </p>
           </div>
         </div>
@@ -1761,7 +1767,7 @@ function ProductEditor({
         </Field>
       </div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Price">
+        <Field label="Confirmed price (leave at 0 until verified)">
           <input type="number" value={product.price || 0} onChange={(event) => onChange({ price: Number(event.target.value) })} className="admin-input" />
         </Field>
         <Field label="Visibility">
@@ -1771,6 +1777,43 @@ function ProductEditor({
           </select>
         </Field>
       </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Public pricing">
+          <select
+            value={product.priceStatus || 'confirmed'}
+            onChange={(event) =>
+              onChange({
+                priceStatus: event.target.value as Product['priceStatus'],
+                checkoutEnabled: false,
+                compareAtPrice: null,
+              })
+            }
+            className="admin-input"
+          >
+            <option value="estimate">Approximate price · enquiry only</option>
+            <option value="enquiry">Price on enquiry</option>
+            <option value="confirmed">Confirmed price</option>
+          </select>
+        </Field>
+        <Field label="Approximate price (not a confirmed price)">
+          <input
+            type="number"
+            min="1"
+            value={product.approximatePrice || ''}
+            onChange={(event) =>
+              onChange({ approximatePrice: Number(event.target.value) })
+            }
+            className="admin-input"
+          />
+        </Field>
+      </div>
+      {product.priceStatus === 'estimate' ? (
+        <p className="rounded-xl bg-[#F8F3EA] p-4 text-sm leading-6 text-[#5A3825]">
+          {productPrice(product)} · Final price on enquiry. Verify identity,
+          sales unit, dimensions, finish and stock before confirming this
+          listing.
+        </p>
+      ) : null}
       <Field label="Short description">
         <textarea value={product.shortDescription || ''} onChange={(event) => onChange({ shortDescription: event.target.value, description: product.description || event.target.value })} className="admin-input min-h-24" />
       </Field>

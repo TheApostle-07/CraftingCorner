@@ -1,7 +1,20 @@
 import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
 import { Cormorant_Garamond, Manrope } from 'next/font/google';
 
 import './globals.css';
+
+export const metadata: Metadata = {
+  metadataBase: new URL('https://www.craftingcorner.in'),
+  title: 'Crafting Corner | Furniture & Living in Mohali',
+  description:
+    'Explore the Crafting Corner showroom collection: expressive furniture, considered details and personal guidance for your space.',
+  openGraph: {
+    type: 'website',
+    siteName: 'Crafting Corner',
+    images: ['/images/real/large/DSC00397.webp'],
+  },
+};
 
 const displayFont = Cormorant_Garamond({
   subsets: ['latin'],

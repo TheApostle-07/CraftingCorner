@@ -5,17 +5,87 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
 
   body {
     @apply bg-ivory font-sans text-charcoal;
-    background-image:
-      radial-gradient(circle at top, rgba(184, 137, 78, 0.08), transparent 28%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(247, 241, 232, 0.92));
+    background-image: radial-gradient(
+        circle at top,
+        rgba(184, 137, 78, 0.08),
+        transparent 28%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.62),
+        rgba(247, 241, 232, 0.92)
+      );
   }
 
   ::selection {
     @apply bg-walnut text-ivory;
+  }
+}
+
+@layer components {
+  .site-container {
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-12;
+  }
+  .section-space {
+    @apply my-16 sm:my-24;
+  }
+  .eyebrow {
+    @apply text-[10px] font-medium uppercase tracking-[0.17em] text-[#7c6852] sm:text-[11px];
+  }
+  .site-button {
+    @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#523b2b] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#35261c] disabled:cursor-wait disabled:opacity-60;
+  }
+  .product-grid {
+    @apply grid grid-cols-1 items-stretch gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-14;
+  }
+  .quick-dialog {
+    width: min(960px, calc(100% - 24px));
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+  img {
+    max-width: 100%;
+  }
+  a,
+  button,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+  :focus-visible {
+    outline: 2px solid #865e3d;
+    outline-offset: 4px;
+  }
+  input,
+  textarea,
+  select {
+    font-size: max(16px, 1em);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
   }
 }
 
@@ -25,7 +95,8 @@
   }
 
   .admin-shell {
-    font-family: var(--font-admin), var(--font-sans), Poppins, Montserrat, system-ui, sans-serif;
+    font-family: var(--font-admin), var(--font-sans), Poppins, Montserrat,
+      system-ui, sans-serif;
   }
 
   .admin-input {

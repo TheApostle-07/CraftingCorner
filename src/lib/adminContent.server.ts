@@ -1,6 +1,8 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
 import path from 'node:path';
+import { cache } from 'react';
+import { preparePhotographyContent } from './photography';
 
 import {
   ADMIN_DATA_FILES,
@@ -30,9 +32,12 @@ export type AdminContentResponse = {
 };
 
 function getGithubConfig(): GithubConfig | null {
-  const token = process.env.GITHUB_TOKEN || process.env.SITE_STATUS_GITHUB_TOKEN || '';
-  const owner = process.env.GITHUB_OWNER || process.env.SITE_STATUS_REPO_OWNER || '';
-  const repo = process.env.GITHUB_REPO || process.env.SITE_STATUS_REPO_NAME || '';
+  const token =
+    process.env.GITHUB_TOKEN || process.env.SITE_STATUS_GITHUB_TOKEN || '';
+  const owner =
+    process.env.GITHUB_OWNER || process.env.SITE_STATUS_REPO_OWNER || '';
+  const repo =
+    process.env.GITHUB_REPO || process.env.SITE_STATUS_REPO_NAME || '';
   const branch =
     process.env.GITHUB_BRANCH || process.env.SITE_STATUS_REPO_BRANCH || 'main';
   const contentPath = process.env.GITHUB_CONTENT_PATH || 'src/data';
@@ -87,7 +92,7 @@ async function readLocalJson<T>(file: string): Promise<T> {
 }
 
 async function readLocalContent(): Promise<AdminContent> {
-  return {
+  return preparePhotographyContent({
     site: await readLocalJson('site.json'),
     homepage: await readLocalJson('homepage.json'),
     categories: await readLocalJson('categories.json'),
@@ -97,11 +102,14 @@ async function readLocalContent(): Promise<AdminContent> {
     seo: await readLocalJson('seo.json'),
     footer: await readLocalJson('footer.json'),
     navigation: await readLocalJson('navigation.json'),
-  };
+  });
 }
 
 function usesDatabaseContent() {
-  return hasCmsDatabaseConnection() && process.env.CMS_CONTENT_STORAGE !== 'github';
+  return (
+    hasCmsDatabaseConnection() &&
+    !['github', 'local'].includes(process.env.CMS_CONTENT_STORAGE || '')
+  );
 }
 
 async function ensureCmsTables() {
@@ -157,7 +165,7 @@ async function seedMissingDatabaseDocuments(localContent: AdminContent) {
 
     await sql`
       insert into cms_documents (key, data, version, updated_at, updated_by)
-      values (${file}, ${sql.json(data)}, 1, now(), 'seed')
+      values (${file}, ${JSON.stringify(data)}::jsonb, 1, now(), 'seed')
       on conflict (key) do nothing
     `;
   }
@@ -192,7 +200,7 @@ async function readDatabaseContent(localContent?: AdminContent) {
   );
 
   return {
-    content: merged,
+    content: preparePhotographyContent(merged),
     baseSha: buildDatabaseBaseSha(rows),
   };
 }
@@ -318,20 +326,35 @@ async function writeDatabaseContent(
 
   const files = contentToFiles(content);
 
-  await sql.begin(async (tx) => {
+  await sql.begin(async (transaction) => {
+    const tx = transaction as unknown as ReturnType<
+      typeof getCmsDatabaseClient
+    >;
+    const lockedRows = await tx<
+      { key: string; data: unknown; version: number }[]
+    >`
+      select key, data, version from cms_documents
+      where key = any(${ADMIN_DATA_FILES as unknown as string[]})
+      order by key for update
+    `;
+    if (baseSha && baseSha !== buildDatabaseBaseSha(lockedRows)) {
+      throw new Error(
+        'Database content changed. Refresh before saving to avoid overwriting newer edits.',
+      );
+    }
     for (const [file, data] of Object.entries(files)) {
-      const current = currentRows.find((row) => row.key === file);
+      const current = lockedRows.find((row) => row.key === file);
 
       if (current) {
         await tx`
           insert into cms_revisions (id, key, data, version, created_at, created_by)
-          values (${randomUUID()}, ${file}, ${tx.json(current.data)}, ${current.version}, now(), ${updatedBy})
+          values (${randomUUID()}, ${file}, ${JSON.stringify(current.data)}::jsonb, ${current.version}, now(), ${updatedBy})
         `;
       }
 
       await tx`
         insert into cms_documents (key, data, version, updated_at, updated_by)
-        values (${file}, ${tx.json(data)}, 1, now(), ${updatedBy})
+        values (${file}, ${JSON.stringify(data)}::jsonb, 1, now(), ${updatedBy})
         on conflict (key) do update set
           data = excluded.data,
           version = cms_documents.version + 1,
@@ -446,14 +469,16 @@ export async function saveAdminContent(
 
   const config = getGithubConfig();
   const commitMessage =
-    options.message || `Update Crafting Corner content (${new Date().toISOString()})`;
+    options.message ||
+    `Update Crafting Corner content (${new Date().toISOString()})`;
 
   if (usesDatabaseContent()) {
     const nextBaseSha = await writeDatabaseContent(content, options.baseSha);
     return {
       ok: true,
       health,
-      message: 'Content saved to Neon. Public pages now read the updated database content.',
+      message:
+        'Content saved to Neon. Public pages now read the updated database content.',
       commitSha: nextBaseSha,
     };
   }
@@ -467,13 +492,16 @@ export async function saveAdminContent(
     return {
       ok: true,
       health,
-      message: 'Content committed to GitHub. Deployment will start from the branch update.',
+      message:
+        'Content committed to GitHub. Deployment will start from the branch update.',
       commitSha,
     };
   }
 
   if (process.env.NODE_ENV === 'production') {
-    throw new Error('GitHub env vars are required for production content saves.');
+    throw new Error(
+      'GitHub env vars are required for production content saves.',
+    );
   }
 
   await writeLocalContent(content);
@@ -485,10 +513,14 @@ export async function saveAdminContent(
   };
 }
 
-export async function readPublicContent(): Promise<AdminContent> {
-  if (usesDatabaseContent()) {
-    return (await readDatabaseContent()).content;
+export const readPublicContent = cache(async (): Promise<AdminContent> => {
+  if (usesDatabaseContent() && process.env.CMS_CONTENT_STORAGE !== 'local') {
+    try {
+      return (await readDatabaseContent()).content;
+    } catch {
+      console.error('CMS unavailable; serving the bundled catalogue.');
+    }
   }
 
   return readLocalContent();
-}
+});

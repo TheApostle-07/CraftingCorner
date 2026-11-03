@@ -1,4 +1,7 @@
 node_modules
 .next
+._*
+.playwright-mcp/
+tsconfig.tsbuildinfo
 .env*
 !.env.example

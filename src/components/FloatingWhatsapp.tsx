@@ -9,7 +9,9 @@ type Props = {
 };
 
 export default function FloatingWhatsapp({ phone, message = '' }: Props) {
-  const url = `https://wa.me/${phone}${message ? `?text=${encodeURIComponent(message)}` : ''}`;
+  const number = phone.replace(/\D/g, '');
+  if (!/^[1-9]\d{9,14}$/.test(number)) return null;
+  const url = `https://wa.me/${number}${message ? `?text=${encodeURIComponent(message)}` : ''}`;
 
   return (
     <a
