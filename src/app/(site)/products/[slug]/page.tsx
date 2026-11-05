@@ -1,20 +1,21 @@
 /* --------------------------------------------------------------------------
    Product details page (server component)
 --------------------------------------------------------------------------- */
-import { Metadata } from 'next';
-import { notFound, redirect } from 'next/navigation';
-import { readPublicContent } from '@/lib/adminContent.server';
+import { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { readPublicContent } from "@/lib/adminContent.server";
+import { pageMetadata, absoluteUrl, jsonLd, breadcrumbs } from "@/lib/seo";
 
-import ProductView from '@/components/ProductView';
+import ProductView from "@/components/ProductView";
 import {
   loadProducts,
   loadAllProducts,
   loadSiteData,
   type Product,
-} from '@/lib/loaders.server';
+} from "@/lib/loaders.server";
 
 /* ---------- static-site helpers ---------- */
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 export const dynamicParams = true;
 
 export async function generateMetadata({
@@ -28,15 +29,16 @@ export async function generateMetadata({
 
   const mainImg =
     (Array.isArray(product.img) ? product.img[0] : product.img) ||
-    '/images/real/large/DSC00397.webp';
+    "/images/real/large/DSC00397.webp";
 
-  return {
-    title: `${product.title} | Crafting Corner`,
-    description:
-      product.description ??
-      `Premium ${product.title} crafted for modern Indian homes.`,
-    openGraph: { images: [mainImg] },
-  };
+  return pageMetadata(
+    `${product.title} | Crafting Corner`,
+    product.shortDescription ||
+      product.description ||
+      `Explore ${product.title} at Crafting Corner.`,
+    `/products/${product.slug}`,
+    mainImg,
+  );
 }
 
 /* ---------- helpers ---------- */
@@ -56,9 +58,9 @@ export default async function ProductPage({
   if (!product) {
     const content = await readPublicContent();
     const archived = content.products.find(
-      (p) => p.slug === slug && p.imageSource !== 'real',
+      (p) => p.slug === slug && p.imageSource !== "real",
     );
-    if (archived) redirect('/products');
+    if (archived) redirect("/products");
     notFound();
   }
 
@@ -76,5 +78,35 @@ export default async function ProductPage({
   related = related.slice(0, 3);
   const site = await loadSiteData();
 
-  return <ProductView product={product} related={related} site={site} />;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.shortDescription || product.description,
+    image: product.images?.map((i) => absoluteUrl(i.url)),
+    url: absoluteUrl(`/products/${product.slug}`),
+    brand: { "@type": "Brand", name: site.brandName },
+  };
+  // This is an enquiry-led catalogue. Indicative prices are not confirmed offers.
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd(
+            breadcrumbs([
+              { name: "Home", path: "/" },
+              { name: "Collection", path: "/products" },
+              { name: product.title, path: `/products/${product.slug}` },
+            ]),
+          ),
+        }}
+      />
+      <ProductView product={product} related={related} site={site} />
+    </>
+  );
 }

@@ -1,13 +1,14 @@
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
-import Footer from '@/components/Footer';
-import FloatingWhatsapp from '@/components/FloatingWhatsapp';
-import Header from '@/components/Header';
-import PaymentPendingExperience from '@/components/PaymentPendingExperience';
-import { loadFooterData, loadSiteData } from '@/lib/loaders.server';
-import { getSiteStatus } from '@/lib/siteStatus';
+import Footer from "@/components/Footer";
+import FloatingWhatsapp from "@/components/FloatingWhatsapp";
+import Header from "@/components/Header";
+import PaymentPendingExperience from "@/components/PaymentPendingExperience";
+import { loadFooterData, loadSiteData } from "@/lib/loaders.server";
+import { getSiteStatus } from "@/lib/siteStatus";
+import { absoluteUrl, jsonLd } from "@/lib/seo";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function SiteLayout({
   children,
@@ -25,6 +26,36 @@ export default async function SiteLayout({
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "@id": absoluteUrl("/#organization"),
+            name: siteData.brandName,
+            url: absoluteUrl("/"),
+            email: siteData.contact.email,
+            telephone: siteData.contact.phone,
+            address: siteData.contact.address,
+            ...(siteData.logoImage
+              ? { logo: absoluteUrl(siteData.logoImage) }
+              : {}),
+          }),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: siteData.brandName,
+            url: absoluteUrl("/"),
+            inLanguage: "en-IN",
+          }),
+        }}
+      />
       <Header />
       <main id="main-content" className="min-h-screen pt-20">
         {children}

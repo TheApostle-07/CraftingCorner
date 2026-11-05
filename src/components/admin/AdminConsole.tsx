@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 
 import { startTransition, useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -741,6 +742,7 @@ export default function AdminConsole({
           </div>
 
           <nav className="mt-6 grid gap-1.5">
+            <Link href="/admin/blog" className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold text-[#5F4B3A] transition hover:bg-[#F3EBDD]">Journal &amp; articles <span aria-hidden="true">↗</span></Link>
             {tabs.map((tab) => {
               const Icon = tab.icon;
               const active = activeTab === tab.id;

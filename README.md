@@ -1,5 +1,8 @@
 ## Crafting Corner
 
+The journal CMS, Cloudinary setup, editorial workflow, migration/rollback guide
+and verification checklist are documented in [docs/JOURNAL.md](docs/JOURNAL.md).
+
 Next.js catalogue site with an admin CMS. Production can use Neon Postgres for
 instant persistent content edits, with GitHub JSON storage still available as a
 fallback.

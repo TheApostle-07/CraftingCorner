@@ -1,13 +1,14 @@
-'use client';
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Menu, X, ArrowUpRight } from 'lucide-react';
+"use client";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 const links = [
-  { href: '/products', label: 'Collection' },
-  { href: '/#categories', label: 'Rooms' },
-  { href: '/about', label: 'Our story' },
-  { href: '/contact', label: 'Visit & connect' },
+  { href: "/products", label: "Collection" },
+  { href: "/#categories", label: "Rooms" },
+  { href: "/about", label: "Our story" },
+  { href: "/blog", label: "Journal" },
+  { href: "/contact", label: "Visit & connect" },
 ];
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -22,7 +23,7 @@ export default function Header() {
       before = document.body.style.overflow;
     const previousFocus = document.activeElement as HTMLElement | null;
     el?.showModal();
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
       el?.close();
       document.body.style.overflow = before;
@@ -59,7 +60,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                aria-current={pathname === link.href ? 'page' : undefined}
+                aria-current={pathname === link.href ? "page" : undefined}
                 className="min-h-11 content-center text-[13px] font-normal text-[#66513e] transition hover:text-[#2e2117]"
               >
                 {link.label}

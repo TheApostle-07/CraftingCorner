@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import { Instagram, Facebook, Linkedin, ArrowUpRight } from 'lucide-react';
-import type { SiteData } from '@/lib/types';
+import Link from "next/link";
+import { Instagram, Facebook, Linkedin, ArrowUpRight } from "lucide-react";
+import type { SiteData } from "@/lib/types";
 type FooterData = {
   brandName?: string;
   tagline?: string;
@@ -43,6 +43,12 @@ export default function Footer({
           <Link href="/contact" className="inline-flex items-center gap-2">
             Plan your visit <ArrowUpRight size={15} />
           </Link>
+          <Link
+            href="/blog"
+            className="inline-flex min-h-11 items-center gap-2"
+          >
+            Journal &amp; inspiration <ArrowUpRight size={15} />
+          </Link>
         </nav>
         <div>
           <p className="eyebrow">Visit & connect</p>
@@ -58,13 +64,13 @@ export default function Footer({
           </a>
           <div className="mt-5 flex gap-2">
             {[
-              [site.social.instagram, 'Instagram', Instagram],
-              [site.social.facebook, 'Facebook', Facebook],
-              [site.social.linkedin, 'LinkedIn', Linkedin],
+              [site.social.instagram, "Instagram", Instagram],
+              [site.social.facebook, "Facebook", Facebook],
+              [site.social.linkedin, "LinkedIn", Linkedin],
             ].map(([href, label, Icon]) =>
-              typeof href === 'string' &&
-              href.startsWith('https://') &&
-              typeof Icon !== 'string' ? (
+              typeof href === "string" &&
+              href.startsWith("https://") &&
+              typeof Icon !== "string" ? (
                 <a
                   key={label as string}
                   href={href}
