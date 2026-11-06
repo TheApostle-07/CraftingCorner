@@ -66,7 +66,8 @@ export default function LeadCapture() {
         onClick={() => openDialog(dialog.current)}
         className="site-button"
       >
-        Request a callback <ArrowUpRight size={17} aria-hidden="true" />
+        Request a callback{' '}
+        <ArrowUpRight size={17} className="site-arrow" aria-hidden="true" />
       </button>
       <dialog
         id={id}

@@ -21,9 +21,20 @@ export default function Photo({
   sizes = '(max-width: 640px) 100vw, 50vw',
 }: Props) {
   const [failedSrc, setFailedSrc] = useState('');
+  const [retrySrc, setRetrySrc] = useState('');
   const small = src?.includes('/images/real/large/')
     ? src.replace('/large/', '/small/')
     : '';
+  const responsive = small && retrySrc !== src;
+
+  function recoverImage(image: HTMLImageElement) {
+    if (responsive && image.currentSrc !== image.src) {
+      setRetrySrc(src);
+    } else {
+      setFailedSrc(src);
+    }
+  }
+
   if (!src || failedSrc === src)
     return (
       <div
@@ -39,7 +50,7 @@ export default function Photo({
     );
   return (
     <picture className={`block overflow-hidden bg-[#eee8df] ${className}`}>
-      {small ? (
+      {responsive ? (
         <source
           srcSet={`${small} 600w, ${src} 1333w`}
           sizes={sizes}
@@ -47,6 +58,11 @@ export default function Photo({
         />
       ) : null}
       <img
+        key={responsive ? 'responsive' : 'original'}
+        ref={(image) => {
+          // A server-rendered image can fail before React attaches onError.
+          if (image?.complete && image.naturalWidth === 0) recoverImage(image);
+        }}
         src={src}
         alt={alt}
         width={1333}
@@ -54,7 +70,7 @@ export default function Photo({
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding="async"
-        onError={() => setFailedSrc(src)}
+        onError={({ currentTarget }) => recoverImage(currentTarget)}
         className={`h-full w-full ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
         style={{ objectPosition: position }}
       />

@@ -14,7 +14,7 @@ export default async function ContactPage() {
   return (
     <div className="site-container pb-14 pt-9 sm:pb-20 sm:pt-14">
       <section className="grid items-center gap-9 md:grid-cols-2 lg:gap-16">
-        <div className="text-center md:text-start">
+        <div className="site-enter min-w-0 text-center md:text-start">
           <p className="eyebrow">Visit & connect</p>
           <h1 className="mt-4 text-balance font-display text-[clamp(2.6rem,5.7vw,4.5rem)] font-normal leading-[1.05]">
             Your space. Let’s talk about it.
@@ -65,13 +65,13 @@ export default async function ContactPage() {
         <Photo
           src="/images/real/large/DSC00391.webp"
           alt="Classic seating in the Crafting Corner Mohali showroom"
-          className="mx-auto aspect-[4/5] w-full max-w-[480px] rounded-b-2xl rounded-t-[clamp(4rem,11vw,7rem)] md:aspect-[2/3]"
+          className="site-enter-photo mx-auto aspect-[4/5] w-full max-w-[480px] rounded-b-2xl rounded-t-[clamp(4rem,11vw,7rem)] md:aspect-[2/3]"
           fit="cover"
           priority
         />
       </section>
       <section className="mt-14 grid items-center gap-8 rounded-2xl border border-[#ded3c5] bg-white/50 p-5 sm:mt-20 sm:p-10 md:grid-cols-2 lg:gap-14">
-        <div className="text-center md:text-start">
+        <div data-reveal className="min-w-0 text-center md:text-start">
           <p className="eyebrow">Start a conversation</p>
           <h2 className="mt-3 text-balance font-display text-4xl font-normal leading-tight">
             Tell us what you have in mind.

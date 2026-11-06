@@ -4,6 +4,7 @@ import BlogImage from "./BlogImage";
 import JournalSearch from "./JournalSearch";
 import { listPublicArticles, getBlogTaxonomy } from "@/lib/blog/service";
 import { blogDatabaseConfigured } from "@/lib/blog/db";
+import { firstSearchParam, type SearchParam } from "@/lib/searchParams";
 export default async function BlogListing({
   title = "Journal & inspiration",
   description = "Thoughtful ideas for the way you live. Explore furniture, materials and spaces, one considered detail at a time.",
@@ -14,30 +15,27 @@ export default async function BlogListing({
   description?: string;
   query?: {
     page?: number;
-    q?: string;
+    q?: SearchParam;
     category?: string;
     tag?: string;
     author?: string;
   };
   base?: string;
 }) {
-  const result = await listPublicArticles(query);
+  const q = firstSearchParam(query.q).slice(0, 200);
+  const result = await listPublicArticles({ ...query, q });
   const options = blogDatabaseConfigured()
     ? await getBlogTaxonomy().catch(() => null)
     : null;
   const featured =
-    !query.q &&
-    !query.category &&
-    !query.tag &&
-    !query.author &&
-    result.page === 1
+    !q && !query.category && !query.tag && !query.author && result.page === 1
       ? result.articles.find((a) => a.featured)
       : null;
   const articles = featured
     ? result.articles.filter((a) => a.id !== featured.id)
     : result.articles;
   const params = new URLSearchParams();
-  if (query.q) params.set("q", query.q);
+  if (q) params.set("q", q);
   const pageHref = (page: number) => {
     const p = new URLSearchParams(params);
     if (page > 1) p.set("page", String(page));
@@ -45,17 +43,19 @@ export default async function BlogListing({
   };
   return (
     <div className="site-container pb-20 pt-12 sm:pt-16">
-      <div className="mb-10 max-w-2xl">
+      <div className="site-enter mx-auto mb-9 max-w-2xl text-center">
         <p className="eyebrow">The Crafting Corner journal</p>
-        <h1 className="mt-4 break-words font-display text-[clamp(2.5rem,5vw,4rem)] font-normal leading-[1.08]">
+        <h1 className="mt-4 break-words text-balance font-display text-[clamp(2.5rem,5vw,4rem)] font-normal leading-[1.08]">
           {title}
         </h1>
-        <p className="mt-5 text-base leading-8 text-[#746354]">{description}</p>
+        <p className="mx-auto mt-4 max-w-xl text-pretty text-sm leading-7 text-[#746354] sm:text-base">
+          {description}
+        </p>
       </div>
-      <JournalSearch base={base} query={query.q || ""} />
+      <JournalSearch base={base} query={q} />
       <nav
         aria-label="Journal categories"
-        className="mb-10 flex max-w-full flex-wrap gap-2"
+        className="mb-10 flex max-w-full flex-wrap justify-center gap-2"
       >
         <Link href="/blog" className="journal-filter">
           All stories
@@ -70,17 +70,20 @@ export default async function BlogListing({
           </Link>
         ))}
       </nav>
-      {query.q ? (
-        <p className="mb-8 text-sm text-[#746354]">
+      {q ? (
+        <p className="mb-8 break-words text-center text-sm text-[#746354]">
           {result.total} {result.total === 1 ? "story" : "stories"} matching “
-          {query.q}”.{" "}
+          {q}”.{" "}
           <Link href={base} className="underline">
             Clear search
           </Link>
         </p>
       ) : null}
       {featured ? (
-        <section className="mb-14 grid gap-8 rounded-2xl border border-[#ded3c5] p-5 sm:p-8 md:grid-cols-[1fr_0.9fr]">
+        <section
+          data-reveal
+          className="mb-14 grid gap-8 rounded-2xl border border-[#ded3c5] p-5 sm:p-8 md:grid-cols-2"
+        >
           <Link href={`/blog/${featured.slug}`}>
             <BlogImage
               src={featured.cover?.url}
@@ -91,9 +94,9 @@ export default async function BlogListing({
               className="aspect-[4/3] w-full rounded-xl bg-[#eee8df] object-contain"
             />
           </Link>
-          <div className="self-center">
+          <div className="min-w-0 self-center text-center md:text-start">
             <p className="eyebrow">Featured story · {featured.category.name}</p>
-            <h2 className="mt-4 font-display text-4xl font-normal leading-tight">
+            <h2 className="mt-4 break-words text-balance font-display text-4xl font-normal leading-tight">
               <Link href={`/blog/${featured.slug}`}>{featured.title}</Link>
             </h2>
             <p className="mt-5 text-sm leading-7 text-[#746354]">
@@ -116,7 +119,7 @@ export default async function BlogListing({
           <h2 className="font-display text-3xl font-normal">
             {result.unavailable
               ? "The journal is taking a moment."
-              : query.q
+              : q
                 ? "No matching stories yet."
                 : "A little inspiration is on its way."}
           </h2>

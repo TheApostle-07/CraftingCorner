@@ -35,6 +35,8 @@ export default function HomeClient({
   const productBySlug = new Map(
     products.map((product) => [product.slug, product]),
   );
+  const showRooms =
+    homepage.sections.browseCategories.visible && categories.length > 0;
   const shelves = [
     homepage.sections.bestSellers,
     homepage.sections.featured,
@@ -43,7 +45,7 @@ export default function HomeClient({
   ];
   return (
     <>
-      <Hero data={homepage.hero} />
+      <Hero data={homepage.hero} showRooms={showRooms} />
       <div className="border-y border-[#ded3c5] bg-[#eee7dc]/40">
         <div className="site-container grid grid-cols-1 gap-3 py-5 text-center text-xs tracking-wide text-[#6c5a49] sm:grid-cols-3">
           <span>Furniture for spaces that feel like you</span>
@@ -51,17 +53,14 @@ export default function HomeClient({
           <span>Personal guidance, from first enquiry</span>
         </div>
       </div>
-      {homepage.sections.browseCategories.visible && categories.length ? (
-        <section
-          id="categories"
-          className="site-container section-space"
-        >
+      {showRooms ? (
+        <section id="categories" className="site-container section-space">
           <SectionHeading
             label="Rooms & inspiration"
             title={homepage.sections.browseCategories.heading}
             text="Different rooms. The same attention to character."
           />
-          <div className="grid grid-cols-2 gap-x-4 gap-y-7 lg:grid-cols-4 lg:gap-6">
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-7 lg:gap-x-6">
             {order(
               categories,
               homepage.sections.browseCategories.categoryOrder,
@@ -69,17 +68,21 @@ export default function HomeClient({
               <Link
                 key={category.slug}
                 href={`/${category.slug}`}
-                className="group min-w-0"
+                className="site-photo-link min-w-0 basis-[calc((100%-1rem)/2)] lg:basis-[calc((100%-4.5rem)/4)]"
               >
                 <Photo
                   src={category.image}
                   alt={category.alt || category.title}
-                  className="aspect-[2/3] w-full rounded-xl transition-transform duration-300 motion-safe:group-hover:-translate-y-1"
+                  className="site-photo-zoom aspect-[2/3] w-full rounded-xl"
                   sizes="(max-width: 1023px) 50vw, 25vw"
                 />
-                <span className="mt-4 flex items-center justify-between gap-2 font-display text-xl text-[#423022] sm:text-2xl">
-                  {category.title}
-                  <ArrowUpRight size={16} className="shrink-0" />
+                <span className="mt-4 flex min-h-10 items-start justify-between gap-2 font-display text-xl leading-tight text-[#423022] sm:text-2xl">
+                  <span className="min-w-0 break-words">{category.title}</span>
+                  <ArrowUpRight
+                    size={16}
+                    className="site-arrow mt-1 shrink-0"
+                    aria-hidden="true"
+                  />
                 </span>
               </Link>
             ))}
@@ -94,7 +97,10 @@ export default function HomeClient({
         />
       ))}
       <section className="bg-[#eee7dc]/55 py-16 sm:py-24">
-        <div className="site-container grid items-center gap-10 md:grid-cols-2 md:gap-20">
+        <div
+          data-reveal
+          className="site-container grid items-center gap-9 md:grid-cols-2 md:gap-16"
+        >
           <div className="grid grid-cols-2 items-center gap-4">
             <Photo
               src="/images/real/large/DSC00415.webp"
@@ -118,7 +124,12 @@ export default function HomeClient({
               closer look and find the details you connect with.
             </p>
             <Link href="/about" className="site-button mt-7">
-              Discover Crafting Corner <ArrowUpRight size={17} />
+              Discover Crafting Corner{' '}
+              <ArrowUpRight
+                size={17}
+                className="site-arrow"
+                aria-hidden="true"
+              />
             </Link>
           </div>
         </div>
@@ -137,15 +148,15 @@ export default function HomeClient({
               <Link
                 key={type.slug}
                 href={`/products?type=${type.slug}`}
-                className="group min-w-0 basis-[calc((100%-1.25rem)/2)] text-center sm:basis-[calc((100%-2.5rem)/3)] lg:basis-[calc((100%-5rem)/5)]"
+                className="site-photo-link group min-w-0 basis-[calc((100%-1.25rem)/2)] text-center sm:basis-[calc((100%-2.5rem)/3)] lg:basis-[calc((100%-5rem)/5)]"
               >
                 <Photo
                   src={type.image}
                   alt={type.name}
-                  className="aspect-[2/3] rounded-xl"
+                  className="site-photo-zoom aspect-[2/3] rounded-xl"
                   sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
                 />
-                <span className="mt-3 block text-sm leading-6 text-walnut group-hover:underline">
+                <span className="mt-3 block break-words text-sm leading-6 text-walnut group-hover:underline">
                   {type.name}
                 </span>
               </Link>
@@ -208,7 +219,7 @@ export default function HomeClient({
       ) : null}
       <section className="site-container section-space">
         <div className="grid justify-items-center gap-6 rounded-2xl border border-[#ded3c5] bg-[#efe6da] px-5 py-9 text-center sm:px-10 sm:py-12">
-          <div>
+          <div data-reveal>
             <p className="eyebrow">Make room for something personal</p>
             <h2 className="mt-3 text-balance font-display text-3xl font-normal leading-tight sm:text-4xl">
               Let’s find the right piece for your space.
@@ -234,18 +245,16 @@ function SectionHeading({
   text?: string;
 }) {
   return (
-    <div className="mb-8 text-center sm:mb-10 md:text-start">
-      <div>
-        <p className="eyebrow">{label}</p>
-        <h2 className="mt-3 text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight text-[#38291f]">
-          {title}
-        </h2>
-        {text ? (
-          <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-7 text-[#746354] md:mx-0">
-            {text}
-          </p>
-        ) : null}
-      </div>
+    <div data-reveal className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
+      <p className="eyebrow">{label}</p>
+      <h2 className="mt-3 break-words text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight text-[#38291f]">
+        {title}
+      </h2>
+      {text ? (
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-7 text-[#746354]">
+          {text}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -262,18 +271,22 @@ function Shelf({
   if (!section.visible || !selected.length) return null;
   return (
     <section className="site-container section-space">
-      <div className="mb-8 flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-start">
-        <div>
+      <div
+        data-reveal
+        className="mb-8 flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-start"
+      >
+        <div className="min-w-0">
           <p className="eyebrow">From the collection</p>
-          <h2 className="mt-3 text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight">
+          <h2 className="mt-3 break-words text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight">
             {section.heading}
           </h2>
         </div>
         <Link
           href="/products"
-          className="flex min-h-11 items-center gap-2 border-b border-[#bda78f] text-sm text-walnut"
+          className="site-link flex min-h-11 shrink-0 items-center gap-2 border-b border-[#bda78f] text-sm text-walnut"
         >
-          View collection <ArrowUpRight size={16} />
+          View collection{' '}
+          <ArrowUpRight size={16} className="site-arrow" aria-hidden="true" />
         </Link>
       </div>
       <div className="product-grid">

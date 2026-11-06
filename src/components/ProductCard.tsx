@@ -17,34 +17,46 @@ export default function ProductCard(product: ProductCardProps) {
   const gallery = productGallery(product);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const cover = gallery[0];
+  const photograph = gallery[active] || cover;
   const dialog = useRef<HTMLDialogElement>(null);
+  const quickView = useRef<HTMLButtonElement>(null);
   const details = `/products/${slug}`;
   useEffect(() => {
     if (!open) return;
     const element = dialog.current;
-    const previousFocus = document.activeElement as HTMLElement | null;
-    const previous = document.body.style.overflow;
+    const trigger = quickView.current;
     element?.showModal();
-    document.body.style.overflow = 'hidden';
     return () => {
       element?.close();
-      document.body.style.overflow = previous;
-      previousFocus?.focus({ preventScroll: true });
+      trigger?.focus({ preventScroll: true });
     };
   }, [open]);
+
+  function changePhoto(direction: number) {
+    setActive((index) => (index + direction + gallery.length) % gallery.length);
+  }
+
   return (
     <>
-      <article className="catalogue-card group flex h-full min-w-0 flex-col">
+      <article className="catalogue-card flex min-w-0 flex-col">
         <div className="relative overflow-hidden rounded-2xl bg-[#eee8df]">
-          <Link href={details} aria-label={`View ${title}`} className="block">
+          <Link
+            href={details}
+            aria-label={`View ${title}`}
+            className="site-photo-link block focus-visible:outline-offset-[-3px]"
+          >
             <Photo
-              src={gallery[0]}
-              alt={product.images?.[0]?.alt || title}
-              className="aspect-[2/3] w-full transition-transform duration-500 motion-safe:group-hover:scale-[1.025]"
+              src={cover}
+              alt={
+                product.images?.find(({ url }) => url === cover)?.alt || title
+              }
+              className="site-photo-zoom aspect-[2/3] w-full"
               sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
             />
           </Link>
           <button
+            ref={quickView}
             type="button"
             aria-label={`Quick view ${title}`}
             aria-haspopup="dialog"
@@ -61,13 +73,13 @@ export default function ProductCard(product: ProductCardProps) {
           <p className="eyebrow mb-2">
             {product.tags?.[0] || 'The collection'}
           </p>
-          <h3 className="line-clamp-2 min-h-[3.4rem] font-display text-[1.65rem] font-normal leading-[1.1] text-[#34271e]">
+          <h3 className="line-clamp-2 min-h-[3.4rem] break-words font-display text-[1.65rem] font-normal leading-[1.1] text-[#34271e]">
             <Link href={details}>{title}</Link>
           </h3>
           <p className="mt-3 line-clamp-2 min-h-[2.75rem] text-sm leading-[1.6] text-[#726354]">
             {shortDescription || description}
           </p>
-          <div className="mt-4 flex flex-wrap items-baseline justify-between gap-2">
+          <div className="mt-4 flex flex-wrap items-baseline justify-between gap-2 pb-5">
             <p className="text-base font-medium text-[#4c3728]">
               {productPrice(product)}
             </p>
@@ -79,9 +91,14 @@ export default function ProductCard(product: ProductCardProps) {
           </div>
           <Link
             href={details}
-            className="mt-5 flex min-h-12 items-center justify-between border-t border-[#ddd2c4] text-sm font-medium text-walnut transition hover:text-charcoal"
+            className="site-link mt-auto flex min-h-12 items-center justify-between gap-2 border-t border-[#ddd2c4] text-sm text-walnut transition-colors hover:text-charcoal"
           >
-            Discover this piece <ArrowUpRight size={18} />
+            Discover this piece{' '}
+            <ArrowUpRight
+              size={18}
+              className="site-arrow shrink-0"
+              aria-hidden="true"
+            />
           </Link>
         </div>
       </article>
@@ -94,7 +111,16 @@ export default function ProductCard(product: ProductCardProps) {
           onClick={(event) => {
             if (event.target === event.currentTarget) setOpen(false);
           }}
-          className="quick-dialog rounded-2xl border border-[#e0d4c5] bg-[#fffdf8] p-0 text-charcoal shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+          onKeyDown={(event) => {
+            if (
+              gallery.length < 2 ||
+              (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')
+            )
+              return;
+            event.preventDefault();
+            changePhoto(event.key === 'ArrowLeft' ? -1 : 1);
+          }}
+          className="quick-dialog rounded-2xl border border-[#e0d4c5] bg-[#fffdf8] p-0 text-charcoal shadow-2xl"
         >
           <div className="relative grid sm:grid-cols-2">
             <button
@@ -108,28 +134,34 @@ export default function ProductCard(product: ProductCardProps) {
             </button>
             <div className="relative bg-[#eee8df]">
               <Photo
-                src={gallery[active]}
-                alt={product.images?.[active]?.alt || title}
-                className="h-[min(48dvh,440px)] w-full sm:h-full sm:min-h-[480px]"
+                src={photograph}
+                alt={
+                  product.images?.find(({ url }) => url === photograph)?.alt ||
+                  title
+                }
+                className="h-[min(48dvh,440px)] w-full sm:h-full sm:min-h-[min(68dvh,480px)]"
               />
               {gallery.length > 1 ? (
                 <div className="absolute inset-x-4 bottom-4 flex items-center justify-between">
                   <button
+                    type="button"
                     aria-label="Previous photograph"
-                    onClick={() =>
-                      setActive((active - 1 + gallery.length) % gallery.length)
-                    }
-                    className="grid h-11 w-11 place-items-center rounded-full bg-white/95"
+                    onClick={() => changePhoto(-1)}
+                    className="grid h-11 w-11 place-items-center rounded-full bg-white/95 transition-colors hover:bg-ivory"
                   >
                     <ChevronLeft size={18} />
                   </button>
-                  <span className="rounded-full bg-white/95 px-3 py-2 text-xs">
+                  <span
+                    role="status"
+                    className="rounded-full bg-white/95 px-3 py-2 text-xs"
+                  >
                     {active + 1} / {gallery.length}
                   </span>
                   <button
+                    type="button"
                     aria-label="Next photograph"
-                    onClick={() => setActive((active + 1) % gallery.length)}
-                    className="grid h-11 w-11 place-items-center rounded-full bg-white/95"
+                    onClick={() => changePhoto(1)}
+                    className="grid h-11 w-11 place-items-center rounded-full bg-white/95 transition-colors hover:bg-ivory"
                   >
                     <ChevronRight size={18} />
                   </button>
@@ -140,7 +172,7 @@ export default function ProductCard(product: ProductCardProps) {
               <p className="eyebrow">A closer look</p>
               <h2
                 id={`quick-title-${slug}`}
-                className="mt-4 font-display text-3xl font-normal leading-tight sm:text-4xl"
+                className="mt-4 break-words text-balance font-display text-3xl font-normal leading-tight sm:text-4xl"
               >
                 {title}
               </h2>
@@ -160,7 +192,12 @@ export default function ProductCard(product: ProductCardProps) {
                 onClick={() => setOpen(false)}
                 className="site-button mt-7"
               >
-                View details & enquire <ArrowUpRight size={17} />
+                View details & enquire{' '}
+                <ArrowUpRight
+                  size={17}
+                  className="site-arrow"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </div>

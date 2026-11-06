@@ -4,7 +4,8 @@ import Footer from "@/components/Footer";
 import FloatingWhatsapp from "@/components/FloatingWhatsapp";
 import Header from "@/components/Header";
 import PaymentPendingExperience from "@/components/PaymentPendingExperience";
-import { loadFooterData, loadSiteData } from "@/lib/loaders.server";
+import SiteReveal from "@/components/SiteReveal";
+import { readPublicContent } from "@/lib/adminContent.server";
 import { getSiteStatus } from "@/lib/siteStatus";
 import { absoluteUrl, jsonLd } from "@/lib/seo";
 
@@ -19,10 +20,15 @@ export default async function SiteLayout({
   if (!status.active) {
     return <PaymentPendingExperience />;
   }
-  const [siteData, footerData] = await Promise.all([
-    loadSiteData(),
-    loadFooterData(),
-  ]);
+  const {
+    site: siteData,
+    footer: footerData,
+    homepage,
+    categories,
+  } = await readPublicContent();
+  const showRooms =
+    homepage.sections.browseCategories.visible &&
+    categories.some((category) => category.visibility !== "draft");
 
   return (
     <>
@@ -56,10 +62,11 @@ export default async function SiteLayout({
           }),
         }}
       />
-      <Header />
+      <Header showRooms={showRooms} />
       <main id="main-content" className="min-h-screen">
         {children}
       </main>
+      <SiteReveal />
       <Footer footer={footerData} site={siteData} />
       {siteData.whatsapp.enabled ? (
         <FloatingWhatsapp

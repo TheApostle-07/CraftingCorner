@@ -31,7 +31,11 @@ export default function JournalSearch({
     setValue(query);
   }, [query]);
   return (
-    <form action={base} role="search" className="mb-6 flex flex-wrap gap-3">
+    <form
+      action={base}
+      role="search"
+      className="mx-auto mb-6 grid max-w-xl grid-cols-[minmax(0,1fr)_auto] gap-3"
+    >
       <label className="sr-only" htmlFor="journal-search">
         Search journal
       </label>
@@ -43,16 +47,12 @@ export default function JournalSearch({
         type="search"
         maxLength={200}
         placeholder="Search stories, materials or ideas"
-        className="blog-input min-w-0 max-w-xl flex-1 font-normal"
+        className="blog-input min-w-0 font-normal"
       />
-      <button className="site-button shrink-0" type="submit">
+      <button className="site-button px-4 sm:px-6" type="submit">
         Search
       </button>
-      <span
-        role="status"
-        aria-live="polite"
-        className="self-center text-xs text-[#796650]"
-      >
+      <span role="status" aria-live="polite" className="sr-only">
         {pending ? "Searching…" : ""}
       </span>
     </form>

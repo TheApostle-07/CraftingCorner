@@ -8,21 +8,19 @@ export const metadata = {
 export default function About() {
   return (
     <div className="site-container pb-16 pt-10">
-      <section className="grid items-center gap-10 md:grid-cols-2 md:gap-20">
-        <div>
+      <section className="grid items-center gap-9 md:grid-cols-2 lg:gap-16">
+        <div className="site-enter min-w-0 text-center md:text-start">
           <p className="eyebrow">Our story</p>
-          <h1 className="mt-5 font-display text-5xl font-normal leading-[1.05] sm:text-6xl">
-            Furniture with character.
-            <br />
-            Spaces with a story.
+          <h1 className="mt-4 text-balance font-display text-[clamp(2.5rem,5.7vw,4rem)] font-normal leading-[1.08]">
+            Furniture with character. Spaces with a story.
           </h1>
-          <p className="mt-6 text-sm leading-8 text-[#746354]">
+          <p className="mx-auto mt-5 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             Crafting Corner brings together furniture and decorative pieces for
             spaces that feel personal. From sculptural accents to classic
             silhouettes, our Mohali showroom is a place to explore, look closely
             and find your own point of view.
           </p>
-          <p className="mt-4 text-sm leading-8 text-[#746354]">
+          <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             See the pieces in their setting, consider the details, and speak
             with our team about what works for your room.
           </p>
@@ -33,24 +31,27 @@ export default function About() {
         <Photo
           src="/images/real/large/DSC00391.webp"
           alt="The Crafting Corner showroom with classic cream and gold-tone seating"
-          className="aspect-[2/3] rounded-t-[7rem] rounded-b-2xl"
+          className="site-enter-photo mx-auto aspect-[4/5] w-full max-w-[480px] rounded-b-2xl rounded-t-[clamp(4rem,11vw,7rem)] md:aspect-[2/3]"
+          fit="cover"
           priority
         />
       </section>
-      <section className="section-space grid items-center gap-10 md:grid-cols-2 md:gap-20">
+      <section
+        data-reveal
+        className="section-space grid items-center gap-9 md:grid-cols-2 lg:gap-16"
+      >
         <Photo
           src="/images/real/large/DSC00056.webp"
           alt="Seating and tables arranged in the Crafting Corner showroom"
-          className="aspect-[2/3] rounded-2xl"
+          className="mx-auto aspect-[4/5] w-full max-w-[480px] rounded-2xl md:aspect-[2/3]"
+          fit="cover"
         />
-        <div>
+        <div className="min-w-0 text-center md:text-start">
           <p className="eyebrow">A personal approach</p>
-          <h2 className="mt-5 font-display text-4xl font-normal">
-            Start with your space.
-            <br />
-            Take time with the details.
+          <h2 className="mt-4 text-balance font-display text-4xl font-normal leading-tight">
+            Start with your space. Take time with the details.
           </h2>
-          <p className="mt-5 text-sm leading-8 text-[#746354]">
+          <p className="mx-auto mt-5 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             Bring a few room photographs, measurements or an idea you have been
             thinking about. Our team can help you explore the collection and
             discuss the finish, proportions and availability of the pieces you
@@ -62,10 +63,12 @@ export default function About() {
         </div>
       </section>
       <section className="section-space">
-        <p className="eyebrow text-center">A closer look</p>
-        <h2 className="mb-9 mt-4 text-center font-display text-4xl font-normal">
-          Texture. Form. Finishing touches.
-        </h2>
+        <div data-reveal className="mb-9 text-center">
+          <p className="eyebrow">A closer look</p>
+          <h2 className="mt-4 text-balance font-display text-4xl font-normal leading-tight">
+            Texture. Form. Finishing touches.
+          </h2>
+        </div>
         <div className="grid grid-cols-3 gap-3 sm:gap-6">
           {[
             ['DSC00415', 'Carved detailing'],

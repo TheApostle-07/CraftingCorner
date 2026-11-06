@@ -31,12 +31,12 @@ export default async function CategoryPage({ params }: Props) {
   return (
     <div className="site-container pb-20 pt-10">
       <section className="mb-14 grid items-center gap-8 rounded-2xl bg-[#eee7dc]/70 p-6 sm:p-10 md:grid-cols-[1fr_280px]">
-        <div>
+        <div className="site-enter min-w-0 text-center md:text-start">
           <p className="eyebrow">Rooms & inspiration</p>
-          <h1 className="mt-4 font-display text-5xl font-normal sm:text-6xl">
+          <h1 className="mt-4 break-words text-balance font-display text-[clamp(2.5rem,6vw,3.75rem)] font-normal leading-[1.08]">
             {cat.title}
           </h1>
-          <p className="mt-5 max-w-lg text-sm leading-7 text-[#746354]">
+          <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             {cat.subtitle}
           </p>
           <Link
@@ -49,7 +49,7 @@ export default async function CategoryPage({ params }: Props) {
         <Photo
           src={cat.image}
           alt={cat.alt || cat.title}
-          className="mx-auto aspect-[2/3] w-full max-w-[280px] rounded-t-[5rem] rounded-b-xl"
+          className="site-enter-photo mx-auto aspect-[2/3] w-full max-w-[280px] rounded-b-xl rounded-t-[5rem]"
           priority
         />
       </section>

@@ -2,10 +2,11 @@ import { notFound } from "next/navigation";
 import BlogListing from "@/components/blog/BlogListing";
 import { getBlogOptions, listPublicArticles } from "@/lib/blog/service";
 import { pageMetadata } from "@/lib/seo";
+import { searchPage, type SearchParam } from "@/lib/searchParams";
 export const dynamic = "force-dynamic";
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{ q?: SearchParam; page?: SearchParam }>;
 };
 export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
@@ -33,7 +34,7 @@ export default async function CategoryBlog({ params, searchParams }: Props) {
     <BlogListing
       title={category.name}
       description={category.description}
-      query={{ category: slug, q: query.q, page: Number(query.page) || 1 }}
+      query={{ category: slug, q: query.q, page: searchPage(query.page) }}
       base={`/blog/category/${slug}`}
     />
   );

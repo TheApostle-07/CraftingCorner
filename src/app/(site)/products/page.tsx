@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
+import { firstSearchParam, type SearchParam } from '@/lib/searchParams';
 import {
   loadAllProducts,
   loadCategories,
@@ -14,9 +15,19 @@ export const metadata = {
 export default async function ProductsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ type?: string; category?: string; q?: string }>;
+  searchParams: Promise<{
+    type?: SearchParam;
+    category?: SearchParam;
+    q?: SearchParam;
+  }>;
 }) {
-  const query = await searchParams;
+  const params = await searchParams;
+  const query = {
+    type: firstSearchParam(params.type),
+    category: firstSearchParam(params.category),
+    q: firstSearchParam(params.q).slice(0, 150),
+  };
+  const term = query.q.toLowerCase();
   const [products, categories, types] = await Promise.all([
     loadAllProducts(),
     loadCategories(),
@@ -33,26 +44,29 @@ export default async function ProductsPage({
           ? p.productTypeSlug === type.slug
           : p.categorySlug === query.type)) &&
       (!query.category || p.categorySlug === query.category) &&
-      (!query.q ||
+      (!term ||
         `${p.title} ${p.shortDescription} ${p.tags?.join(' ')}`
           .toLowerCase()
-          .includes(query.q.trim().toLowerCase())),
+          .includes(term)),
   );
   return (
     <div className="site-container pb-20 pt-10 sm:pt-16">
-      <div className="mb-9 max-w-2xl">
+      <div className="site-enter mx-auto mb-9 max-w-2xl text-center">
         <p className="eyebrow">Explore Crafting Corner</p>
-        <h1 className="mt-4 font-display text-5xl font-normal sm:text-6xl">
+        <h1 className="mt-4 break-words text-balance font-display text-[clamp(2.5rem,6vw,3.75rem)] font-normal leading-[1.08]">
           {type?.name || category?.title || 'The collection'}
         </h1>
-        <p className="mt-5 text-sm leading-7 text-[#746354]">
+        <p className="mx-auto mt-4 max-w-xl text-pretty text-sm leading-7 text-[#746354]">
           Real pieces, photographed in our showroom. Explore the forms and
           finishes, then speak with us for a final quotation.
         </p>
       </div>
       <form
+        key={JSON.stringify(query)}
         action="/products"
-        className="mb-6 grid gap-3 rounded-xl border border-[#ded3c5] bg-white/50 p-4 sm:grid-cols-[1fr_1fr_auto]"
+        role="search"
+        aria-label="Furniture collection"
+        className="mb-6 grid gap-4 rounded-xl border border-[#ded3c5] bg-white/50 p-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]"
       >
         {query.type ? (
           <input type="hidden" name="type" value={query.type} />
@@ -61,7 +75,7 @@ export default async function ProductsPage({
           Search the collection
           <input
             name="q"
-            defaultValue={query.q || ''}
+            defaultValue={query.q}
             type="search"
             placeholder="Search pieces or details"
             maxLength={150}
@@ -72,7 +86,7 @@ export default async function ProductsPage({
           Room
           <select
             name="category"
-            defaultValue={query.category || ''}
+            defaultValue={query.category}
             className="mt-2 min-h-12 w-full rounded-lg border border-[#ded3c5] bg-white px-3 text-base text-charcoal"
           >
             <option value="">All rooms</option>
@@ -89,7 +103,7 @@ export default async function ProductsPage({
           Find pieces
         </button>
       </form>
-      <div className="mb-8 flex flex-wrap items-center gap-x-5 gap-y-3 text-xs text-[#746354]">
+      <div className="mb-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-xs text-[#746354] sm:justify-start">
         <span>
           {filtered.length} {filtered.length === 1 ? 'piece' : 'pieces'}
         </span>

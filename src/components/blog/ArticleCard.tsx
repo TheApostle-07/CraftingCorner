@@ -6,11 +6,15 @@ import { readingMinutes } from "@/lib/blog/content";
 export default function ArticleCard({ article }: { article: PublicArticle }) {
   return (
     <article className="flex min-w-0 flex-col">
-      <Link href={`/blog/${article.slug}`} aria-label={article.title}>
+      <Link
+        href={`/blog/${article.slug}`}
+        aria-label={article.title}
+        className="site-photo-link"
+      >
         <Photo
           src={article.cover?.url || ""}
           alt={article.coverAlt}
-          className="aspect-[4/3] rounded-xl"
+          className="site-photo-zoom aspect-[4/3] rounded-xl"
           fit="contain"
           sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw"
         />
@@ -28,9 +32,14 @@ export default function ArticleCard({ article }: { article: PublicArticle }) {
         </p>
         <Link
           href={`/blog/${article.slug}`}
-          className="mt-auto flex min-h-14 items-center justify-between border-b border-[#ded3c5] pt-5 text-sm text-walnut"
+          className="site-link mt-auto flex min-h-14 items-center justify-between gap-2 border-b border-[#ded3c5] pt-5 text-sm text-walnut"
         >
-          Read the story <ArrowUpRight size={17} />
+          Read the story{" "}
+          <ArrowUpRight
+            size={17}
+            className="site-arrow shrink-0"
+            aria-hidden="true"
+          />
         </Link>
       </div>
     </article>

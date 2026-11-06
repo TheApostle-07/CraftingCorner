@@ -6,18 +6,21 @@ export default async function HomeJournal() {
   if (!result.articles.length) return null;
   return (
     <section className="site-container section-space">
-      <div className="mb-9 flex flex-wrap items-end justify-between gap-5">
+      <div
+        data-reveal
+        className="mb-9 flex flex-col items-center gap-4 text-center md:flex-row md:items-end md:justify-between md:text-start"
+      >
         <div>
           <p className="eyebrow">The art of living well</p>
-          <h2 className="mt-4 font-display text-4xl font-normal sm:text-5xl">
+          <h2 className="mt-3 text-balance font-display text-4xl font-normal sm:text-5xl">
             Journal &amp; inspiration
           </h2>
-          <p className="mt-4 max-w-xl text-sm leading-7 text-[#746354]">
+          <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             Considered ideas for thoughtful rooms, lasting materials and a home
             that feels your own.
           </p>
         </div>
-        <Link href="/blog" className="journal-filter">
+        <Link href="/blog" className="journal-filter shrink-0">
           Explore the journal
         </Link>
       </div>

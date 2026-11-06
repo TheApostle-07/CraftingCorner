@@ -1,29 +1,31 @@
 import BlogListing from "@/components/blog/BlogListing";
 import { pageMetadata } from "@/lib/seo";
+import {
+  firstSearchParam,
+  searchPage,
+  type SearchParam,
+} from "@/lib/searchParams";
 export const dynamic = "force-dynamic";
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{ q?: SearchParam; page?: SearchParam }>;
 }) {
   const query = await searchParams;
+  const page = searchPage(query.page);
   return pageMetadata(
     "Journal & Inspiration | Crafting Corner",
     "Furniture ideas, buying considerations, materials and thoughtful spaces from Crafting Corner.",
-    `/blog${Number(query.page) > 1 ? "?page=" + Number(query.page) : ""}`,
+    `/blog${page > 1 ? "?page=" + page : ""}`,
     undefined,
-    Boolean(query.q),
+    Boolean(firstSearchParam(query.q)),
   );
 }
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; page?: string }>;
+  searchParams: Promise<{ q?: SearchParam; page?: SearchParam }>;
 }) {
   const query = await searchParams;
-  return (
-    <BlogListing
-      query={{ q: query.q?.slice(0, 200), page: Number(query.page) || 1 }}
-    />
-  );
+  return <BlogListing query={{ q: query.q, page: searchPage(query.page) }} />;
 }
