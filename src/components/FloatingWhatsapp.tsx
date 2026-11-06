@@ -19,15 +19,9 @@ export default function FloatingWhatsapp({ phone, message = '' }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="fixed z-50 flex items-center justify-center rounded-full bg-green-500 shadow-lg
-    transition-transform hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-400
-    bottom-3 right-3 h-12 w-12
-    sm:bottom-6 sm:right-6 sm:h-14 sm:w-14
-    lg:bottom-8 lg:right-8 lg:h-16 lg:w-16
-  "
+      className="fixed bottom-[max(0.75rem,env(safe-area-inset-bottom))] right-[max(0.75rem,env(safe-area-inset-right))] z-40 grid h-12 w-12 place-items-center rounded-full bg-[#216846] text-white shadow-md transition-colors hover:bg-[#185039] sm:bottom-6 sm:right-6 sm:h-[3.25rem] sm:w-[3.25rem]"
     >
-      <FaWhatsapp className="h-7 w-7 text-white" />
-      <span className="sr-only">WhatsApp</span>
+      <FaWhatsapp className="h-6 w-6" aria-hidden="true" />
     </a>
   );
 }

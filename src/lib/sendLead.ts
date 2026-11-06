@@ -1,20 +1,39 @@
+export type LeadKind = 'contact' | 'callback';
+
+type LeadDetails = {
+  kind: LeadKind;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  website: string;
+  submissionId?: string;
+};
+
+const deliveryError =
+  'We couldn’t confirm delivery. Your details are still here. Please try again or use one of our other contact options.';
+
 export async function sendLead(
-  name: string,
-  email: string,
-  phone: string,
-  message = '',
-  website = '',
-) {
+  details: LeadDetails,
+): Promise<{ ok: true } | { ok: false; message: string }> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
     const response = await fetch('/api/enquiry', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, phone, message, website }),
-      signal: AbortSignal.timeout(20000),
+      body: JSON.stringify(details),
+      signal: controller.signal,
     });
     const payload = await response.json();
-    return response.ok && payload.ok === true;
+    if (response.ok && payload?.ok === true) return { ok: true };
+    if (response.status === 400 && typeof payload?.message === 'string') {
+      return { ok: false, message: payload.message };
+    }
   } catch {
-    return false;
+    return { ok: false, message: deliveryError };
+  } finally {
+    clearTimeout(timeout);
   }
+  return { ok: false, message: deliveryError };
 }

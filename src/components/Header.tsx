@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowUpRight } from "lucide-react";
@@ -10,6 +11,22 @@ const links = [
   { href: "/blog", label: "Journal" },
   { href: "/contact", label: "Visit & connect" },
 ];
+
+function BrandLogo({ priority = false }: { priority?: boolean }) {
+  return (
+    <span className="brand-logo">
+      <Image
+        src="/assets/img/crafting-corner-lockup.webp"
+        alt="Crafting Corner"
+        width={480}
+        height={377}
+        priority={priority}
+        className="h-[3.75rem] w-auto lg:h-[4.375rem]"
+      />
+    </span>
+  );
+}
+
 export default function Header() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -38,50 +55,44 @@ export default function Header() {
       >
         Skip to content
       </a>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-[#e1d7c9]/80 bg-[#faf7f1]/95 backdrop-blur-xl">
-        <div className="site-container flex h-20 items-center justify-between gap-5">
+      <header className="sticky top-0 z-50 border-b border-[#d9c8b5] bg-[#faf7f1]/95 backdrop-blur-xl">
+        <div className="site-container site-header-row grid grid-cols-[1fr_auto] items-center gap-3 lg:grid-cols-[1fr_auto_1fr] lg:gap-6">
           <Link
             href="/"
             aria-label="Crafting Corner home"
-            className="leading-none text-[#483424]"
+            className="w-fit rounded-xl"
           >
-            <span className="block font-display text-[1.7rem] font-medium tracking-tight sm:text-3xl">
-              Crafting Corner
-            </span>
-            <span className="mt-1.5 block text-[8px] uppercase tracking-[0.35em] text-[#8b735b]">
-              Furniture & living
-            </span>
+            <BrandLogo priority />
           </Link>
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-7 lg:flex"
+            className="hidden items-center gap-6 lg:flex xl:gap-9"
           >
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 aria-current={pathname === link.href ? "page" : undefined}
-                className="min-h-11 content-center text-[13px] font-normal text-[#66513e] transition hover:text-[#2e2117]"
+                className="site-nav-link"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
-          <Link
-            href="/contact"
-            className="hidden items-center gap-2 rounded-full border border-[#bca48b] px-5 py-2.5 text-xs text-[#523b2b] transition hover:bg-[#eee7dc] sm:inline-flex"
-          >
-            Let’s talk <ArrowUpRight size={15} />
-          </Link>
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            aria-haspopup="dialog"
-            aria-label="Open navigation"
-            className="grid h-11 w-11 place-items-center text-walnut lg:hidden"
-          >
-            <Menu size={22} />
-          </button>
+          <div className="flex items-center gap-3 justify-self-end sm:gap-4">
+            <Link href="/contact" className="header-action hidden sm:inline-flex">
+              Let’s talk <ArrowUpRight size={15} aria-hidden="true" />
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(true)}
+              aria-haspopup="dialog"
+              aria-label="Open navigation"
+              className="header-action inline-flex lg:hidden"
+            >
+              Menu <Menu size={18} aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </header>
       {open ? (
@@ -90,33 +101,42 @@ export default function Header() {
           aria-label="Mobile navigation"
           onCancel={() => setOpen(false)}
           onClose={() => setOpen(false)}
-          className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none bg-[#faf7f1] p-6 text-[#483424]"
+          className="fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none overscroll-contain bg-[#faf7f1] p-0 text-[#483424]"
         >
-          <div className="flex items-center justify-between">
-            <span className="font-display text-2xl">Crafting Corner</span>
+          <div className="site-container site-header-row flex items-center justify-between gap-4 border-b border-[#d9c8b5]">
+            <Link
+              href="/"
+              aria-label="Crafting Corner home"
+              onClick={() => setOpen(false)}
+              className="rounded-xl"
+            >
+              <BrandLogo />
+            </Link>
             <button
               autoFocus
+              type="button"
               aria-label="Close navigation"
               onClick={() => setOpen(false)}
-              className="grid h-12 w-12 place-items-center"
+              className="header-action inline-flex"
             >
-              <X size={24} />
+              Close <X size={18} aria-hidden="true" />
             </button>
           </div>
-          <nav aria-label="Mobile" className="mt-14 flex flex-col gap-4">
+          <nav aria-label="Mobile" className="site-container mx-auto mt-6 flex max-w-lg flex-col">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
+                aria-current={pathname === link.href ? "page" : undefined}
                 onClick={() => setOpen(false)}
-                className="flex min-h-16 items-center justify-between border-b border-[#ded3c5] font-display text-3xl"
+                className="flex min-h-14 items-center justify-between gap-4 border-b border-[#ded3c5] font-display text-3xl font-normal aria-[current=page]:text-walnut"
               >
                 {link.label}
-                <ArrowUpRight size={20} />
+                <ArrowUpRight size={18} aria-hidden="true" />
               </Link>
             ))}
           </nav>
-          <p className="mt-10 text-sm text-[#7c6852]">
+          <p className="site-container mx-auto max-w-lg py-7 text-sm text-[#7c6852]">
             Thoughtful furniture. Personal spaces.
           </p>
         </dialog>

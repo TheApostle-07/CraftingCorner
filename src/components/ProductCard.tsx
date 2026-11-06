@@ -61,7 +61,7 @@ export default function ProductCard(product: ProductCardProps) {
           <p className="eyebrow mb-2">
             {product.tags?.[0] || 'The collection'}
           </p>
-          <h3 className="line-clamp-2 min-h-[3.4rem] font-display text-[1.65rem] font-medium leading-[1.1] text-[#34271e]">
+          <h3 className="line-clamp-2 min-h-[3.4rem] font-display text-[1.65rem] font-normal leading-[1.1] text-[#34271e]">
             <Link href={details}>{title}</Link>
           </h3>
           <p className="mt-3 line-clamp-2 min-h-[2.75rem] text-sm leading-[1.6] text-[#726354]">
@@ -140,7 +140,7 @@ export default function ProductCard(product: ProductCardProps) {
               <p className="eyebrow">A closer look</p>
               <h2
                 id={`quick-title-${slug}`}
-                className="mt-4 font-display text-3xl font-medium leading-tight sm:text-4xl"
+                className="mt-4 font-display text-3xl font-normal leading-tight sm:text-4xl"
               >
                 {title}
               </h2>

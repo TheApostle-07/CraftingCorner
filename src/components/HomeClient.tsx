@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import Hero from './Hero';
+import LeadCapture from './LeadCapture';
 import Photo from './Photo';
 import ProductCard from './ProductCard';
 import type {
@@ -53,7 +54,7 @@ export default function HomeClient({
       {homepage.sections.browseCategories.visible && categories.length ? (
         <section
           id="categories"
-          className="site-container section-space scroll-mt-28"
+          className="site-container section-space"
         >
           <SectionHeading
             label="Rooms & inspiration"
@@ -103,17 +104,15 @@ export default function HomeClient({
             <Photo
               src="/images/real/large/DSC00431.webp"
               alt="Decorative gold-tone furniture leg and upholstery detail"
-              className="mt-16 aspect-[2/3] rounded-xl"
+              className="aspect-[2/3] rounded-b-xl rounded-t-[5rem]"
             />
           </div>
-          <div>
+          <div className="text-center md:text-start">
             <p className="eyebrow">Look a little closer</p>
-            <h2 className="mt-5 font-display text-4xl font-normal leading-tight sm:text-5xl">
-              The details make
-              <br />
-              the difference.
+            <h2 className="mt-4 text-balance font-display text-4xl font-normal leading-tight sm:text-5xl">
+              The details make the difference.
             </h2>
-            <p className="mt-6 max-w-md text-sm leading-8 text-[#746354]">
+            <p className="mx-auto mt-5 max-w-md text-pretty text-sm leading-7 text-[#746354] md:mx-0">
               A curve that catches the light. A carved edge. A finish that
               brings a room together. Our collection invites you to take a
               closer look and find the details you connect with.
@@ -130,7 +129,7 @@ export default function HomeClient({
             label="Shop by shape & purpose"
             title={homepage.sections.browseProducts.heading}
           />
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="flex flex-wrap justify-center gap-5">
             {order(
               productTypes,
               homepage.sections.browseProducts.productTypeOrder,
@@ -138,13 +137,13 @@ export default function HomeClient({
               <Link
                 key={type.slug}
                 href={`/products?type=${type.slug}`}
-                className="group"
+                className="group min-w-0 basis-[calc((100%-1.25rem)/2)] text-center sm:basis-[calc((100%-2.5rem)/3)] lg:basis-[calc((100%-5rem)/5)]"
               >
                 <Photo
                   src={type.image}
                   alt={type.name}
                   className="aspect-[2/3] rounded-xl"
-                  sizes="(max-width: 639px) 50vw, 20vw"
+                  sizes="(max-width: 639px) 50vw, (max-width: 1023px) 33vw, 20vw"
                 />
                 <span className="mt-3 block text-sm leading-6 text-walnut group-hover:underline">
                   {type.name}
@@ -208,20 +207,18 @@ export default function HomeClient({
         </section>
       ) : null}
       <section className="site-container section-space">
-        <div className="grid items-center gap-8 rounded-2xl bg-[#eae0d2] p-6 sm:p-10 md:grid-cols-[1fr_auto]">
+        <div className="grid justify-items-center gap-6 rounded-2xl border border-[#ded3c5] bg-[#efe6da] px-5 py-9 text-center sm:px-10 sm:py-12">
           <div>
             <p className="eyebrow">Make room for something personal</p>
-            <h2 className="mt-4 font-display text-3xl font-normal sm:text-4xl">
+            <h2 className="mt-3 text-balance font-display text-3xl font-normal leading-tight sm:text-4xl">
               Let’s find the right piece for your space.
             </h2>
-            <p className="mt-3 text-sm leading-7 text-[#746354]">
+            <p className="mx-auto mt-3 max-w-lg text-pretty text-sm leading-7 text-[#746354]">
               Visit our showroom or speak with our team about finishes, sizing
               and availability.
             </p>
           </div>
-          <Link href="/contact" className="site-button">
-            Start a conversation <ArrowUpRight size={17} />
-          </Link>
+          <LeadCapture />
         </div>
       </section>
     </>
@@ -237,14 +234,14 @@ function SectionHeading({
   text?: string;
 }) {
   return (
-    <div className="mb-8 flex flex-col justify-between gap-5 sm:mb-10 md:flex-row md:items-end">
+    <div className="mb-8 text-center sm:mb-10 md:text-start">
       <div>
         <p className="eyebrow">{label}</p>
-        <h2 className="mt-3 font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight text-[#38291f]">
+        <h2 className="mt-3 text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight text-[#38291f]">
           {title}
         </h2>
         {text ? (
-          <p className="mt-3 max-w-xl text-sm leading-7 text-[#746354]">
+          <p className="mx-auto mt-3 max-w-xl text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             {text}
           </p>
         ) : null}
@@ -265,10 +262,10 @@ function Shelf({
   if (!section.visible || !selected.length) return null;
   return (
     <section className="site-container section-space">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <div className="mb-8 flex flex-col items-center gap-3 text-center md:flex-row md:items-end md:justify-between md:text-start">
         <div>
           <p className="eyebrow">From the collection</p>
-          <h2 className="mt-3 font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight">
+          <h2 className="mt-3 text-balance font-display text-[clamp(2rem,3.5vw,3rem)] font-normal leading-tight">
             {section.heading}
           </h2>
         </div>

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import localFont from "next/font/local";
 
 import "./globals.css";
 import "./journal.css";
@@ -17,16 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
-const displayFont = Cormorant_Garamond({
-  subsets: ["latin"],
+const displayFont = localFont({
+  src: "./fonts/cormorant-garamond.woff2",
   variable: "--font-display",
-  weight: ["400", "500", "600", "700"],
+  weight: "400 700",
+  adjustFontFallback: "Times New Roman",
 });
 
-const sansFont = Manrope({
-  subsets: ["latin"],
+const sansFont = localFont({
+  src: "./fonts/manrope.woff2",
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "400 800",
 });
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -35,7 +36,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
         <link
           rel="alternate"
           type="application/rss+xml"

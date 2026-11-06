@@ -4,8 +4,19 @@
 
 @layer base {
   html {
+    --site-header-height: 5.25rem;
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
+    scroll-padding-top: calc(var(--site-header-height) + 1rem);
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      --site-header-height: 6rem;
+    }
+  }
+
+  html:has(.lead-dialog[open]) {
+    overflow: hidden;
   }
 
   body {
@@ -31,6 +42,33 @@
   .site-container {
     @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8 lg:px-12;
   }
+  .site-header-row {
+    height: var(--site-header-height);
+  }
+  .brand-logo {
+    @apply relative grid h-[4.5rem] w-28 place-items-center rounded-xl lg:h-[5.125rem] lg:w-[7.875rem];
+    background: linear-gradient(145deg, #413023, #251911);
+    box-shadow: 0 3px 8px rgb(45 31 21 / 15%);
+  }
+  .brand-logo::after {
+    @apply pointer-events-none absolute inset-1 rounded-[0.5rem] border;
+    border-color: rgb(215 174 97 / 36%);
+    content: "";
+  }
+  .header-action {
+    @apply min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#cdbba5] px-3.5 text-xs font-medium text-[#523b2b] transition-colors hover:bg-[#eee7dc] sm:px-4;
+  }
+  .site-nav-link {
+    @apply relative inline-flex min-h-11 items-center whitespace-nowrap text-[13px] text-[#66513e] transition-colors hover:text-[#2e2117];
+  }
+  .site-nav-link::after {
+    @apply absolute inset-x-0 bottom-1 h-px origin-left scale-x-0 bg-brass transition-transform;
+    content: "";
+  }
+  .site-nav-link:hover::after,
+  .site-nav-link[aria-current="page"]::after {
+    @apply scale-x-100;
+  }
   .section-space {
     @apply my-16 sm:my-24;
   }
@@ -39,6 +77,32 @@
   }
   .site-button {
     @apply inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#523b2b] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#35261c] disabled:cursor-wait disabled:opacity-60;
+  }
+  .lead-dialog {
+    @apply fixed inset-0 m-auto w-[calc(100%-1.5rem)] max-w-[28rem] overflow-y-auto overscroll-contain rounded-2xl border border-[#d9c8b5] bg-[#faf7f1] p-0 text-charcoal shadow-2xl;
+    max-height: calc(100dvh - 1.5rem);
+  }
+  .lead-dialog::backdrop {
+    background: rgb(38 26 18 / 62%);
+    backdrop-filter: blur(4px);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .lead-dialog[open] {
+      animation: open-lead-dialog 180ms ease-out both;
+    }
+  }
+  @keyframes open-lead-dialog {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .enquiry-input {
+    @apply mt-1.5 min-h-11 w-full rounded-lg border border-[#cdbba5] bg-[#fffdf9] px-3.5 py-2.5 text-base text-charcoal transition-colors hover:border-[#a99279] focus:border-walnut disabled:opacity-70;
   }
   .product-grid {
     @apply grid grid-cols-1 items-stretch gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-14;

@@ -12,38 +12,36 @@ export default async function ContactPage() {
   const site = await loadSiteData();
   const whatsappNumber = site.whatsapp.number.replace(/\D/g, '');
   return (
-    <div className="site-container pb-20 pt-10 sm:pt-14">
-      <section className="grid items-center gap-10 md:grid-cols-2 lg:gap-20">
-        <div>
+    <div className="site-container pb-14 pt-9 sm:pb-20 sm:pt-14">
+      <section className="grid items-center gap-9 md:grid-cols-2 lg:gap-16">
+        <div className="text-center md:text-start">
           <p className="eyebrow">Visit & connect</p>
-          <h1 className="mt-5 font-display text-5xl font-normal leading-[1.05] sm:text-6xl">
-            Your space.
-            <br />
-            Let’s talk about it.
+          <h1 className="mt-4 text-balance font-display text-[clamp(2.6rem,5.7vw,4.5rem)] font-normal leading-[1.05]">
+            Your space. Let’s talk about it.
           </h1>
-          <p className="mt-6 max-w-md text-sm leading-8 text-[#746354]">
+          <p className="mx-auto mt-5 max-w-md text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             Have a piece in mind or a room to bring together? Speak with us
             about the details, explore your options and arrange a showroom
             visit.
           </p>
-          <div className="mt-8 space-y-5 text-sm leading-7 text-[#66513e]">
-            <p className="flex items-start gap-3">
+          <div className="mt-6 grid gap-2 text-sm leading-7 text-[#66513e]">
+            <p className="flex items-start justify-center gap-2 md:justify-start">
               <MapPin size={19} className="mt-1 shrink-0" />
               {site.contact.address}
             </p>
             <a
               href={`tel:${site.contact.phone}`}
-              className="flex items-center gap-3"
+              className="flex min-h-11 items-center justify-center gap-2 hover:underline md:justify-start"
             >
               <Phone size={19} />
               {site.contact.phone}
             </a>
             <a
               href={`mailto:${site.contact.email}`}
-              className="flex items-center gap-3 break-all"
+              className="flex min-h-11 items-center justify-center gap-2 [overflow-wrap:anywhere] hover:underline md:justify-start"
             >
-              <Mail size={19} />
-              {site.contact.email}
+              <Mail size={19} className="shrink-0" />
+              <span className="min-w-0">{site.contact.email}</span>
             </a>
           </div>
           {site.whatsapp.enabled && /^[1-9]\d{9,14}$/.test(whatsappNumber) ? (
@@ -59,7 +57,7 @@ export default async function ContactPage() {
           ) : null}
           <Link
             href="/products"
-            className="mt-5 flex w-fit min-h-11 items-center border-b border-[#bda78f] text-sm text-walnut"
+            className="mx-auto mt-3 flex w-fit min-h-11 items-center text-sm text-walnut underline decoration-[#bda78f] underline-offset-4 md:mx-0"
           >
             Explore the collection first
           </Link>
@@ -67,19 +65,18 @@ export default async function ContactPage() {
         <Photo
           src="/images/real/large/DSC00391.webp"
           alt="Classic seating in the Crafting Corner Mohali showroom"
-          className="aspect-[2/3] rounded-t-[7rem] rounded-b-2xl"
+          className="mx-auto aspect-[4/5] w-full max-w-[480px] rounded-b-2xl rounded-t-[clamp(4rem,11vw,7rem)] md:aspect-[2/3]"
+          fit="cover"
           priority
         />
       </section>
-      <section className="section-space grid gap-10 rounded-2xl border border-[#ded3c5] bg-white/50 p-6 sm:p-10 md:grid-cols-[0.7fr_1fr]">
-        <div>
+      <section className="mt-14 grid items-center gap-8 rounded-2xl border border-[#ded3c5] bg-white/50 p-5 sm:mt-20 sm:p-10 md:grid-cols-2 lg:gap-14">
+        <div className="text-center md:text-start">
           <p className="eyebrow">Start a conversation</p>
-          <h2 className="mt-4 font-display text-4xl font-normal">
-            Tell us what you
-            <br />
-            have in mind.
+          <h2 className="mt-3 text-balance font-display text-4xl font-normal leading-tight">
+            Tell us what you have in mind.
           </h2>
-          <p className="mt-5 text-sm leading-7 text-[#746354]">
+          <p className="mt-3 text-pretty text-sm leading-7 text-[#746354]">
             Share the piece you like, your room measurements or a few details
             about your project.
           </p>

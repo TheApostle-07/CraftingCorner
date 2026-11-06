@@ -57,7 +57,7 @@ export default async function SiteLayout({
         }}
       />
       <Header />
-      <main id="main-content" className="min-h-screen pt-20">
+      <main id="main-content" className="min-h-screen">
         {children}
       </main>
       <Footer footer={footerData} site={siteData} />

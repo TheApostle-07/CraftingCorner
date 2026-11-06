@@ -63,7 +63,7 @@ Editorial scenes: DSC00397, DSC00087, DSC00391, DSC00097, DSC00374, DSC00051, DS
 
 ## Enquiries and reliability
 
-WhatsApp enquiries include product identity, indicative pricing and URL. Invalid/disabled numbers fall back to Contact. `/api/enquiry` validates and forwards contact submissions. It reports success only on an explicit JSON success response. Set `LEAD_WEBHOOK_URL` to override the existing Apps Script receiver. Accepted responses contain `success: true`, `ok: true`, `result: "success"` or `status: "success"`. A failed response preserves form contents and shows retry feedback.
+WhatsApp enquiries include product identity, indicative pricing and URL. Invalid or disabled numbers fall back to Contact. The homepage callback form and Contact page share `/api/enquiry`. The API sends URL-encoded submissions to the original Apps Script deployment, which writes to the `Leads` tab and acknowledges only after the write succeeds. The deployment uses the submission ID and a payload fingerprint to recognise a retry. If you set `LEAD_WEBHOOK_URL` to another receiver, keep the same encoding and return `success: true`, `ok: true`, `result: "success"` or `status: "success"` after writing the row. On failure, the form keeps the entered details and offers a retry.
 
 CMS reads are deduplicated within each render and fall back to bundled content on failure. That fallback can be older than recent admin edits. Database saves acquire row locks and recheck revision versions. Native dialogs contain keyboard focus and support Escape. Broken images show a neutral placeholder. Both responsive WebP sizes are delivered with proportional image frames.
 
@@ -73,7 +73,7 @@ CMS reads are deduplicated within each render and fall back to bundled content o
 - Five catalogue tests pass: preserved original prices, estimate semantics, asset/reference integrity, idempotent rollout, and checkout guards.
 - All 23 checked public routes and 56 WebP URLs return successfully. Three legacy routes redirect to the refreshed collection. Unauthenticated admin content requests return 401.
 - Product detail layout was checked at 320, 390, 768, 1024, 1440 and 1920 pixels without horizontal overflow. The homepage, mobile menu, quick view, alternate images and product enquiry links were also inspected.
-- Contact success and failure flows were tested against a local receiver, including preserving form values on failure and focusing the visible confirmation on success. No test enquiries were sent to the live receiver. Its deployed POST response still needs to satisfy the documented success contract.
+- The callback form retained its values on a simulated delivery failure. A test submission and its retry both received confirmation from the original live Apps Script deployment, with one matching row in `Leads`.
 - The homepage first-load JavaScript is approximately 110 kB, compared with 164 kB in the earlier build. This is a build comparison, not a field-performance measurement.
 
 Review screenshots: [Desktop](previews/hero-desktop.png), [Mobile](previews/home-mobile.png), [Quick view](previews/quick-view-mobile.png), [Contact confirmation](previews/contact-success-mobile.png).

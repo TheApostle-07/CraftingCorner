@@ -17,52 +17,55 @@ export default function Footer({
 }) {
   return (
     <footer className="border-t border-[#d9cdbc] bg-[#eee6da] text-[#574332]">
-      <div className="site-container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_0.7fr_1fr] lg:gap-16">
-        <div>
+      <div className="site-container grid gap-9 py-12 text-center sm:grid-cols-3 sm:gap-5 sm:py-14 lg:gap-12">
+        <div className="min-w-0">
           <Link href="/" className="font-display text-3xl text-[#3e2b1e]">
             {footer.brandName || site.brandName}
           </Link>
-          <p className="mt-4 max-w-xs text-sm leading-7 text-[#796650]">
+          <p className="mx-auto mt-4 max-w-xs text-pretty text-sm leading-7 text-[#6d5844]">
             Considered furniture and expressive details. Find something that
             feels like you.
           </p>
         </div>
         <nav
           aria-label="Footer"
-          className="flex flex-col items-start gap-4 text-sm"
+          className="flex flex-wrap items-center justify-center gap-x-5 gap-y-0.5 text-sm sm:flex-col sm:justify-start"
         >
+          <p className="eyebrow mb-2 w-full">Explore</p>
           {(footer.nav || []).map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="transition hover:underline hover:underline-offset-4"
+              className="inline-flex min-h-11 items-center text-center transition hover:underline hover:underline-offset-4"
             >
               {link.label}
             </Link>
           ))}
-          <Link href="/contact" className="inline-flex items-center gap-2">
-            Plan your visit <ArrowUpRight size={15} />
-          </Link>
+          {!footer.nav?.some(({ href }) => href === "/contact") && (
+            <Link href="/contact" className="inline-flex min-h-11 items-center hover:underline hover:underline-offset-4">
+              Plan your visit
+            </Link>
+          )}
           <Link
             href="/blog"
-            className="inline-flex min-h-11 items-center gap-2"
+            className="inline-flex min-h-11 items-center gap-2 hover:underline hover:underline-offset-4"
           >
-            Journal &amp; inspiration <ArrowUpRight size={15} />
+            Journal <ArrowUpRight size={14} aria-hidden="true" />
           </Link>
         </nav>
-        <div>
+        <div className="min-w-0">
           <p className="eyebrow">Visit & connect</p>
           <p className="mt-4 text-sm leading-7">{site.contact.address}</p>
-          <a href={`tel:${site.contact.phone}`} className="mt-2 block text-sm">
+          <a href={`tel:${site.contact.phone}`} className="mt-2 inline-block text-sm hover:underline">
             {site.contact.phone}
           </a>
           <a
             href={`mailto:${site.contact.email}`}
-            className="mt-2 block break-all text-sm"
+            className="mt-2 block text-sm [overflow-wrap:anywhere] hover:underline"
           >
             {site.contact.email}
           </a>
-          <div className="mt-5 flex gap-2">
+          <div className="mt-5 flex flex-wrap justify-center gap-2">
             {[
               [site.social.instagram, "Instagram", Instagram],
               [site.social.facebook, "Facebook", Facebook],
@@ -86,11 +89,23 @@ export default function Footer({
           </div>
         </div>
       </div>
-      <div className="site-container flex flex-wrap justify-between gap-3 border-t border-[#d9cdbc] py-6 text-[11px] text-[#796650]">
-        <span>
-          © {new Date().getFullYear()} Crafting Corner. All rights reserved.
-        </span>
-        <span>Mohali, Punjab · Made for living</span>
+      <div className="border-t border-[#d9cdbc]">
+        <div className="site-container flex flex-col items-center justify-between gap-3 px-16 py-5 text-center text-xs leading-5 text-[#6d5844] sm:flex-row sm:px-24 sm:text-start">
+          <span>
+            © {new Date().getFullYear()} Crafting Corner. All rights reserved.
+          </span>
+          <p>
+            Created and managed by{" "}
+            <a
+              href="https://www.expertdevstudio.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-[#493424] underline decoration-[#ac9074] underline-offset-4 hover:decoration-current"
+            >
+              Expert Dev Studio <ArrowUpRight size={13} aria-hidden="true" />
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
