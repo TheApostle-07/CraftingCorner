@@ -21,7 +21,7 @@ function BrandLogo({ priority = false }: { priority?: boolean }) {
         width={480}
         height={377}
         priority={priority}
-        className="h-[3.75rem] w-auto lg:h-[4.375rem]"
+        className="h-[3.375rem] w-auto lg:h-[3.875rem]"
       />
     </span>
   );

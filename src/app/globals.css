@@ -48,7 +48,7 @@
     height: var(--site-header-height);
   }
   .brand-logo {
-    @apply relative grid h-[4.5rem] w-28 place-items-center rounded-xl lg:h-[5.125rem] lg:w-[7.875rem];
+    @apply relative grid h-16 w-[6.5rem] place-items-center rounded-xl lg:h-[4.5rem] lg:w-[7.25rem];
     background: linear-gradient(145deg, #413023, #251911);
     box-shadow: 0 3px 8px rgb(45 31 21 / 15%);
   }
