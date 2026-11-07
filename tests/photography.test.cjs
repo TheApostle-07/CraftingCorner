@@ -41,6 +41,7 @@ const { validateAdminContent } = readModule(
 const { productPrice, enquiryHref } = readModule(
   path.join(root, "src/lib/productPresentation.ts"),
 );
+const { realPhotoSrcSet } = readModule(path.join(root, "src/lib/photoSources.ts"));
 const content = Object.fromEntries(
   [
     "site",
@@ -106,6 +107,11 @@ test("all real images and renditions exist and every homepage shelf resolves to 
     fs.readFileSync(path.join(root, "src/data/realPhotography.json"), "utf8"),
   );
   assert.equal(catalog.photos.length, 28);
+  for (const photo of catalog.photos) {
+    const medium = photo.large.replace("/large/", "/medium/");
+    assert.ok(fs.existsSync(path.join(root, "public", medium)));
+    assert.ok(realPhotoSrcSet(photo.large).includes(`${medium} 900w`));
+  }
   for (const photo of catalog.photos)
     for (const size of ["large", "small"])
       assert.ok(

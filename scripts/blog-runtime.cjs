@@ -15,7 +15,7 @@ function readModule(file) {
     let target = name.startsWith("@/")
       ? path.join(root, "src", name.slice(2))
       : path.resolve(path.dirname(file), name);
-    if (!path.extname(target)) target += ".ts";
+    if (!/\.(?:ts|json)$/.test(target)) target += ".ts";
     return readModule(target);
   };
   const source = ts.transpileModule(fs.readFileSync(file, "utf8"), {

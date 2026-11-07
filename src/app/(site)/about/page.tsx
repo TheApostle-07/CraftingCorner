@@ -1,10 +1,12 @@
 import Link from 'next/link';
 import Photo from '@/components/Photo';
-export const metadata = {
-  title: 'Our Story | Crafting Corner',
-  description:
-    'Explore the Crafting Corner showroom in Mohali and discover furniture through its forms, finishes and details.',
-};
+import { pageMetadata } from '@/lib/seo';
+export const metadata = pageMetadata(
+  'About Our Mohali Furniture Studio | Crafting Corner',
+  'Meet Crafting Corner, a bespoke furniture studio in Mohali. Get to know our showroom and how we help you choose pieces for your space.',
+  '/about',
+  '/images/real/large/DSC00056.webp',
+);
 export default function About() {
   return (
     <div className="site-container pb-16 pt-10">
@@ -15,10 +17,9 @@ export default function About() {
             Furniture with character. Spaces with a story.
           </h1>
           <p className="mx-auto mt-5 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
-            Crafting Corner brings together furniture and decorative pieces for
-            spaces that feel personal. From sculptural accents to classic
-            silhouettes, our Mohali showroom is a place to explore, look closely
-            and find your own point of view.
+            Crafting Corner is a bespoke furniture studio in Mohali. Our
+            showroom brings together sculptural accents, classic silhouettes
+            and decorative pieces for spaces that feel personal.
           </p>
           <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
             See the pieces in their setting, consider the details, and speak

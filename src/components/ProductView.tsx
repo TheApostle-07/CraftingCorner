@@ -43,7 +43,7 @@ export default function ProductView({
             }
             className="aspect-[2/3] w-full rounded-2xl"
             priority
-            sizes="(max-width: 767px) 100vw, 50vw"
+            sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 767px) calc(100vw - 64px), (max-width: 1023px) calc(50vw - 48px), (max-width: 1239px) calc(50vw - 80px), 540px"
           />
           {gallery.length > 1 ? (
             <div className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">

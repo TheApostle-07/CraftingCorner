@@ -5,7 +5,7 @@ import ArticleCard from "./ArticleCard";
 import BlogImage from "./BlogImage";
 import type { PublicArticle } from "@/lib/blog/types";
 import { articleHeadings, blogSlug, readingMinutes } from "@/lib/blog/content";
-import { absoluteUrl, breadcrumbs, jsonLd } from "@/lib/seo";
+import { absoluteUrl, articleCanonical, breadcrumbs, jsonLd } from "@/lib/seo";
 import type { Product, SiteData } from "@/lib/types";
 import ProductCard from "@/components/ProductCard";
 
@@ -30,8 +30,7 @@ export default function ArticleView({
   preview?: boolean;
 }) {
   const headings = articleHeadings(article.content);
-  const canonical =
-    article.canonicalUrl || absoluteUrl(`/blog/${article.slug}`);
+  const canonical = articleCanonical(article.slug, article.canonicalUrl);
   const schema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -46,6 +45,7 @@ export default function ArticleView({
       url: absoluteUrl(`/blog/author/${article.author.slug}`),
     },
     publisher: {
+      "@id": absoluteUrl("/#organization"),
       "@type": "Organization",
       name: "Crafting Corner",
       url: absoluteUrl("/"),

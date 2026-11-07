@@ -3,11 +3,13 @@ import { Mail, MapPin, MessageCircle, Phone } from 'lucide-react';
 import Photo from '@/components/Photo';
 import ContactForm from '@/components/ContactForm';
 import { loadSiteData } from '@/lib/loaders.server';
-export const metadata = {
-  title: 'Visit & Connect | Crafting Corner',
-  description:
-    'Speak with Crafting Corner about your space, final pricing, finishes and availability. Visit our Mohali showroom.',
-};
+import { pageMetadata } from '@/lib/seo';
+export const metadata = pageMetadata(
+  'Contact Our Mohali Showroom | Crafting Corner',
+  'Arrange a visit to the Crafting Corner showroom in Mohali or contact us about furniture, finishes, availability and a quotation.',
+  '/contact',
+  '/images/real/large/DSC00391.webp',
+);
 export default async function ContactPage() {
   const site = await loadSiteData();
   const whatsappNumber = site.whatsapp.number.replace(/\D/g, '');

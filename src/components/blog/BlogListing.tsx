@@ -2,31 +2,28 @@ import Link from "next/link";
 import ArticleCard from "./ArticleCard";
 import BlogImage from "./BlogImage";
 import JournalSearch from "./JournalSearch";
-import { listPublicArticles, getBlogTaxonomy } from "@/lib/blog/service";
-import { blogDatabaseConfigured } from "@/lib/blog/db";
+import { journalPage, publicJournalTaxonomy } from "@/lib/blog/discovery";
 import { firstSearchParam, type SearchParam } from "@/lib/searchParams";
 export default async function BlogListing({
   title = "Journal & inspiration",
   description = "Thoughtful ideas for the way you live. Explore furniture, materials and spaces, one considered detail at a time.",
   query = {},
+  result,
   base = "/blog",
 }: {
   title?: string;
   description?: string;
   query?: {
-    page?: number;
     q?: SearchParam;
     category?: string;
     tag?: string;
     author?: string;
   };
+  result: Awaited<ReturnType<typeof journalPage>>;
   base?: string;
 }) {
   const q = firstSearchParam(query.q).slice(0, 200);
-  const result = await listPublicArticles({ ...query, q });
-  const options = blogDatabaseConfigured()
-    ? await getBlogTaxonomy().catch(() => null)
-    : null;
+  const options = await publicJournalTaxonomy().catch(() => null);
   const featured =
     !q && !query.category && !query.tag && !query.author && result.page === 1
       ? result.articles.find((a) => a.featured)

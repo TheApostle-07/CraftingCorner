@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ImageOff } from 'lucide-react';
+import { realPhotoSrcSet } from '@/lib/photoSources';
 
 type Props = {
   src: string;
@@ -22,13 +23,10 @@ export default function Photo({
 }: Props) {
   const [failedSrc, setFailedSrc] = useState('');
   const [retrySrc, setRetrySrc] = useState('');
-  const small = src?.includes('/images/real/large/')
-    ? src.replace('/large/', '/small/')
-    : '';
-  const responsive = small && retrySrc !== src;
+  const srcSet = retrySrc !== src ? realPhotoSrcSet(src) : undefined;
 
   function recoverImage(image: HTMLImageElement) {
-    if (responsive && image.currentSrc !== image.src) {
+    if (srcSet && image.currentSrc !== image.src) {
       setRetrySrc(src);
     } else {
       setFailedSrc(src);
@@ -50,15 +48,15 @@ export default function Photo({
     );
   return (
     <picture className={`block overflow-hidden bg-[#eee8df] ${className}`}>
-      {responsive ? (
+      {srcSet ? (
         <source
-          srcSet={`${small} 600w, ${src} 1333w`}
+          srcSet={srcSet}
           sizes={sizes}
           type="image/webp"
         />
       ) : null}
       <img
-        key={responsive ? 'responsive' : 'original'}
+        key={srcSet ? 'responsive' : 'original'}
         ref={(image) => {
           // A server-rendered image can fail before React attaches onError.
           if (image?.complete && image.naturalWidth === 0) recoverImage(image);

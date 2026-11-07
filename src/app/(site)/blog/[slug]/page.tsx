@@ -2,7 +2,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import ArticleView from "@/components/blog/ArticleView";
 import { getPublicArticle, listPublicArticles } from "@/lib/blog/service";
 import { loadAllProducts, loadSiteData } from "@/lib/loaders.server";
-import { pageMetadata } from "@/lib/seo";
+import { articleCanonical, pageMetadata } from "@/lib/seo";
 export const dynamic = "force-dynamic";
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props) {
   const base = pageMetadata(
     a.seoTitle || `${a.title} | Crafting Corner`,
     a.seoDescription || a.excerpt,
-    a.canonicalUrl || `/blog/${a.slug}`,
+    articleCanonical(a.slug, a.canonicalUrl),
     a.ogImage?.url || a.cover?.url,
     a.noIndex,
   );

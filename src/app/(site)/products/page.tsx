@@ -1,26 +1,31 @@
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import { firstSearchParam, type SearchParam } from '@/lib/searchParams';
+import { pageMetadata } from '@/lib/seo';
 import {
   loadAllProducts,
   loadCategories,
   loadProductTypes,
 } from '@/lib/loaders.server';
 export const dynamic = 'force-dynamic';
-export const metadata = {
-  title: 'The Collection | Crafting Corner',
-  description:
-    'Discover furniture photographed in our Mohali showroom. Explore the details and enquire for your final quotation.',
-};
-export default async function ProductsPage({
-  searchParams,
-}: {
+type Props = {
   searchParams: Promise<{
     type?: SearchParam;
     category?: SearchParam;
     q?: SearchParam;
   }>;
-}) {
+};
+export async function generateMetadata({ searchParams }: Props) {
+  const { type, category, q } = await searchParams;
+  return pageMetadata(
+    'Furniture Collection in Mohali | Crafting Corner',
+    'Browse furniture photographed in our Mohali showroom, from sculptural accent tables and chairs to bedside storage, consoles and writing desks.',
+    '/products',
+    undefined,
+    [type, category, q].some((value) => Boolean(firstSearchParam(value))),
+  );
+}
+export default async function ProductsPage({ searchParams }: Props) {
   const params = await searchParams;
   const query = {
     type: firstSearchParam(params.type),

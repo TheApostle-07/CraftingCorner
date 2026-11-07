@@ -3,7 +3,7 @@
 --------------------------------------------------------------------------- */
 import { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { readPublicContent } from "@/lib/adminContent.server";
+import legacyProducts from "@/data/products.json";
 import { pageMetadata, absoluteUrl, jsonLd, breadcrumbs } from "@/lib/seo";
 
 import ProductView from "@/components/ProductView";
@@ -32,8 +32,8 @@ export async function generateMetadata({
     "/images/real/large/DSC00397.webp";
 
   return pageMetadata(
-    `${product.title} | Crafting Corner`,
-    product.shortDescription ||
+    product.seo?.title?.trim() || `${product.title} | Crafting Corner`,
+    product.seo?.description?.trim() || product.shortDescription ||
       product.description ||
       `Explore ${product.title} at Crafting Corner.`,
     `/products/${product.slug}`,
@@ -56,11 +56,7 @@ export default async function ProductPage({
   const { slug } = await params;
   const product = await findProduct(slug);
   if (!product) {
-    const content = await readPublicContent();
-    const archived = content.products.find(
-      (p) => p.slug === slug && p.imageSource !== "real",
-    );
-    if (archived) redirect("/products");
+    if (legacyProducts.some((p) => p.slug === slug)) redirect("/products");
     notFound();
   }
 

@@ -9,11 +9,13 @@ import { ArrowUpRight, ServerCog, Wrench } from 'lucide-react';
 const headingFont = Montserrat({
   subsets: ['latin'],
   weight: ['600', '700', '800'],
+  preload: false,
 });
 
 const bodyFont = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
+  preload: false,
 });
 
 export default function PaymentPendingExperience() {

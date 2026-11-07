@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { ArrowUpRight, CheckCircle2, LoaderCircle } from 'lucide-react';
 import { sendLead, type LeadKind } from '@/lib/sendLead';
+import { trackContactConversion } from './ConversionAnalytics';
 
 export default function ContactForm({
   kind = 'contact',
@@ -54,6 +55,7 @@ export default function ContactForm({
     if (result.ok === true) {
       attempt.current = null;
       setStatus('sent');
+      trackContactConversion(kind);
     } else {
       setFeedback(result.message);
       setStatus('idle');

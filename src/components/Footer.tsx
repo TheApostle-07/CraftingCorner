@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Instagram, Facebook, Linkedin, ArrowUpRight } from "lucide-react";
 import type { SiteData } from "@/lib/types";
+import ConversionAnalytics from "./ConversionAnalytics";
 type FooterData = {
   brandName?: string;
   tagline?: string;
@@ -11,9 +12,11 @@ type FooterData = {
 export default function Footer({
   footer,
   site,
+  analyticsEnabled,
 }: {
   footer: FooterData;
   site: SiteData;
+  analyticsEnabled: boolean;
 }) {
   return (
     <footer className="border-t border-[#d9cdbc] bg-[#eee6da] text-[#574332]">
@@ -26,6 +29,7 @@ export default function Footer({
             Considered furniture and expressive details. Find something that
             feels like you.
           </p>
+          {analyticsEnabled ? <ConversionAnalytics /> : null}
         </div>
         <nav
           aria-label="Footer"

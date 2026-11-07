@@ -1,5 +1,7 @@
 import MediaLibrary from "@/components/admin/blog/MediaLibrary";
-export default function Page() {
+import { requireBlogAdmin } from "@/lib/blog/admin.server";
+export default async function Page() {
+  await requireBlogAdmin();
   return (
     <>
       <p className="eyebrow">The image library</p>

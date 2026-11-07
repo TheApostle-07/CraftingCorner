@@ -5,17 +5,26 @@ import Photo from '@/components/Photo';
 import ProductCard from '@/components/ProductCard';
 import { getCategory, loadProducts } from '@/lib/loaders.server';
 import { readPublicContent } from '@/lib/adminContent.server';
+import { pageMetadata } from '@/lib/seo';
 export const dynamic = 'force-dynamic';
 type Props = { params: Promise<{ category: string }> };
+const roomDescriptions: Record<string, string> = {
+  'living-room': 'Explore accent chairs, side tables, consoles and living room inspiration photographed in the Crafting Corner showroom in Mohali.',
+  bedroom: 'Explore bedside storage, a carved vanity and bedroom inspiration from the Crafting Corner showroom in Mohali.',
+  office: 'Explore the Crafting Corner study and office collection in Mohali, including a classic writing desk photographed in our showroom.',
+  custom: 'Discuss bespoke furniture with Crafting Corner in Mohali. Bring your room measurements, ideas and finish preferences to start a conversation.',
+};
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
   const cat = await getCategory(category);
   return cat
-    ? {
-        title: `${cat.title} | Crafting Corner`,
-        description: cat.subtitle,
-        openGraph: { images: [cat.image] },
-      }
+    ? pageMetadata(
+        `${cat.title}${category === 'custom' ? '' : ' Furniture'} in Mohali | Crafting Corner`,
+        roomDescriptions[category] || cat.seo?.description?.trim() || cat.subtitle || cat.title,
+        `/${cat.slug}`,
+        cat.image,
+        cat.slug !== 'custom' && (await loadProducts(cat.slug)).length === 0,
+      )
     : {};
 }
 export default async function CategoryPage({ params }: Props) {
@@ -37,7 +46,7 @@ export default async function CategoryPage({ params }: Props) {
             {cat.title}
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-7 text-[#746354] md:mx-0">
-            {cat.subtitle}
+            {roomDescriptions[cat.slug] || cat.subtitle}
           </p>
           <Link
             href="/contact"
@@ -51,6 +60,7 @@ export default async function CategoryPage({ params }: Props) {
           alt={cat.alt || cat.title}
           className="site-enter-photo mx-auto aspect-[2/3] w-full max-w-[280px] rounded-b-xl rounded-t-[5rem]"
           priority
+          sizes="280px"
         />
       </section>
       {products.length ? (

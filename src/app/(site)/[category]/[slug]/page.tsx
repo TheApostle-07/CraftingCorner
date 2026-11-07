@@ -1,5 +1,6 @@
-import { notFound, redirect } from 'next/navigation';
-import { readPublicContent } from '@/lib/adminContent.server';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import legacyProducts from '@/data/products.json';
+import { loadAllProducts } from '@/lib/loaders.server';
 export const dynamic = 'force-dynamic';
 export default async function CategoryProductPage({
   params,
@@ -7,12 +8,12 @@ export default async function CategoryProductPage({
   params: Promise<{ category: string; slug: string }>;
 }) {
   const { category, slug } = await params;
-  const content = await readPublicContent();
-  const product = content.products.find(
-    (p) => p.slug === slug && (p.categorySlug || p.category) === category,
+  const product = (await loadAllProducts()).find((p) => p.slug === slug);
+  const legacy = legacyProducts.some(
+    (p) => p.slug === slug && p.categorySlug === category,
   );
-  if (!product) notFound();
-  if (product.visibility === 'draft')
-    redirect(`/products?category=${encodeURIComponent(category)}`);
-  redirect(`/products/${encodeURIComponent(slug)}`);
+  if (product && (product.categorySlug === category || legacy))
+    permanentRedirect(`/products/${encodeURIComponent(slug)}`);
+  if (legacy) redirect('/products');
+  notFound();
 }

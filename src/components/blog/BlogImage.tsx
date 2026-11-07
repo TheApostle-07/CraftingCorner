@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { realPhotoSrcSet } from "@/lib/photoSources";
 export default function BlogImage({
   src,
   alt,
@@ -16,16 +17,16 @@ export default function BlogImage({
   priority?: boolean;
 }) {
   const [failed, setFailed] = useState("");
-  const srcSet = src?.startsWith("/images/real/large/")
-    ? `${src.replace("/large/", "/small/")} 600w, ${src} 1333w`
-    : src?.startsWith("https://res.cloudinary.com/")
+  const srcSet = realPhotoSrcSet(src) ?? (
+    src?.startsWith("https://res.cloudinary.com/") && src.includes("/image/upload/")
       ? [600, 1200, 2000]
           .map(
             (size) =>
               `${src.replace("/image/upload/", `/image/upload/c_limit,w_${size},q_auto,f_auto/`)} ${size}w`,
           )
           .join(", ")
-      : undefined;
+      : undefined
+  );
   if (!src || failed === src)
     return (
       <div

@@ -52,7 +52,7 @@ export default function ProductCard(product: ProductCardProps) {
                 product.images?.find(({ url }) => url === cover)?.alt || title
               }
               className="site-photo-zoom aspect-[2/3] w-full"
-              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
+              sizes="(max-width: 639px) calc(100vw - 40px), (max-width: 1023px) calc(50vw - 44px), (max-width: 1239px) calc((100vw - 160px) / 3), 360px"
             />
           </Link>
           <button
@@ -140,6 +140,7 @@ export default function ProductCard(product: ProductCardProps) {
                   title
                 }
                 className="h-[min(48dvh,440px)] w-full sm:h-full sm:min-h-[min(68dvh,480px)]"
+                sizes="(max-width: 639px) calc(100vw - 24px), (max-width: 983px) calc(50vw - 12px), 480px"
               />
               {gallery.length > 1 ? (
                 <div className="absolute inset-x-4 bottom-4 flex items-center justify-between">
