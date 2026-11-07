@@ -10,6 +10,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: homeTitle,
   description: homeDescription,
+  icons: {
+    icon: [
+      { url: "/favicon.png", type: "image/png", sizes: "64x64" },
+      { url: "/favicon-192.png", type: "image/png", sizes: "192x192" },
+    ],
+    apple: { url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" },
+  },
   openGraph: {
     type: "website",
     siteName: "Crafting Corner",
@@ -34,7 +41,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en-IN" data-scroll-behavior="smooth">
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
         <link
           rel="alternate"
           type="application/rss+xml"
