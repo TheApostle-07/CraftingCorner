@@ -30,6 +30,15 @@ export function hasCmsDatabaseConnection() {
   return Boolean(getCmsConnectionString());
 }
 
+export function isMissingDatabaseTable(error: unknown) {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'code' in error &&
+    error.code === '42P01'
+  );
+}
+
 export function getDatabaseClient() {
   const connectionString = getConnectionString();
 

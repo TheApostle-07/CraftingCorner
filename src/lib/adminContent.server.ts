@@ -9,7 +9,11 @@ import {
   type AdminContent,
   validateAdminContent,
 } from './adminContent';
-import { getCmsDatabaseClient, hasCmsDatabaseConnection } from './database';
+import {
+  getCmsDatabaseClient,
+  hasCmsDatabaseConnection,
+  isMissingDatabaseTable,
+} from './database';
 
 type GithubConfig = {
   token: string;
@@ -145,19 +149,22 @@ function buildDatabaseBaseSha(rows: { key: string; version: number }[]) {
     .join('|');
 }
 
+type CmsDocumentRow = { key: string; data: unknown; version: number };
+
 async function readDatabaseRows() {
   const sql = getCmsDatabaseClient();
-  return sql<{ key: string; data: unknown; version: number }[]>`
+  return sql<CmsDocumentRow[]>`
     select key, data, version
     from cms_documents
     where key = any(${ADMIN_DATA_FILES as unknown as string[]})
   `;
 }
 
-async function seedMissingDatabaseDocuments(localContent: AdminContent) {
+async function seedMissingDatabaseDocuments(
+  localContent: AdminContent,
+  existingKeys: Set<string>,
+) {
   const sql = getCmsDatabaseClient();
-  const rows = await readDatabaseRows();
-  const existingKeys = new Set(rows.map((row) => row.key));
   const files = contentToFiles(localContent);
 
   for (const [file, data] of Object.entries(files)) {
@@ -165,20 +172,26 @@ async function seedMissingDatabaseDocuments(localContent: AdminContent) {
 
     await sql`
       insert into cms_documents (key, data, version, updated_at, updated_by)
-      values (${file}, ${JSON.stringify(data)}::jsonb, 1, now(), 'seed')
+      values (${file}, ${JSON.stringify(data)}::text::jsonb, 1, now(), 'seed')
       on conflict (key) do nothing
     `;
   }
 }
 
 async function readDatabaseContent(localContent?: AdminContent) {
-  await ensureCmsTables();
   let fallbackContent = localContent;
-  let rows = await readDatabaseRows();
+  let rows: CmsDocumentRow[] = await readDatabaseRows().catch((error: unknown) => {
+    if (!isMissingDatabaseTable(error)) throw error;
+    return [];
+  });
 
   if (rows.length < ADMIN_DATA_FILES.length) {
+    await ensureCmsTables();
     fallbackContent ||= await readLocalContent();
-    await seedMissingDatabaseDocuments(fallbackContent);
+    await seedMissingDatabaseDocuments(
+      fallbackContent,
+      new Set(rows.map((row) => row.key)),
+    );
     rows = await readDatabaseRows();
   }
 
@@ -330,9 +343,7 @@ async function writeDatabaseContent(
     const tx = transaction as unknown as ReturnType<
       typeof getCmsDatabaseClient
     >;
-    const lockedRows = await tx<
-      { key: string; data: unknown; version: number }[]
-    >`
+    const lockedRows = await tx<CmsDocumentRow[]>`
       select key, data, version from cms_documents
       where key = any(${ADMIN_DATA_FILES as unknown as string[]})
       order by key for update
@@ -348,13 +359,13 @@ async function writeDatabaseContent(
       if (current) {
         await tx`
           insert into cms_revisions (id, key, data, version, created_at, created_by)
-          values (${randomUUID()}, ${file}, ${JSON.stringify(current.data)}::jsonb, ${current.version}, now(), ${updatedBy})
+          values (${randomUUID()}, ${file}, ${JSON.stringify(current.data)}::text::jsonb, ${current.version}, now(), ${updatedBy})
         `;
       }
 
       await tx`
         insert into cms_documents (key, data, version, updated_at, updated_by)
-        values (${file}, ${JSON.stringify(data)}::jsonb, 1, now(), ${updatedBy})
+        values (${file}, ${JSON.stringify(data)}::text::jsonb, 1, now(), ${updatedBy})
         on conflict (key) do update set
           data = excluded.data,
           version = cms_documents.version + 1,

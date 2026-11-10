@@ -3,7 +3,11 @@ import path from 'node:path';
 
 import { unstable_noStore as noStore } from 'next/cache';
 
-import { getDatabaseClient, hasDatabaseConnection } from '@/lib/database';
+import {
+  getDatabaseClient,
+  hasDatabaseConnection,
+  isMissingDatabaseTable,
+} from '@/lib/database';
 
 export type SiteStorageMode = 'database' | 'github' | 'local-file';
 
@@ -159,9 +163,7 @@ async function writeLocalStatus(status: Omit<SiteStatus, 'storageMode'>) {
   return normalizeStatus(record, 'local-file');
 }
 
-async function readDatabaseStatus() {
-  await ensureDatabaseStatusTable();
-
+async function selectDatabaseStatus() {
   const sql = getDatabaseClient();
   const rows = await sql<DatabaseRow[]>`
     select active, updated_at, updated_by
@@ -170,7 +172,19 @@ async function readDatabaseStatus() {
     limit 1
   `;
 
-  const row = rows[0];
+  return rows[0];
+}
+
+async function readDatabaseStatus() {
+  let row = await selectDatabaseStatus().catch((error: unknown) => {
+    if (!isMissingDatabaseTable(error)) throw error;
+    return undefined;
+  });
+
+  if (!row) {
+    await ensureDatabaseStatusTable();
+    row = await selectDatabaseStatus();
+  }
 
   if (!row) {
     throw new Error('Unable to read site status row from the database.');
