@@ -48,14 +48,8 @@
     height: var(--site-header-height);
   }
   .brand-logo {
-    @apply relative grid h-16 w-[6.5rem] place-items-center rounded-xl lg:h-[4.5rem] lg:w-[7.25rem];
-    background: linear-gradient(145deg, #413023, #251911);
-    box-shadow: 0 3px 8px rgb(45 31 21 / 15%);
-  }
-  .brand-logo::after {
-    @apply pointer-events-none absolute inset-1 rounded-[0.5rem] border;
-    border-color: rgb(215 174 97 / 36%);
-    content: "";
+    @apply block h-16 w-auto shrink-0 object-contain lg:h-[4.5rem];
+    filter: brightness(0.62) saturate(0.85);
   }
   .header-action {
     @apply min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#cdbba5] px-3.5 text-xs font-medium text-[#523b2b] transition-colors hover:bg-[#eee7dc] sm:px-4;

@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowUpRight } from "lucide-react";
+import BrandLogo from "./BrandLogo";
 const navigation = [
   { href: "/products", label: "Collection" },
   { href: "/#categories", label: "Rooms" },
@@ -12,25 +12,11 @@ const navigation = [
   { href: "/contact", label: "Visit & connect" },
 ];
 
-function BrandLogo({ priority = false }: { priority?: boolean }) {
-  return (
-    <span className="brand-logo">
-      <Image
-        src="/assets/img/crafting-corner-lockup.webp"
-        alt="Crafting Corner"
-        width={480}
-        height={377}
-        priority={priority}
-        className="h-[3.375rem] w-auto lg:h-[3.875rem]"
-      />
-    </span>
-  );
-}
-
 export default function Header({ showRooms = true }: { showRooms?: boolean }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const drawer = useRef<HTMLDialogElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
   const homeLink = useRef<HTMLAnchorElement>(null);
   const links = showRooms
     ? navigation
@@ -52,6 +38,7 @@ export default function Header({ showRooms = true }: { showRooms?: boolean }) {
       if (desktop.matches) setOpen(false);
     }
     el?.showModal();
+    closeButton.current?.focus({ preventScroll: true });
     desktop.addEventListener("change", closeOnDesktop);
     return () => {
       desktop.removeEventListener("change", closeOnDesktop);
@@ -75,7 +62,7 @@ export default function Header({ showRooms = true }: { showRooms?: boolean }) {
             ref={homeLink}
             href="/"
             aria-label="Crafting Corner home"
-            className="w-fit rounded-xl"
+            className="inline-flex w-fit items-center rounded-sm"
           >
             <BrandLogo priority />
           </Link>
@@ -132,11 +119,12 @@ export default function Header({ showRooms = true }: { showRooms?: boolean }) {
               href="/"
               aria-label="Crafting Corner home"
               onClick={() => setOpen(false)}
-              className="rounded-xl"
+              className="inline-flex items-center rounded-sm"
             >
               <BrandLogo />
             </Link>
             <button
+              ref={closeButton}
               autoFocus
               type="button"
               aria-label="Close navigation"

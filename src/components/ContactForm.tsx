@@ -79,7 +79,10 @@ export default function ContactForm({
         </p>
         <button
           type="button"
-          onClick={onDone ?? (() => setStatus('idle'))}
+          onClick={() => {
+            setStatus('idle');
+            onDone?.();
+          }}
           className="mt-2 min-h-11 text-sm underline underline-offset-4"
         >
           {onDone ? 'Done' : 'Send another message'}

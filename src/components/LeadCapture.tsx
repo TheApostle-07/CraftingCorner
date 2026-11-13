@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useId, useRef } from 'react';
-import Image from 'next/image';
 import { ArrowUpRight, X } from 'lucide-react';
+import BrandLogo from './BrandLogo';
 import ContactForm from './ContactForm';
 
 const sessionKey = 'leadModalShown';
@@ -87,14 +87,8 @@ export default function LeadCapture() {
             <X size={20} aria-hidden="true" />
           </button>
           <div className="mb-5 text-center sm:mb-6">
-            <Image
-              src="/favicon.png"
-              alt=""
-              width={40}
-              height={40}
-              className="mx-auto"
-            />
-            <p className="eyebrow mt-3">Crafting Corner · Mohali</p>
+            <BrandLogo className="mx-auto" />
+            <p className="eyebrow mt-3">Mohali showroom</p>
             <h2
               id={`${id}-title`}
               className="mt-2 text-balance font-display text-[2.25rem] font-normal leading-[1.05] text-[#38291f] sm:text-[2.6rem]"
