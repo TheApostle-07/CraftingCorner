@@ -49,7 +49,6 @@
   }
   .brand-logo {
     @apply block h-16 w-auto shrink-0 object-contain lg:h-[4.5rem];
-    filter: brightness(0.62) saturate(0.85);
   }
   .header-action {
     @apply min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-full border border-[#cdbba5] px-3.5 text-xs font-medium text-[#523b2b] transition-colors hover:bg-[#eee7dc] sm:px-4;
