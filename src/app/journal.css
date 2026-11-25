@@ -13,7 +13,7 @@
 .article-prose h4 {
   color: #38291f;
   font-family: var(--font-display), Georgia, serif;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.22;
   scroll-margin-top: 110px;
 }
@@ -127,8 +127,12 @@
   color: #66513e;
   transition: background 0.18s;
 }
-.journal-filter:hover {
+.journal-filter:hover,
+.journal-filter[aria-current="page"] {
   background: #eee7dc;
+}
+.journal-filter[aria-current="page"] {
+  border-color: #a98c71;
 }
 .journal-admin {
   font-family: var(--font-sans), sans-serif;

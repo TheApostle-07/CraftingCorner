@@ -15,7 +15,7 @@ Code boundaries:
 - `src/app/api/admin/blog/[[...parts]]`: authenticated JSON and upload API.
 - `src/components/admin/blog`: writing, media, taxonomy and revision interfaces.
 - `src/components/blog` and `src/app/(site)/blog`: public journal and articles.
-- `src/app/sitemap.ts`, `robots.ts`, `blog/feed.xml`: search discovery.
+- `src/app/sitemap.xml/route.ts`, `robots.ts`, `blog/feed.xml`: search discovery.
 - `migrations/001_blog.sql`: additive schema; existing CMS tables are untouched.
 - `scripts/blog-maintenance.cjs`: migration and optional private editorial seed.
 
@@ -75,6 +75,13 @@ destructive reset. The test-only schema cleanup command in automated tests must
 never be pointed at `public`.
 
 ## Writing And Publishing
+
+The three launch stories are recorded in `src/data/journalLaunch.json`. Run
+`node scripts/publish-journal.cjs --check` to validate the source copy. To publish
+the launch set, pass the intended journal database environment explicitly to
+`node scripts/publish-journal.cjs --publish`. The script can resume an untouched
+launch draft after an interrupted run and leaves subsequent editorial changes in
+the Journal Studio.
 
 Sign in at `/admin`, then open **Journal & articles**. You can create, duplicate,
 search, filter, preview, archive, trash and restore articles. Manage categories,

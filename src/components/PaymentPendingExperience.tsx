@@ -1,29 +1,16 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import { Montserrat, Poppins } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowUpRight, ServerCog, Wrench } from 'lucide-react';
-
-const headingFont = Montserrat({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  preload: false,
-});
-
-const bodyFont = Poppins({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  preload: false,
-});
 
 export default function PaymentPendingExperience() {
   const shouldReduceMotion = useReducedMotion();
 
   return (
     <section
-      className={`${bodyFont.className} relative min-h-screen overflow-hidden bg-[#f6fbff] px-4 py-8 text-[#1f3651] sm:px-6 sm:py-12`}
+      className="relative min-h-screen overflow-hidden bg-[#f6fbff] px-4 py-8 font-sans text-[#1f3651] sm:px-6 sm:py-12"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,194,26,0.28),_transparent_26%),radial-gradient(circle_at_bottom_right,_rgba(138,184,222,0.24),_transparent_28%),linear-gradient(180deg,_#fcfeff_0%,_#eef6fd_52%,_#f7fbff_100%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(rgba(40,88,132,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(40,88,132,0.04)_1px,transparent_1px)] bg-[size:120px_120px] opacity-40" />
@@ -106,7 +93,7 @@ export default function PaymentPendingExperience() {
             </motion.div>
 
             <h1
-              className={`${headingFont.className} mx-auto mt-6 max-w-3xl text-3xl font-semibold leading-[1.02] text-[#17304d] sm:mt-8 sm:text-5xl lg:text-[3.65rem]`}
+              className="mx-auto mt-6 max-w-3xl text-3xl font-semibold leading-[1.02] text-[#17304d] sm:mt-8 sm:text-5xl lg:text-[3.65rem]"
             >
               Server Upgrade Required
             </h1>
@@ -149,7 +136,7 @@ export default function PaymentPendingExperience() {
                   </div>
                   <div className="min-w-0 flex-1">
                     <p
-                      className={`${headingFont.className} text-lg font-semibold tracking-[0.01em] text-white sm:text-[1.45rem]`}
+                      className="text-lg font-semibold tracking-[0.01em] text-white sm:text-[1.45rem]"
                     >
                       Expert Dev Studio
                     </p>

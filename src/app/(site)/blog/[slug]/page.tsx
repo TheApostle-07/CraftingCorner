@@ -39,13 +39,16 @@ export default async function ArticlePage({ params }: Props) {
     loadAllProducts(),
     loadSiteData(),
   ]);
-  const related = suggestions.articles
-    .filter((a) => a.id !== article.id)
-    .slice(0, 3);
+  const related = suggestions.articles.filter((a) => a.id !== article.id);
+  if (related.length < 3) {
+    const latest = await listPublicArticles({ limit: 4 });
+    const seen = new Set([article.id, ...related.map((a) => a.id)]);
+    related.push(...latest.articles.filter((a) => !seen.has(a.id)));
+  }
   return (
     <ArticleView
       article={article}
-      related={related}
+      related={related.slice(0, 3)}
       site={site}
       products={products
         .filter((p) => article.relatedProductSlugs.includes(p.slug))

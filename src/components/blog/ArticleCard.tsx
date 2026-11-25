@@ -14,9 +14,10 @@ export default function ArticleCard({ article }: { article: PublicArticle }) {
         <Photo
           src={article.cover?.url || ""}
           alt={article.coverAlt}
-          className="site-photo-zoom aspect-[4/3] rounded-xl"
-          fit="contain"
-          sizes="(max-width:639px) 100vw, (max-width:1023px) 50vw, 33vw"
+          className="site-photo-zoom aspect-[4/3] rounded-xl sm:aspect-[4/5]"
+          fit="cover"
+          position="50% 60%"
+          sizes="(max-width:639px) calc(100vw - 40px), (max-width:1023px) calc(50vw - 44px), (max-width:1239px) calc((100vw - 160px) / 3), 360px"
         />
       </Link>
       <div className="flex flex-1 flex-col pt-5">
@@ -24,10 +25,10 @@ export default function ArticleCard({ article }: { article: PublicArticle }) {
           {article.category?.name || "Journal"} ·{" "}
           {readingMinutes(article.content)} min read
         </p>
-        <h2 className="mt-3 break-words font-display text-[1.8rem] font-normal leading-tight">
+        <h2 className="mt-3 break-words text-balance font-display text-[1.8rem] font-normal leading-tight">
           <Link href={`/blog/${article.slug}`}>{article.title}</Link>
         </h2>
-        <p className="mt-4 line-clamp-3 text-sm leading-7 text-[#746354]">
+        <p className="mt-3 text-sm leading-7 text-[#746354]">
           {article.excerpt}
         </p>
         <Link

@@ -2,11 +2,14 @@ import Link from "next/link";
 import ArticleCard from "./ArticleCard";
 import BlogImage from "./BlogImage";
 import JournalSearch from "./JournalSearch";
-import { journalPage, publicJournalTaxonomy } from "@/lib/blog/discovery";
+import {
+  type journalPage,
+  publicJournalCategories,
+} from "@/lib/blog/discovery";
 import { firstSearchParam, type SearchParam } from "@/lib/searchParams";
 export default async function BlogListing({
-  title = "Journal & inspiration",
-  description = "Thoughtful ideas for the way you live. Explore furniture, materials and spaces, one considered detail at a time.",
+  title = "The Crafting Corner Journal",
+  description = "Practical guides to planning your rooms and choosing furniture, with photographs from our Mohali showroom.",
   query = {},
   result,
   base = "/blog",
@@ -23,7 +26,7 @@ export default async function BlogListing({
   base?: string;
 }) {
   const q = firstSearchParam(query.q).slice(0, 200);
-  const options = await publicJournalTaxonomy().catch(() => null);
+  const categories = await publicJournalCategories().catch(() => []);
   const featured =
     !q && !query.category && !query.tag && !query.author && result.page === 1
       ? result.articles.find((a) => a.featured)
@@ -39,10 +42,9 @@ export default async function BlogListing({
     return `${base}${p.size ? "?" + p.toString() : ""}`;
   };
   return (
-    <div className="site-container pb-20 pt-12 sm:pt-16">
-      <div className="site-enter mx-auto mb-9 max-w-2xl text-center">
-        <p className="eyebrow">The Crafting Corner journal</p>
-        <h1 className="mt-4 break-words text-balance font-display text-[clamp(2.5rem,5vw,4rem)] font-normal leading-[1.08]">
+    <div className="site-container pb-20 pt-9 sm:pt-16">
+      <div className="site-enter mx-auto mb-7 max-w-2xl text-center sm:mb-9">
+        <h1 className="break-words text-balance font-display text-[clamp(2.5rem,5vw,4rem)] font-normal leading-[1.08]">
           {title}
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-pretty text-sm leading-7 text-[#746354] sm:text-base">
@@ -50,23 +52,30 @@ export default async function BlogListing({
         </p>
       </div>
       <JournalSearch base={base} query={q} />
-      <nav
-        aria-label="Journal categories"
-        className="mb-10 flex max-w-full flex-wrap justify-center gap-2"
-      >
-        <Link href="/blog" className="journal-filter">
-          All stories
-        </Link>
-        {options?.categories.map((c) => (
+      {categories.length > 0 ? (
+        <nav
+          aria-label="Journal categories"
+          className="mb-7 flex max-w-full flex-wrap justify-center gap-2 sm:mb-10"
+        >
           <Link
-            key={c.slug}
-            href={`/blog/category/${c.slug}`}
-            className={`journal-filter ${query.category === c.slug ? "bg-[#eee7dc]" : ""}`}
+            href="/blog"
+            aria-current={base === "/blog" ? "page" : undefined}
+            className="journal-filter"
           >
-            {c.name}
+            All stories
           </Link>
-        ))}
-      </nav>
+          {categories.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/blog/category/${c.slug}`}
+              aria-current={query.category === c.slug ? "page" : undefined}
+              className="journal-filter"
+            >
+              {c.name}
+            </Link>
+          ))}
+        </nav>
+      ) : null}
       {q ? (
         <p className="mb-8 break-words text-center text-sm text-[#746354]">
           {result.total} {result.total === 1 ? "story" : "stories"} matching “

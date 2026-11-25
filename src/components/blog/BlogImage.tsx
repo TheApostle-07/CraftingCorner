@@ -7,6 +7,7 @@ export default function BlogImage({
   width = 1333,
   height = 2000,
   className = "",
+  sizes = "(max-width:639px) calc(100vw - 40px), 680px",
   priority = false,
 }: {
   src: string;
@@ -14,19 +15,28 @@ export default function BlogImage({
   width?: number;
   height?: number;
   className?: string;
+  sizes?: string;
   priority?: boolean;
 }) {
   const [failed, setFailed] = useState("");
-  const srcSet = realPhotoSrcSet(src) ?? (
-    src?.startsWith("https://res.cloudinary.com/") && src.includes("/image/upload/")
-      ? [600, 1200, 2000]
-          .map(
-            (size) =>
-              `${src.replace("/image/upload/", `/image/upload/c_limit,w_${size},q_auto,f_auto/`)} ${size}w`,
-          )
-          .join(", ")
-      : undefined
-  );
+  const [retry, setRetry] = useState("");
+  const srcSet =
+    retry !== src
+      ? realPhotoSrcSet(src) ??
+        (src?.startsWith("https://res.cloudinary.com/") &&
+        src.includes("/image/upload/")
+          ? [600, 1200, 2000]
+              .map(
+                (size) =>
+                  `${src.replace("/image/upload/", `/image/upload/c_limit,w_${size},q_auto,f_auto/`)} ${size}w`,
+              )
+              .join(", ")
+          : undefined)
+      : undefined;
+  function recoverImage(image: HTMLImageElement) {
+    if (srcSet && image.currentSrc !== image.src) setRetry(src);
+    else setFailed(src);
+  }
   if (!src || failed === src)
     return (
       <div
@@ -40,9 +50,13 @@ export default function BlogImage({
     );
   return (
     <img
+      key={srcSet ? "responsive" : "original"}
+      ref={(image) => {
+        if (image?.complete && image.naturalWidth === 0) recoverImage(image);
+      }}
       src={src}
       srcSet={srcSet}
-      sizes="(max-width:640px) calc(100vw - 40px), (max-width:1024px) 80vw, 1000px"
+      sizes={sizes}
       alt={alt}
       width={width}
       height={height}
@@ -50,7 +64,7 @@ export default function BlogImage({
       loading={priority ? "eager" : "lazy"}
       fetchPriority={priority ? "high" : "auto"}
       decoding="async"
-      onError={() => setFailed(src)}
+      onError={({ currentTarget }) => recoverImage(currentTarget)}
     />
   );
 }

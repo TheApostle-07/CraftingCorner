@@ -64,6 +64,19 @@ export async function publicJournalTaxonomy() {
     : { categories: [], authors: [] };
 }
 
+export const publicJournalCategories = cache(async () => {
+  if (!blogDatabaseConfigured()) return [];
+  await ensureBlogDatabase();
+  await publishDueArticles();
+  return blogSql()<{ slug: string; name: string }[]>`select c.slug,c.name
+    from ${blogTable("blog_categories")} c
+    where exists (
+      select 1 from ${blogTable("blog_articles")} a
+      where a.live_snapshot->>'categorySlug'=c.slug and a.published_at<=now()
+        and a.deleted_at is null
+    ) order by c.name`;
+});
+
 export async function indexableArticles() {
   if (!blogDatabaseConfigured()) return [];
   await ensureBlogDatabase();

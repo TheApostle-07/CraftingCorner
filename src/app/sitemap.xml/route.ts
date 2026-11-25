@@ -1,5 +1,6 @@
 import { loadAllProducts, loadCategories } from "@/lib/loaders.server";
 import { indexableArticles } from "@/lib/blog/discovery";
+import { safeImage } from "@/lib/blog/content";
 import { absoluteUrl, escapeXml } from "@/lib/seo";
 import { getSiteStatus } from "@/lib/siteStatus";
 
@@ -33,10 +34,17 @@ async function getEntries(): Promise<Entry[]> {
   if (articles.length) entries.push({ url: absoluteUrl("/blog") });
   const journalCategories = new Set<string>();
   for (const article of articles) {
+    const photos = (article.fields.content?.content ?? []).flatMap((node) => {
+      const src = node.attrs?.src;
+      return node.type === "image" && typeof src === "string" && safeImage(src)
+        ? [src]
+        : [];
+    });
+    if (article.coverUrl) photos.unshift(article.coverUrl);
     entries.push({
       url: absoluteUrl(`/blog/${article.slug}`),
       lastModified: article.fields.liveUpdatedAt || article.publishedAt,
-      images: article.coverUrl ? [absoluteUrl(article.coverUrl)] : undefined,
+      images: photos.map(absoluteUrl),
     });
     if (article.fields.categorySlug)
       journalCategories.add(article.fields.categorySlug);
